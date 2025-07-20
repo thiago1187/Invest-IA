@@ -1,12 +1,12 @@
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { HeroButton } from "@/components/ui/hero-button"
 import { Eye, EyeOff, TrendingUp, Shield, Brain, DollarSign } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/contexts/AuthContext"
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
@@ -14,21 +14,38 @@ export default function Login() {
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { toast } = useToast()
+  const location = useLocation()
+  const { login, isAuthenticated } = useAuth()
+
+  // Redirecionar se já estiver logado
+  useEffect(() => {
+    if (isAuthenticated) {
+      const from = location.state?.from?.pathname || "/dashboard";
+      navigate(from, { replace: true });
+    }
+  }, [isAuthenticated, navigate, location]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsLoading(true)
+    
+    if (!email || !password) {
+      return;
+    }
 
-    // Simular login
-    setTimeout(() => {
-      toast({
-        title: "Login realizado com sucesso!",
-        description: "Bem-vindo de volta ao InvestIA.",
-      })
-      navigate("/dashboard")
-      setIsLoading(false)
-    }, 1500)
+    setIsLoading(true)
+    
+    try {
+      const success = await login(email, password);
+      
+      if (success) {
+        const from = location.state?.from?.pathname || "/dashboard";
+        navigate(from, { replace: true });
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (

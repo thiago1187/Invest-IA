@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label"
 import { HeroButton } from "@/components/ui/hero-button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, TrendingUp, CheckCircle2 } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/contexts/AuthContext"
+import { toast } from "sonner"
 
 export default function Cadastro() {
   const [showPassword, setShowPassword] = useState(false)
@@ -22,7 +23,14 @@ export default function Cadastro() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { toast } = useToast()
+  const { register, isAuthenticated } = useAuth()
+
+  // Redirecionar se já estiver logado
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -32,34 +40,33 @@ export default function Cadastro() {
     e.preventDefault()
     
     if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Erro",
-        description: "As senhas não coincidem.",
-        variant: "destructive"
-      })
+      toast.error("As senhas não coincidem.");
       return
     }
 
     if (!formData.termos) {
-      toast({
-        title: "Erro",
-        description: "Você deve aceitar os termos de uso.",
-        variant: "destructive"
-      })
+      toast.error("Você deve aceitar os termos de uso.");
+      return
+    }
+
+    if (formData.password.length < 6) {
+      toast.error("A senha deve ter pelo menos 6 caracteres.");
       return
     }
 
     setIsLoading(true)
 
-    // Simular cadastro
-    setTimeout(() => {
-      toast({
-        title: "Conta criada com sucesso!",
-        description: "Bem-vindo ao InvestIA. Vamos começar!",
-      })
-      navigate("/simulado")
-      setIsLoading(false)
-    }, 1500)
+    try {
+      const success = await register(formData.nome, formData.email, formData.password);
+      
+      if (success) {
+        navigate("/simulado");
+      }
+    } catch (error) {
+      console.error('Erro no cadastro:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const benefits = [
