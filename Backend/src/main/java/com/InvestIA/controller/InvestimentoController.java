@@ -2,6 +2,7 @@ package com.InvestIA.controller;
 
 import com.InvestIA.dto.investimento.*;
 import com.InvestIA.service.InvestimentoService;
+import com.InvestIA.service.FinanceAPIService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -23,6 +27,7 @@ import java.util.UUID;
 public class InvestimentoController {
     
     private final InvestimentoService investimentoService;
+    private final FinanceAPIService financeAPIService;
     
     @GetMapping
     @Operation(summary = "Listar investimentos do usuário")
