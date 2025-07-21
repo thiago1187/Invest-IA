@@ -115,11 +115,11 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         
-        <!-- H2 Database for testing -->
+        <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
         
         <!-- Test Dependencies -->

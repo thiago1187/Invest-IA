@@ -125,14 +125,14 @@ public class SimuladoService {
         
         perfilRepository.save(perfil);
         
-        // Gerar análise com IA
+        // Gerar análise com IA usando DeepSeek
         String analiseIA = iaService.analisarPerfil(tipoPerfil, nivelExp, request.getRespostas());
         
         return ResultadoSimuladoResponse.builder()
                 .perfil(tipoPerfil)
                 .nivelExperiencia(nivelExp)
                 .pontuacaoTotal(pontuacaoTotal)
-                .descricaoPerfil(tipoPerfil.getDescricao())
+                .descricaoPerfil(analiseIA)  // Use IA analysis instead of enum description
                 .caracteristicas(obterCaracteristicas(tipoPerfil))
                 .recomendacoesIniciais(obterRecomendacoes(tipoPerfil, nivelExp))
                 .toleranciaRisco(calcularToleranciaRisco(pontuacaoTotal))

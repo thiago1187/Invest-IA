@@ -32,6 +32,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .senha(passwordEncoder.encode(request.getSenha()))
                 .telefone(request.getTelefone())
+                .ativo(true)
                 .build();
         
         usuarioRepository.save(usuario);
@@ -48,15 +49,25 @@ public class AuthService {
     }
     
     public AuthResponse authenticate(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getSenha()
-                )
-        );
-        
+        // Verificar se o usuário existe
         var usuario = usuarioRepository.findByEmail(request.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("Email não encontrado"));
+        
+        // Verificar se o usuário está ativo
+        if (!usuario.isAtivo()) {
+            throw new RuntimeException("Conta desativada");
+        }
+        
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getSenha()
+                    )
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Senha incorreta");
+        }
         
         var accessToken = jwtService.generateToken(usuario);
         var refreshToken = jwtService.generateRefreshToken(usuario);

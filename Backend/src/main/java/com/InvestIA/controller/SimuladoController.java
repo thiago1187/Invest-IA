@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/simulado")
+@RequestMapping("/api/simulado")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearer-jwt")
 @Tag(name = "Simulado", description = "Simulado de perfil de investidor")
@@ -20,10 +20,28 @@ public class SimuladoController {
     
     private final SimuladoService simuladoService;
     
+    @GetMapping("/test")
+    @Operation(summary = "Teste simples")
+    public ResponseEntity<String> test() {
+        try {
+            return ResponseEntity.ok("Simulado Controller funcionando!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erro: " + e.getMessage());
+        }
+    }
+    
     @GetMapping("/perguntas")
     @Operation(summary = "Obter perguntas do simulado")
     public ResponseEntity<SimuladoQuestoesResponse> obterPerguntas() {
-        return ResponseEntity.ok(simuladoService.obterPerguntas());
+        try {
+            SimuladoQuestoesResponse response = simuladoService.obterPerguntas();
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.err.println("Erro ao obter perguntas: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao obter perguntas: " + e.getMessage());
+        }
     }
     
     @PostMapping("/responder")

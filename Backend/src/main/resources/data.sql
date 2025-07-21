@@ -2,44 +2,44 @@
 
 -- Inserir ativos populares da B3
 INSERT INTO ativos (id, nome, ticker, simbolo, tipo_ativo, setor, status) VALUES
-(gen_random_uuid(), 'Vale S.A.', 'VALE3', 'VALE3.SA', 'ACAO', 'MINERACAO', true),
-(gen_random_uuid(), 'Petróleo Brasileiro S.A.', 'PETR4', 'PETR4.SA', 'ACAO', 'ENERGIA', true),
-(gen_random_uuid(), 'Itaú Unibanco Holding S.A.', 'ITUB4', 'ITUB4.SA', 'ACAO', 'FINANCEIRO', true),
-(gen_random_uuid(), 'Banco Bradesco S.A.', 'BBDC4', 'BBDC4.SA', 'ACAO', 'FINANCEIRO', true),
-(gen_random_uuid(), 'Ambev S.A.', 'ABEV3', 'ABEV3.SA', 'ACAO', 'BENS_CONSUMO', true),
-(gen_random_uuid(), 'Magazine Luiza S.A.', 'MGLU3', 'MGLU3.SA', 'ACAO', 'VAREJO', true),
-(gen_random_uuid(), 'WEG S.A.', 'WEGE3', 'WEGE3.SA', 'ACAO', 'INDUSTRIAL', true),
-(gen_random_uuid(), 'JBS S.A.', 'JBSS3', 'JBSS3.SA', 'ACAO', 'BENS_CONSUMO', true),
-(gen_random_uuid(), 'B3 S.A.', 'B3SA3', 'B3SA3.SA', 'ACAO', 'FINANCEIRO', true),
-(gen_random_uuid(), 'Suzano S.A.', 'SUZB3', 'SUZB3.SA', 'ACAO', 'INDUSTRIAL', true);
+(RANDOM_UUID(), 'Vale S.A.', 'VALE3', 'VALE3.SA', 'ACAO', 'MATERIAIS_BASICOS', true),
+(RANDOM_UUID(), 'Petróleo Brasileiro S.A.', 'PETR4', 'PETR4.SA', 'ACAO', 'ENERGIA', true),
+(RANDOM_UUID(), 'Itaú Unibanco Holding S.A.', 'ITUB4', 'ITUB4.SA', 'ACAO', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'Banco Bradesco S.A.', 'BBDC4', 'BBDC4.SA', 'ACAO', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'Ambev S.A.', 'ABEV3', 'ABEV3.SA', 'ACAO', 'CONSUMO', true),
+(RANDOM_UUID(), 'Magazine Luiza S.A.', 'MGLU3', 'MGLU3.SA', 'ACAO', 'VAREJO', true),
+(RANDOM_UUID(), 'WEG S.A.', 'WEGE3', 'WEGE3.SA', 'ACAO', 'INDUSTRIAL', true),
+(RANDOM_UUID(), 'JBS S.A.', 'JBSS3', 'JBSS3.SA', 'ACAO', 'CONSUMO', true),
+(RANDOM_UUID(), 'B3 S.A.', 'B3SA3', 'B3SA3.SA', 'ACAO', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'Suzano S.A.', 'SUZB3', 'SUZB3.SA', 'ACAO', 'INDUSTRIAL', true);
 
 -- Inserir ETFs populares
 INSERT INTO ativos (id, nome, ticker, simbolo, tipo_ativo, setor, status) VALUES
-(gen_random_uuid(), 'iShares Bovespa', 'BOVA11', 'BOVA11.SA', 'ETF', 'FUNDOS', true),
-(gen_random_uuid(), 'iShares Small Cap', 'SMAL11', 'SMAL11.SA', 'ETF', 'FUNDOS', true),
-(gen_random_uuid(), 'SPDR S&P 500 ETF', 'SPY', 'SPY', 'ETF', 'FUNDOS', true);
+(RANDOM_UUID(), 'iShares Bovespa', 'BOVA11', 'BOVA11.SA', 'ETF', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'iShares Small Cap', 'SMAL11', 'SMAL11.SA', 'ETF', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'SPDR S&P 500 ETF', 'SPY', 'SPY', 'ETF', 'FINANCEIRO', true);
 
 -- Inserir FIIs populares
 INSERT INTO ativos (id, nome, ticker, simbolo, tipo_ativo, setor, status) VALUES
-(gen_random_uuid(), 'Maxi Renda FII', 'MXRF11', 'MXRF11.SA', 'FII', 'IMOBILIARIO', true),
-(gen_random_uuid(), 'XP Log FII', 'XPLG11', 'XPLG11.SA', 'FII', 'IMOBILIARIO', true),
-(gen_random_uuid(), 'Kinea Renda Imobiliária FII', 'KNRI11', 'KNRI11.SA', 'FII', 'IMOBILIARIO', true),
-(gen_random_uuid(), 'CSHG Real Estate FII', 'HGRE11', 'HGRE11.SA', 'FII', 'IMOBILIARIO', true),
-(gen_random_uuid(), 'Vinci Partners RE FII', 'VINO11', 'VINO11.SA', 'FII', 'IMOBILIARIO', true);
+(RANDOM_UUID(), 'Maxi Renda FII', 'MXRF11', 'MXRF11.SA', 'FII', 'IMOBILIARIO', true),
+(RANDOM_UUID(), 'XP Log FII', 'XPLG11', 'XPLG11.SA', 'FII', 'IMOBILIARIO', true),
+(RANDOM_UUID(), 'Kinea Renda Imobiliária FII', 'KNRI11', 'KNRI11.SA', 'FII', 'IMOBILIARIO', true),
+(RANDOM_UUID(), 'CSHG Real Estate FII', 'HGRE11', 'HGRE11.SA', 'FII', 'IMOBILIARIO', true),
+(RANDOM_UUID(), 'Vinci Partners RE FII', 'VINO11', 'VINO11.SA', 'FII', 'IMOBILIARIO', true);
 
 -- Inserir alguns títulos de renda fixa
 INSERT INTO ativos (id, nome, ticker, simbolo, tipo_ativo, setor, status) VALUES
-(gen_random_uuid(), 'Tesouro Selic 2029', 'SELIC2029', 'SELIC2029', 'RENDA_FIXA', 'GOVERNO', true),
-(gen_random_uuid(), 'Tesouro IPCA+ 2029', 'IPCA2029', 'IPCA2029', 'RENDA_FIXA', 'GOVERNO', true),
-(gen_random_uuid(), 'Tesouro Prefixado 2027', 'PRE2027', 'PRE2027', 'RENDA_FIXA', 'GOVERNO', true),
-(gen_random_uuid(), 'CDB Banco Inter', 'CDB_INTER', 'CDB_INTER', 'RENDA_FIXA', 'FINANCEIRO', true),
-(gen_random_uuid(), 'LCI Banco do Brasil', 'LCI_BB', 'LCI_BB', 'RENDA_FIXA', 'FINANCEIRO', true);
+(RANDOM_UUID(), 'Tesouro Selic 2029', 'SELIC2029', 'SELIC2029', 'TESOURO_DIRETO', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'Tesouro IPCA+ 2029', 'IPCA2029', 'IPCA2029', 'TESOURO_DIRETO', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'Tesouro Prefixado 2027', 'PRE2027', 'PRE2027', 'TESOURO_DIRETO', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'CDB Banco Inter', 'CDB_INTER', 'CDB_INTER', 'CDB', 'FINANCEIRO', true),
+(RANDOM_UUID(), 'LCI Banco do Brasil', 'LCI_BB', 'LCI_BB', 'LCI_LCA', 'FINANCEIRO', true);
 
 -- Inserir algumas criptomoedas
 INSERT INTO ativos (id, nome, ticker, simbolo, tipo_ativo, setor, status) VALUES
-(gen_random_uuid(), 'Bitcoin', 'BTC', 'BTC-USD', 'CRIPTO', 'TECNOLOGIA', true),
-(gen_random_uuid(), 'Ethereum', 'ETH', 'ETH-USD', 'CRIPTO', 'TECNOLOGIA', true),
-(gen_random_uuid(), 'Cardano', 'ADA', 'ADA-USD', 'CRIPTO', 'TECNOLOGIA', true);
+(RANDOM_UUID(), 'Bitcoin', 'BTC', 'BTC-USD', 'CRIPTO', 'TECNOLOGIA', true),
+(RANDOM_UUID(), 'Ethereum', 'ETH', 'ETH-USD', 'CRIPTO', 'TECNOLOGIA', true),
+(RANDOM_UUID(), 'Cardano', 'ADA', 'ADA-USD', 'CRIPTO', 'TECNOLOGIA', true);
 
 -- Atualizar preços iniciais (valores aproximados para demonstração)
 UPDATE ativos SET preco_atual = 65.50 WHERE ticker = 'VALE3';
