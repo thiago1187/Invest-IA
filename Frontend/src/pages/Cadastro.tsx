@@ -17,8 +17,8 @@ export default function Cadastro() {
     nome: "",
     email: "",
     telefone: "",
-    password: "",
-    confirmPassword: "",
+    senha: "",
+    confirmSenha: "",
     termos: false
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -39,7 +39,7 @@ export default function Cadastro() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.senha !== formData.confirmSenha) {
       toast.error("As senhas não coincidem.");
       return
     }
@@ -49,7 +49,7 @@ export default function Cadastro() {
       return
     }
 
-    if (formData.password.length < 6) {
+    if (formData.senha.length < 6) {
       toast.error("A senha deve ter pelo menos 6 caracteres.");
       return
     }
@@ -57,10 +57,11 @@ export default function Cadastro() {
     setIsLoading(true)
 
     try {
-      const success = await register(formData.nome, formData.email, formData.password);
+      const success = await register(formData.nome, formData.email, formData.senha, formData.telefone);
       
       if (success) {
-        navigate("/simulado");
+        // Após o cadastro bem-sucedido, redirecionar para login
+        navigate("/login", { replace: true });
       }
     } catch (error) {
       console.error('Erro no cadastro:', error);
@@ -75,7 +76,7 @@ export default function Cadastro() {
     "Simuladores de metas e carteiras",
     "Diversificação automática",
     "Alertas inteligentes"
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -176,14 +177,14 @@ export default function Cadastro() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="password">Senha</Label>
+                    <Label htmlFor="senha">Senha</Label>
                     <div className="relative">
                       <Input
-                        id="password"
+                        id="senha"
                         type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
-                        value={formData.password}
-                        onChange={(e) => handleInputChange("password", e.target.value)}
+                        value={formData.senha}
+                        onChange={(e) => handleInputChange("senha", e.target.value)}
                         required
                         className="bg-surface border-border/50 pr-10"
                       />
@@ -202,14 +203,14 @@ export default function Cadastro() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword">Confirmar Senha</Label>
+                    <Label htmlFor="confirmSenha">Confirmar Senha</Label>
                     <div className="relative">
                       <Input
-                        id="confirmPassword"
+                        id="confirmSenha"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="••••••••"
-                        value={formData.confirmPassword}
-                        onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                        value={formData.confirmSenha}
+                        onChange={(e) => handleInputChange("confirmSenha", e.target.value)}
                         required
                         className="bg-surface border-border/50 pr-10"
                       />

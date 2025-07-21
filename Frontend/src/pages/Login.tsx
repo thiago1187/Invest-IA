@@ -7,11 +7,12 @@ import { Label } from "@/components/ui/label"
 import { HeroButton } from "@/components/ui/hero-button"
 import { Eye, EyeOff, TrendingUp, Shield, Brain, DollarSign } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
+import { toast } from "sonner"
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [senha, setSenha] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -28,14 +29,26 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!email || !password) {
+    // Validações locais
+    if (!email || !senha) {
+      toast.error('Preencha todos os campos');
+      return;
+    }
+
+    if (!email.includes('@')) {
+      toast.error('Digite um email válido');
+      return;
+    }
+
+    if (senha.length < 6) {
+      toast.error('A senha deve ter pelo menos 6 caracteres');
       return;
     }
 
     setIsLoading(true)
     
     try {
-      const success = await login(email, password);
+      const success = await login(email, senha);
       
       if (success) {
         const from = location.state?.from?.pathname || "/dashboard";
@@ -97,8 +110,8 @@ export default function Login() {
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={senha}
+                      onChange={(e) => setSenha(e.target.value)}
                       required
                       className="bg-surface border-border/50 pr-10"
                     />

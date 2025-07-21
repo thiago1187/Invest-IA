@@ -1,6 +1,7 @@
 
 import { useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useAuth } from "@/contexts/AuthContext"
 import { Button } from "@/components/ui/button"
 import { HeroButton } from "@/components/ui/hero-button"
 import { Badge } from "@/components/ui/badge"
@@ -36,14 +37,15 @@ export function Header() {
   const location = useLocation()
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
   
-  // Simulando dados do usuário
-  const userProfile = localStorage.getItem("userProfile") || "moderado"
-  const userName = "João Silva"
+  // Usar dados do usuário autenticado ou fallback
+  const userProfile = user?.perfil?.tipoPerfil?.toLowerCase() || "moderado"
+  const userName = user?.nome || "Usuário"
 
   const handleLogout = () => {
-    localStorage.clear()
-    navigate("/login")
+    logout()
+    navigate("/")
   }
 
   const navItems = [

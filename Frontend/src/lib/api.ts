@@ -8,6 +8,7 @@ export const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: false, // Para CORS
 });
 
 // Interceptor para adicionar token JWT automaticamente
@@ -34,8 +35,10 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      localStorage.removeItem('refreshToken');
       toast.error('Sessão expirada. Faça login novamente.');
+      // Não fazer redirect aqui para evitar problemas com React Router
+      // O AuthContext irá detectar a remoção do token e redirecionar apropriadamente
       return Promise.reject(error);
     }
 
@@ -63,18 +66,21 @@ function getErrorMessage(error: AxiosError): string {
 // Tipos para as principais entidades
 export interface LoginRequest {
   email: string;
-  password: string;
+  senha: string;
 }
 
 export interface RegisterRequest {
   nome: string;
   email: string;
-  password: string;
+  senha: string;
+  telefone?: string;
 }
 
 export interface AuthResponse {
-  token: string;
+  accessToken: string;
   refreshToken: string;
+  tokenType: string;
+  expiresIn: number;
   usuario: Usuario;
 }
 
@@ -82,7 +88,9 @@ export interface Usuario {
   id: string;
   nome: string;
   email: string;
+  telefone?: string;
   perfil?: PerfilUsuario;
+  criadoEm?: string;
 }
 
 export interface PerfilUsuario {
@@ -204,10 +212,10 @@ export const authService = {
 
 export const simuladoService = {
   obterQuestoes: () => 
-    api.get<SimuladoQuestoes>('/simulado/questoes'),
+    api.get<SimuladoQuestoes>('/simulado/perguntas'),
   
   processarRespostas: (data: SimuladoRespostas) => 
-    api.post<ResultadoSimulado>('/simulado/processar', data)
+    api.post<ResultadoSimulado>('/simulado/responder', data)
 };
 
 export const dashboardService = {
