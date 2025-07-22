@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Bot, Send, Minimize2, Maximize2, History, ThumbsUp, ThumbsDown, TrendingUp, PieChart, MessageCircle, Star, Clock, Lightbulb } from "lucide-react"
+import { Bot, Send, History, ThumbsUp, ThumbsDown, TrendingUp, PieChart, MessageCircle, Star, Clock, Lightbulb, Minimize2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { chatService } from "@/lib/api"
 import { toast } from "sonner"
@@ -67,14 +67,15 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
   ])
   const [inputValue, setInputValue] = useState("")
   const [isMinimized, setIsMinimized] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   const [historico, setHistorico] = useState<HistoricoConversa[]>([])
   const [loadingHistory, setLoadingHistory] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, 100)
   }
 
   useEffect(() => {
@@ -131,11 +132,6 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
       }
       
       setMessages(prev => [...prev, botResponse])
-      
-      // Toast com tempo de resposta
-      if (responseTime < 2000) {
-        toast.success(`Nina respondeu em ${responseTime}ms! ⚡`)
-      }
       
     } catch (error: any) {
       console.error('Erro no chatbot:', error)
@@ -256,7 +252,7 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
     <TooltipProvider>
       <Card className={cn(
         "fixed bottom-6 right-6 z-50 flex flex-col bg-gradient-surface border-border/50 shadow-large transition-all duration-300",
-        isExpanded ? "w-[500px] h-[600px]" : "w-80 h-96"
+        "w-[500px] h-[600px]"
       )}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border/50">
@@ -280,30 +276,22 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => setIsExpanded(!isExpanded)}
+                  onClick={() => setIsMinimized(true)}
                   className="h-8 w-8"
                 >
-                  <Maximize2 className="h-4 w-4" />
+                  <Minimize2 className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {isExpanded ? 'Reduzir' : 'Expandir'}
+                Minimizar
               </TooltipContent>
             </Tooltip>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMinimized(true)}
-              className="h-8 w-8"
-            >
-              <Minimize2 className="h-4 w-4" />
-            </Button>
           </div>
         </div>
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-          <TabsList className="grid w-full grid-cols-2 mx-4 mt-2">
+          <TabsList className="grid w-full grid-cols-2 mx-4 mt-2 mb-1">
             <TabsTrigger value="chat" className="text-xs">
               <MessageCircle className="h-3 w-3 mr-1" />
               Chat
@@ -314,51 +302,9 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="chat" className="flex-1 flex flex-col m-0">
-            {/* Ações Rápidas */}
-            <div className="p-2 border-b border-border/50">
-              <div className="flex flex-wrap gap-1">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs h-6"
-                  onClick={() => executarAcaoRapida('analise')}
-                >
-                  <PieChart className="h-3 w-3 mr-1" />
-                  Análise
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs h-6"
-                  onClick={() => executarAcaoRapida('recomendacoes')}
-                >
-                  <TrendingUp className="h-3 w-3 mr-1" />
-                  Dicas
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs h-6"
-                  onClick={() => executarAcaoRapida('mercado')}
-                >
-                  <MessageCircle className="h-3 w-3 mr-1" />
-                  Mercado
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-xs h-6"
-                  onClick={() => executarAcaoRapida('educacao')}
-                >
-                  <Lightbulb className="h-3 w-3 mr-1" />
-                  Aprender
-                </Button>
-              </div>
-            </div>
-
+          <TabsContent value="chat" className="flex-1 flex flex-col m-0 mt-1">
             {/* Messages */}
-            <ScrollArea className="flex-1 p-4">
+            <ScrollArea className="flex-1 p-4" style={{height: "calc(100% - 120px)"}}>
               <div className="space-y-4">
                 {messages.map((message) => (
                   <div
@@ -457,8 +403,8 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
             </ScrollArea>
           </TabsContent>
 
-          <TabsContent value="history" className="flex-1 flex flex-col m-0">
-            <ScrollArea className="flex-1 p-4">
+          <TabsContent value="history" className="flex-1 flex flex-col m-0 mt-1">
+            <ScrollArea className="flex-1 p-4" style={{height: "calc(100% - 120px)"}}>
               {loadingHistory ? (
                 <div className="flex justify-center py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>

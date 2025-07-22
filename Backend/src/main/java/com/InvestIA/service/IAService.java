@@ -146,10 +146,11 @@ public class IAService {
             Map<String, String> systemMessage = new HashMap<>();
             systemMessage.put("role", "system");
             systemMessage.put("content", 
-                "Você é Nina, uma consultora financeira especializada em investimentos no Brasil. " +
-                "Forneça análises precisas, recomendações personalizadas e conselhos práticos. " +
-                "Use linguagem clara, amigável e profissional. Foque em investimentos brasileiros (B3, Tesouro, CDB, FIIs, etc.). " +
-                "Seja específica nas recomendações e sempre considere o perfil de risco do investidor.");
+                "Você é Nina, uma consultora financeira brasileira. " +
+                "Seja DIRETA e CONCISA nas respostas (máximo 3 parágrafos curtos). " +
+                "Use linguagem natural, amigável mas profissional. " +
+                "Foque em investimentos brasileiros (Tesouro, CDB, ações B3, FIIs). " +
+                "Dê conselhos práticos e objetivos, sem enrolação.");
             messages.add(systemMessage);
             
             // User message
@@ -409,12 +410,12 @@ public class IAService {
             }
             
             prompt.append("INSTRUÇÕES:\n");
-            prompt.append("1. Seja específica e personalizada na resposta\n");
-            prompt.append("2. Use o histórico e contexto fornecido\n");
-            prompt.append("3. Forneça dicas práticas e educativas\n");
+            prompt.append("1. Seja DIRETA e CONCISA (máximo 3 parágrafos)\n");
+            prompt.append("2. Use o contexto fornecido mas sem repetir informações óbvias\n");
+            prompt.append("3. Dê dicas práticas e objetivas\n");
             prompt.append("4. Foque em investimentos brasileiros\n");
-            prompt.append("5. Mantenha tom amigável e profissional\n\n");
-            prompt.append("Responda de forma completa e útil:");
+            prompt.append("5. Tom natural e amigável, sem formalidade excessiva\n\n");
+            prompt.append("Responda de forma direta e útil:");
             
             return callClaude(prompt.toString(), "Consulta com contexto completo");
         } catch (Exception e) {
@@ -492,16 +493,14 @@ public class IAService {
     
     private String buildContextualizedPrompt(String pergunta, String contextoPersonalizado) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append("Nina, você é a assistente de investimentos da InvestIA. Responda esta pergunta considerando o contexto completo do usuário:\n\n");
+        prompt.append("Nina, responda de forma DIRETA e NATURAL:\n\n");
         prompt.append("PERGUNTA: ").append(pergunta).append("\n\n");
-        prompt.append("CONTEXTO DO USUÁRIO:\n").append(contextoPersonalizado).append("\n\n");
+        prompt.append("CONTEXTO: ").append(contextoPersonalizado).append("\n\n");
         prompt.append("INSTRUÇÕES:\n");
-        prompt.append("1. Use o contexto fornecido para personalizar a resposta\n");
-        prompt.append("2. Seja específico e prático nas recomendações\n");
-        prompt.append("3. Considere o histórico de interações do usuário\n");
-        prompt.append("4. Use linguagem clara e educativa\n");
-        prompt.append("5. Foque em investimentos brasileiros (B3, Tesouro, etc.)\n\n");
-        prompt.append("Responda de forma personalizada e útil:");
+        prompt.append("- Máximo 2-3 parágrafos curtos\n");
+        prompt.append("- Linguagem natural, sem formalidade excessiva\n");
+        prompt.append("- Seja prática e objetiva\n");
+        prompt.append("- Foque em investimentos brasileiros\n\n");
         return prompt.toString();
     }
     
