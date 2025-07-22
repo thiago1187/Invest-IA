@@ -66,7 +66,21 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
     }
   ])
   const [inputValue, setInputValue] = useState("")
-  const [isMinimized, setIsMinimized] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(true)
+  
+  // Desabilitar scroll da página quando chat estiver aberto
+  useEffect(() => {
+    if (!isMinimized) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    
+    // Cleanup quando componente desmontar
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMinimized])
   const [isTyping, setIsTyping] = useState(false)
   const [historico, setHistorico] = useState<HistoricoConversa[]>([])
   const [loadingHistory, setLoadingHistory] = useState(false)
@@ -251,11 +265,11 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
   return (
     <TooltipProvider>
       <Card className={cn(
-        "fixed bottom-6 right-6 z-50 flex flex-col bg-gradient-surface border-border/50 shadow-large transition-all duration-300",
-        "w-[500px] h-[600px]"
+        "fixed bottom-0 right-0 z-50 flex flex-col bg-gradient-surface border-border/50 shadow-large transition-all duration-300",
+        "w-[550px] h-[700px] rounded-tl-lg rounded-bl-lg rounded-tr-none rounded-br-none"
       )}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border/50">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-border/50 bg-surface/30">
           <div className="flex items-center space-x-3">
             <Avatar className="h-8 w-8 bg-gradient-primary animate-pulse">
               <AvatarFallback className="text-primary-foreground font-semibold">
@@ -289,166 +303,132 @@ export function ChatBotAdvanced({ userProfile = "moderado" }: ChatBotProps) {
           </div>
         </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-          <TabsList className="grid w-full grid-cols-2 mx-4 mt-2 mb-1">
-            <TabsTrigger value="chat" className="text-xs">
-              <MessageCircle className="h-3 w-3 mr-1" />
-              Chat
-            </TabsTrigger>
-            <TabsTrigger value="history" className="text-xs">
-              <History className="h-3 w-3 mr-1" />
-              Histórico
-            </TabsTrigger>
-          </TabsList>
+        {/* Content Area */}
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+            <TabsList className="grid w-full grid-cols-2 mx-4 mt-3 mb-2 h-10 shrink-0">
+              <TabsTrigger value="chat" className="text-sm">
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Chat
+              </TabsTrigger>
+              <TabsTrigger value="history" className="text-sm">
+                <History className="h-4 w-4 mr-2" />
+                Histórico
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="chat" className="flex-1 flex flex-col m-0 mt-1">
-            {/* Messages */}
-            <ScrollArea className="flex-1 p-4" style={{height: "calc(100% - 120px)"}}>
-              <div className="space-y-4">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={cn(
-                      "flex flex-col",
-                      message.isBot ? "items-start" : "items-end"
-                    )}
-                  >
-                    <div className="flex items-start space-x-2 max-w-[85%]">
-                      {message.isBot && (
-                        <Avatar className="h-6 w-6 bg-gradient-primary">
+            <TabsContent value="chat" className="flex-1 mt-0 data-[state=active]:flex data-[state=active]:flex-col">
+              <div className="flex-1 px-4 py-2 overflow-y-auto max-h-[450px]">
+                <div className="space-y-4 pb-4">
+                  {messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={cn(
+                        "flex flex-col",
+                        message.isBot ? "items-start" : "items-end"
+                      )}
+                    >
+                      <div className="flex items-start space-x-2 max-w-[85%]">
+                        {message.isBot && (
+                          <Avatar className="h-7 w-7 bg-gradient-primary shrink-0">
+                            <AvatarFallback className="text-xs">
+                              {getMessageTypeIcon(message.type)}
+                            </AvatarFallback>
+                          </Avatar>
+                        )}
+                        <div className="flex flex-col space-y-1">
+                          <div className="flex items-center space-x-2">
+                            {message.type && getMessageTypeBadge(message.type)}
+                            <span className="text-xs text-muted-foreground">
+                              {message.timestamp.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <div
+                            className={cn(
+                              "rounded-lg p-3 text-sm break-words",
+                              message.isBot
+                                ? "bg-surface text-foreground border border-border/50 max-w-[400px]"
+                                : "bg-gradient-primary text-primary-foreground max-w-[350px]"
+                            )}
+                          >
+                            {message.content}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="flex items-start space-x-2">
+                        <Avatar className="h-7 w-7 bg-gradient-primary">
                           <AvatarFallback className="text-xs">
-                            {getMessageTypeIcon(message.type)}
+                            <Bot className="h-3 w-3" />
                           </AvatarFallback>
                         </Avatar>
-                      )}
-                      <div className="flex flex-col space-y-1">
-                        <div className="flex items-center space-x-2">
-                          {message.type && getMessageTypeBadge(message.type)}
-                          <span className="text-xs text-muted-foreground">
-                            {message.timestamp.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
-                          </span>
+                        <div className="bg-surface text-foreground rounded-lg p-3 text-sm border border-border/50">
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                            <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                          </div>
                         </div>
-                        <div
-                          className={cn(
-                            "rounded-lg p-3 text-sm",
-                            message.isBot
-                              ? "bg-surface text-foreground border border-border/50"
-                              : "bg-gradient-primary text-primary-foreground"
-                          )}
-                        >
-                          {message.content}
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} className="h-1" />
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="history" className="flex-1 mt-0 data-[state=active]:flex data-[state=active]:flex-col">
+              <div className="flex-1 px-4 py-2 overflow-y-auto max-h-[450px]">
+                {loadingHistory ? (
+                  <div className="flex justify-center py-8">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
+                  </div>
+                ) : (
+                  <div className="space-y-3 pb-4">
+                    {historico.map((item) => (
+                      <div key={item.id} className="border border-border/50 rounded-lg p-3 space-y-2 bg-surface/30">
+                        <div className="flex items-center justify-between">
+                          <Badge variant="outline" className="text-xs">
+                            {item.tipo.replace('_', ' ').toLowerCase()}
+                          </Badge>
+                          <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {new Date(item.criadoEm).toLocaleDateString('pt-BR')}
+                          </div>
                         </div>
-                        {message.isBot && (
-                          <div className="flex items-center space-x-1 mt-1">
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-6 w-6 p-0"
-                                  onClick={() => avaliarResposta(message.id, 5)}
-                                >
-                                  <ThumbsUp className={cn(
-                                    "h-3 w-3",
-                                    message.rating === 5 && "text-green-500"
-                                  )} />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Gostei</TooltipContent>
-                            </Tooltip>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-6 w-6 p-0"
-                                  onClick={() => avaliarResposta(message.id, 1)}
-                                >
-                                  <ThumbsDown className={cn(
-                                    "h-3 w-3",
-                                    message.rating === 1 && "text-red-500"
-                                  )} />
-                                </Button>
-                              </TooltipTrigger>
-                              <TooltipContent>Não gostei</TooltipContent>
-                            </Tooltip>
+                        <p className="text-sm font-medium">{item.pergunta}</p>
+                        <p className="text-xs text-muted-foreground line-clamp-2">
+                          {item.resposta.substring(0, 100)}...
+                        </p>
+                        {item.avaliacaoUsuario && (
+                          <div className="flex items-center space-x-1">
+                            <Star className="h-3 w-3 text-yellow-500" />
+                            <span className="text-xs">{item.avaliacaoUsuario}/5</span>
                           </div>
                         )}
                       </div>
-                    </div>
-                  </div>
-                ))}
-                
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="flex items-start space-x-2">
-                      <Avatar className="h-6 w-6 bg-gradient-primary">
-                        <AvatarFallback className="text-xs">
-                          <Bot className="h-3 w-3" />
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="bg-surface text-foreground rounded-lg p-3 text-sm border border-border/50">
-                        <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                          <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 )}
-                <div ref={messagesEndRef} />
               </div>
-            </ScrollArea>
-          </TabsContent>
-
-          <TabsContent value="history" className="flex-1 flex flex-col m-0 mt-1">
-            <ScrollArea className="flex-1 p-4" style={{height: "calc(100% - 120px)"}}>
-              {loadingHistory ? (
-                <div className="flex justify-center py-8">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {historico.map((item) => (
-                    <div key={item.id} className="border border-border/50 rounded-lg p-3 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Badge variant="outline" className="text-xs">
-                          {item.tipo.replace('_', ' ').toLowerCase()}
-                        </Badge>
-                        <div className="flex items-center space-x-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {new Date(item.criadoEm).toLocaleDateString('pt-BR')}
-                        </div>
-                      </div>
-                      <p className="text-sm font-medium">{item.pergunta}</p>
-                      <p className="text-xs text-muted-foreground line-clamp-2">
-                        {item.resposta.substring(0, 100)}...
-                      </p>
-                      {item.avaliacaoUsuario && (
-                        <div className="flex items-center space-x-1">
-                          <Star className="h-3 w-3 text-yellow-500" />
-                          <span className="text-xs">{item.avaliacaoUsuario}/5</span>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </ScrollArea>
-          </TabsContent>
-        </Tabs>
+            </TabsContent>
+          </Tabs>
+        </div>
 
         {/* Input */}
-        <div className="p-4 border-t border-border/50">
+        <div className="shrink-0 p-4 border-t border-border/50 bg-surface/80">
           <div className="flex space-x-2">
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Digite sua pergunta... (Shift+Enter para nova linha)"
-              className="flex-1 bg-surface border-border/50"
+              placeholder="Digite sua pergunta..."
+              className="flex-1 bg-background border-border/50 text-sm"
               disabled={isTyping}
             />
             <Button
