@@ -25,6 +25,20 @@ import java.util.stream.Collectors;
 @Service
 public class IAService {
 
+    // Groq API (PRINCIPAL - grátis e rápida)
+    @Value("${groq.api.key}")
+    private String groqApiKey;
+
+    @Value("${groq.api.url}")
+    private String groqApiUrl;
+
+    @Value("${groq.api.model}")
+    private String groqModel;
+
+    @Value("${groq.api.timeout}")
+    private long timeout;
+
+    // Claude backup
     @Value("${claude.api.key}")
     private String claudeApiKey;
 
@@ -33,9 +47,6 @@ public class IAService {
 
     @Value("${claude.api.model}")
     private String claudeModel;
-
-    @Value("${claude.api.timeout}")
-    private long timeout;
 
     // DeepSeek backup
     @Value("${deepseek.api.key}")
@@ -93,10 +104,93 @@ public class IAService {
     }
 
     private String callClaude(String prompt, String context) {
-        // Se não tiver chave configurada, tentar DeepSeek ou usar resposta padrão
+        // NOVA ORDEM: Groq -> Claude -> DeepSeek -> Fallback
+        log.info("Processando solicitação: {}", context);
+        
+        // 1. Tentar Groq primeiro (grátis e rápida)
+        if (groqApiKey != null && !groqApiKey.equals("sk-placeholder-key") && !groqApiKey.startsWith("gsk_placeholder")) {
+            log.info("Tentando Groq API para: {}", context);
+            String groqResponse = callGroq(prompt, context);
+            if (groqResponse != null && !groqResponse.startsWith("Desculpe")) {
+                return groqResponse;
+            }
+        }
+        
+        // 2. Fallback para Claude
+        if (claudeApiKey != null && !claudeApiKey.equals("sk-placeholder-key")) {
+            log.info("Groq falhou, tentando Claude para: {}", context);
+            return callClaudeAPI(prompt, context);
+        }
+        
+        // 3. Fallback para DeepSeek
+        log.info("Claude não disponível, tentando DeepSeek para: {}", context);
+        return callDeepSeek(prompt, context);
+    }
+    
+    private String callGroq(String prompt, String context) {
+        try {
+            // Criar headers para Groq API
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setBearerAuth(groqApiKey);
+
+            // Criar corpo da requisição para Groq (formato OpenAI-compatible)
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("model", groqModel);
+            requestBody.put("max_tokens", 1000);
+            requestBody.put("temperature", 0.7);
+            
+            List<Map<String, String>> messages = new ArrayList<>();
+            
+            // System message para Nina
+            Map<String, String> systemMessage = new HashMap<>();
+            systemMessage.put("role", "system");
+            systemMessage.put("content", 
+                "Você é Nina, uma consultora financeira especializada em investimentos no Brasil. " +
+                "Forneça análises precisas, recomendações personalizadas e conselhos práticos. " +
+                "Use linguagem clara, amigável e profissional. Foque em investimentos brasileiros (B3, Tesouro, CDB, FIIs, etc.). " +
+                "Seja específica nas recomendações e sempre considere o perfil de risco do investidor.");
+            messages.add(systemMessage);
+            
+            // User message
+            Map<String, String> userMessage = new HashMap<>();
+            userMessage.put("role", "user");
+            userMessage.put("content", prompt);
+            messages.add(userMessage);
+            
+            requestBody.put("messages", messages);
+
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+
+            // Fazer chamada para Groq
+            ResponseEntity<String> response = restTemplate.exchange(
+                groqApiUrl, 
+                HttpMethod.POST, 
+                entity, 
+                String.class
+            );
+
+            // Parsear resposta do Groq (formato OpenAI)
+            JsonNode responseJson = objectMapper.readTree(response.getBody());
+            String content = responseJson.path("choices")
+                                      .get(0)
+                                      .path("message")
+                                      .path("content")
+                                      .asText();
+
+            log.info("✅ Resposta do Groq para {}: {}", context, content.substring(0, Math.min(100, content.length())));
+            return content;
+            
+        } catch (Exception e) {
+            log.error("❌ Erro na chamada para Groq: {}", e.getMessage());
+            return null; // Retorna null para tentar próximo fallback
+        }
+    }
+    
+    private String callClaudeAPI(String prompt, String context) {
+        // Se não tiver chave configurada, tentar DeepSeek
         if (claudeApiKey == null || claudeApiKey.equals("sk-placeholder-key")) {
-            log.info("Claude não configurado, tentando DeepSeek para: {}", context);
-            return callDeepSeek(prompt, context);
+            return null;
         }
         
         try {
@@ -139,11 +233,11 @@ public class IAService {
                                       .path("text")
                                       .asText();
 
-            log.info("Resposta do Claude para {}: {}", context, content.substring(0, Math.min(100, content.length())));
+            log.info("✅ Resposta do Claude para {}: {}", context, content.substring(0, Math.min(100, content.length())));
             return content;
         } catch (Exception e) {
-            log.error("Erro na chamada para Claude: {}, tentando DeepSeek", e.getMessage());
-            return callDeepSeek(prompt, context);
+            log.error("❌ Erro na chamada para Claude: {}", e.getMessage());
+            return null; // Retorna null para continuar fallback chain
         }
     }
 

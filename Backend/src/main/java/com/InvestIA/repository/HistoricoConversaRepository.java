@@ -15,7 +15,7 @@ import java.util.UUID;
 @Repository
 public interface HistoricoConversaRepository extends JpaRepository<HistoricoConversa, UUID> {
     
-    Page<HistoricoConversa> findByUsuarioIdOrderBycriadoEmDesc(UUID usuarioId, Pageable pageable);
+    Page<HistoricoConversa> findByUsuarioIdOrderByCriadoEmDesc(UUID usuarioId, Pageable pageable);
     
     List<HistoricoConversa> findTop10ByUsuarioIdOrderByCriadoEmDesc(UUID usuarioId);
     
