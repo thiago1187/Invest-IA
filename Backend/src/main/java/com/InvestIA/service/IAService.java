@@ -283,6 +283,208 @@ public class IAService {
         return prompt.toString();
     }
 
+    // Novos métodos para ChatBot personalizado
+    public String responderComContextoPersonalizado(String pergunta, String contextoPersonalizado) {
+        try {
+            String prompt = buildContextualizedPrompt(pergunta, contextoPersonalizado);
+            return callClaude(prompt, "Consulta contextualizada");
+        } catch (Exception e) {
+            log.error("Erro ao responder com contexto: {}", e.getMessage());
+            return "Desculpe, não consegui processar sua pergunta com o contexto personalizado. Tente novamente.";
+        }
+    }
+    
+    public String responderConsultaComContexto(String pergunta, Usuario usuario, List<Investimento> investimentos, String contextoPersonalizado) {
+        try {
+            StringBuilder prompt = new StringBuilder();
+            prompt.append("Nina, você é a assistente de investimentos da InvestIA. Responda esta consulta considerando todo o contexto:\n\n");
+            prompt.append("PERGUNTA: ").append(pergunta).append("\n\n");
+            prompt.append("CONTEXTO PERSONALIZADO:\n").append(contextoPersonalizado).append("\n\n");
+            
+            // Adicionar contexto da carteira atual
+            if (!investimentos.isEmpty()) {
+                BigDecimal valorTotal = calcularValorTotalCarteira(investimentos);
+                prompt.append("CARTEIRA ATUAL:\n");
+                prompt.append("Valor total: R$ ").append(valorTotal).append("\n");
+                prompt.append("Ativos:\n");
+                investimentos.forEach(inv -> 
+                    prompt.append("- ").append(inv.getAtivo().getTicker())
+                          .append(": ").append(inv.getQuantidade()).append(" cotas")
+                          .append(", R$ ").append(inv.getValorTotalInvestido()).append("\n"));
+                prompt.append("\n");
+            }
+            
+            prompt.append("INSTRUÇÕES:\n");
+            prompt.append("1. Seja específica e personalizada na resposta\n");
+            prompt.append("2. Use o histórico e contexto fornecido\n");
+            prompt.append("3. Forneça dicas práticas e educativas\n");
+            prompt.append("4. Foque em investimentos brasileiros\n");
+            prompt.append("5. Mantenha tom amigável e profissional\n\n");
+            prompt.append("Responda de forma completa e útil:");
+            
+            return callClaude(prompt.toString(), "Consulta com contexto completo");
+        } catch (Exception e) {
+            log.error("Erro ao responder consulta com contexto: {}", e.getMessage());
+            return responderConsulta(pergunta, usuario, investimentos);
+        }
+    }
+    
+    public String analisarCarteiraComHistorico(List<Investimento> investimentos, BigDecimal valorTotal, 
+                                              Usuario usuario, List<com.InvestIA.entity.HistoricoConversa> analisesPrevias) {
+        try {
+            StringBuilder prompt = new StringBuilder();
+            prompt.append("Nina, analise esta carteira considerando o histórico de análises anteriores:\n\n");
+            
+            prompt.append("CARTEIRA ATUAL:\n");
+            prompt.append("Usuário: ").append(usuario.getNome()).append("\n");
+            if (usuario.getPerfil() != null) {
+                prompt.append("Perfil: ").append(usuario.getPerfil().getTipoPerfil().getNome()).append("\n");
+                prompt.append("Tolerância ao risco: ").append(usuario.getPerfil().getToleranciaRisco()).append("/10\n");
+            }
+            prompt.append("Valor total: R$ ").append(valorTotal).append("\n");
+            prompt.append("Número de ativos: ").append(investimentos.size()).append("\n\n");
+            
+            prompt.append("Composição atual:\n");
+            investimentos.forEach(inv -> 
+                prompt.append("- ").append(inv.getAtivo().getTicker())
+                      .append(" (").append(inv.getAtivo().getTipoAtivo().getNome()).append(")")
+                      .append(": ").append(inv.getQuantidade()).append(" cotas")
+                      .append(", R$ ").append(inv.getValorTotalInvestido()).append("\n"));
+            
+            if (!analisesPrevias.isEmpty()) {
+                prompt.append("\nANÁLISES ANTERIORES:\n");
+                analisesPrevias.forEach(analise -> 
+                    prompt.append("- ").append(analise.getCriadoEm().toLocalDate())
+                          .append(": ").append(analise.getResposta().substring(0, Math.min(150, analise.getResposta().length())))
+                          .append("...\n"));
+            }
+            
+            prompt.append("\nFORNEÇA UMA ANÁLISE INCLUINDO:\n");
+            prompt.append("1. Avaliação da diversificação e exposição ao risco\n");
+            prompt.append("2. Comparação com análises anteriores (se disponível)\n");
+            prompt.append("3. Evolução positiva ou pontos de atenção\n");
+            prompt.append("4. Recomendações específicas de melhorias\n");
+            prompt.append("5. Estratégia para próximos passos\n\n");
+            prompt.append("Análise detalhada e personalizada:");
+            
+            return callClaude(prompt.toString(), "Análise de carteira com histórico");
+        } catch (Exception e) {
+            log.error("Erro na análise com histórico: {}", e.getMessage());
+            return analisarCarteira(investimentos, valorTotal);
+        }
+    }
+    
+    public String analisarCarteiraComEvolucao(List<Investimento> investimentos, String contextoEvolucao) {
+        try {
+            String prompt = buildEvolutionAnalysisPrompt(investimentos, contextoEvolucao);
+            return callClaude(prompt, "Análise com evolução");
+        } catch (Exception e) {
+            log.error("Erro na análise com evolução: {}", e.getMessage());
+            BigDecimal valorTotal = calcularValorTotalCarteira(investimentos);
+            return getDefaultPortfolioAnalysis(valorTotal);
+        }
+    }
+    
+    public String gerarRecomendacoesPersonalizadas(Usuario usuario, List<Investimento> investimentos, 
+                                                   String padroesBehavior) {
+        try {
+            String prompt = buildPersonalizedRecommendationPrompt(usuario, investimentos, padroesBehavior);
+            return callClaude(prompt, "Recomendações personalizadas");
+        } catch (Exception e) {
+            log.error("Erro nas recomendações personalizadas: {}", e.getMessage());
+            return getDefaultRecommendations(usuario);
+        }
+    }
+    
+    private String buildContextualizedPrompt(String pergunta, String contextoPersonalizado) {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("Nina, você é a assistente de investimentos da InvestIA. Responda esta pergunta considerando o contexto completo do usuário:\n\n");
+        prompt.append("PERGUNTA: ").append(pergunta).append("\n\n");
+        prompt.append("CONTEXTO DO USUÁRIO:\n").append(contextoPersonalizado).append("\n\n");
+        prompt.append("INSTRUÇÕES:\n");
+        prompt.append("1. Use o contexto fornecido para personalizar a resposta\n");
+        prompt.append("2. Seja específico e prático nas recomendações\n");
+        prompt.append("3. Considere o histórico de interações do usuário\n");
+        prompt.append("4. Use linguagem clara e educativa\n");
+        prompt.append("5. Foque em investimentos brasileiros (B3, Tesouro, etc.)\n\n");
+        prompt.append("Responda de forma personalizada e útil:");
+        return prompt.toString();
+    }
+    
+    private String buildEvolutionAnalysisPrompt(List<Investimento> investimentos, String contextoEvolucao) {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("Nina, analise esta carteira considerando sua evolução histórica:\n\n");
+        
+        BigDecimal valorTotal = calcularValorTotalCarteira(investimentos);
+        prompt.append("CARTEIRA ATUAL:\n");
+        prompt.append("Valor total: R$ ").append(valorTotal).append("\n");
+        prompt.append("Número de ativos: ").append(investimentos.size()).append("\n\n");
+        
+        prompt.append("Composição:\n");
+        investimentos.forEach(inv -> 
+            prompt.append("- ").append(inv.getAtivo().getTicker())
+                  .append(" (").append(inv.getAtivo().getTipoAtivo().getNome()).append(")")
+                  .append(": ").append(inv.getQuantidade()).append(" cotas")
+                  .append(", R$ ").append(inv.getValorTotalInvestido()).append("\n"));
+        
+        prompt.append("\nCONTEXTO DE EVOLUÇÃO:\n").append(contextoEvolucao).append("\n\n");
+        
+        prompt.append("ANÁLISE SOLICITADA:\n");
+        prompt.append("1. Compare com análises anteriores (se disponível)\n");
+        prompt.append("2. Identifique mudanças e tendências na carteira\n");
+        prompt.append("3. Avalie diversificação e exposição ao risco\n");
+        prompt.append("4. Sugira melhorias específicas\n");
+        prompt.append("5. Comente sobre a evolução do investidor\n\n");
+        prompt.append("Forneça uma análise detalhada e personalizada:");
+        
+        return prompt.toString();
+    }
+    
+    private String buildPersonalizedRecommendationPrompt(Usuario usuario, List<Investimento> investimentos, 
+                                                        String padroesBehavior) {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("Nina, gere recomendações personalizadas baseadas no comportamento do usuário:\n\n");
+        
+        prompt.append("PERFIL DO USUÁRIO:\n");
+        prompt.append("Nome: ").append(usuario.getNome()).append("\n");
+        if (usuario.getPerfil() != null) {
+            prompt.append("Perfil de risco: ").append(usuario.getPerfil().getTipoPerfil().getNome()).append("\n");
+            prompt.append("Experiência: ").append(usuario.getPerfil().getNivelExperiencia().getNome()).append("\n");
+            prompt.append("Tolerância ao risco: ").append(usuario.getPerfil().getToleranciaRisco()).append("/10\n");
+        }
+        
+        if (!investimentos.isEmpty()) {
+            BigDecimal valorTotal = calcularValorTotalCarteira(investimentos);
+            prompt.append("\nCARTEIRA ATUAL:\n");
+            prompt.append("Valor total: R$ ").append(valorTotal).append("\n");
+            prompt.append("Ativos na carteira:\n");
+            investimentos.forEach(inv -> 
+                prompt.append("- ").append(inv.getAtivo().getTicker())
+                      .append(": R$ ").append(inv.getValorTotalInvestido()).append("\n"));
+        } else {
+            prompt.append("\nCARTEIRA: Vazia - usuário iniciante\n");
+        }
+        
+        prompt.append("\nPADRÕES DE COMPORTAMENTO:\n").append(padroesBehavior).append("\n\n");
+        
+        prompt.append("RECOMENDAÇÕES SOLICITADAS:\n");
+        prompt.append("1. 3-5 recomendações específicas de ativos brasileiros\n");
+        prompt.append("2. Percentual sugerido para cada recomendação\n");
+        prompt.append("3. Justificativa baseada no perfil e comportamento\n");
+        prompt.append("4. Estratégia de implementação gradual\n");
+        prompt.append("5. Considere os padrões de uso identificados\n\n");
+        prompt.append("Gere recomendações personalizadas e práticas:");
+        
+        return prompt.toString();
+    }
+    
+    private BigDecimal calcularValorTotalCarteira(List<Investimento> investimentos) {
+        return investimentos.stream()
+                .map(inv -> inv.getValorAtual().multiply(BigDecimal.valueOf(inv.getQuantidade())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    
+
     private String buildPortfolioAnalysisPrompt(List<Investimento> investimentos, BigDecimal valorTotal) {
         StringBuilder prompt = new StringBuilder();
         prompt.append("Analise a seguinte carteira de investimentos:\n\n");
@@ -296,7 +498,7 @@ public class IAService {
                 ));
         
         composicaoPorTipo.forEach((tipo, valor) -> {
-            BigDecimal percentual = valor.divide(valorTotal, 4, BigDecimal.ROUND_HALF_UP)
+            BigDecimal percentual = valor.divide(valorTotal, 4, java.math.RoundingMode.HALF_UP)
                                         .multiply(BigDecimal.valueOf(100));
             prompt.append("- ").append(tipo).append(": R$ ").append(valor)
                   .append(" (").append(percentual).append("%)\n");
