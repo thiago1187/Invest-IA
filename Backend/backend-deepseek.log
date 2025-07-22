@@ -324,3 +324,1159 @@ Hibernate:
     where
         p1_0.usuario_id=?
 2025-07-22T00:22:41.726-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/e97cefca-59cb-4ac9-b3cd-0402a6b9da2d
+2025-07-22T00:51:21.819-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:21.819-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:21.824-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:21.843-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:21.848-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:21.852-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:27.791-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:27.795-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:27.804-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:34.777-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:34.777-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:34.781-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:34.794-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:34.799-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:34.804-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:43.778-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:43.778-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:43.780-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:43.780-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:43.785-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:43.786-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:48.775-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:48.775-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:48.780-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:48.780-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:53.773-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:53.773-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:53.773-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:53.773-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:53.776-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:53.776-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:53.781-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:53.781-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:53.783-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:51:53.783-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:51:53.786-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:51:53.786-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:04.776-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:04.776-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:04.778-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:04.778-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:52:04.784-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:04.784-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:12.781-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:12.781-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:12.785-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:12.785-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:52:12.795-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:12.795-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:17.778-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:17.778-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:52:17.790-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:17.790-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:43.782-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:43.782-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:43.785-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:43.785-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:52:43.790-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:43.790-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:52:48.775-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:48.775-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:52:48.780-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:52:48.780-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:58:50.216-03:00 DEBUG 74859 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:58:50.216-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:58:50.216-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:58:50.216-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:58:50.219-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:58:50.219-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:58:50.226-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T00:58:50.226-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:58:50.229-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:58:50.229-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:58:50.234-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8
+2025-07-22T00:58:50.234-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/79bd7f1d-86ad-474c-9c02-3cfed8f0e4a8/performance
+2025-07-22T01:11:14.038-03:00  WARN 74859 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m38s315ms).
