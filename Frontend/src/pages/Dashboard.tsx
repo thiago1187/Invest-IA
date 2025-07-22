@@ -321,11 +321,10 @@ export default function Dashboard() {
 
           {/* Tabs Content */}
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="overview">Visão Geral</TabsTrigger>
               <TabsTrigger value="performance">Performance</TabsTrigger>
               <TabsTrigger value="recommendations">Recomendações</TabsTrigger>
-              <TabsTrigger value="simulator">Simulador</TabsTrigger>
               <TabsTrigger value="alerts">Alertas</TabsTrigger>
             </TabsList>
 
@@ -693,82 +692,6 @@ export default function Dashboard() {
               </Card>
             </TabsContent>
 
-            {/* Simulador */}
-            <TabsContent value="simulator" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="bg-gradient-surface border-border/50">
-                  <CardHeader>
-                    <CardTitle>Simulador de Metas</CardTitle>
-                    <CardDescription>
-                      Calcule quanto investir para atingir seus objetivos
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Meta de Valor</label>
-                      <input 
-                        type="text" 
-                        placeholder="R$ 100.000" 
-                        className="w-full p-3 rounded-lg bg-background border border-border/50"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Prazo (anos)</label>
-                      <input 
-                        type="number" 
-                        placeholder="5" 
-                        className="w-full p-3 rounded-lg bg-background border border-border/50"
-                      />
-                    </div>
-                    <HeroButton className="w-full">Calcular</HeroButton>
-                    
-                    <div className="mt-4 p-4 bg-primary/10 rounded-lg">
-                      <p className="text-sm text-muted-foreground">Resultado do cálculo:</p>
-                      <p className="text-lg font-bold">R$ 1.200/mês</p>
-                      <p className="text-sm">Com rentabilidade média de 12% a.a.</p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-gradient-surface border-border/50">
-                  <CardHeader>
-                    <CardTitle>Simulador de Carteira</CardTitle>
-                    <CardDescription>
-                      Teste diferentes alocações de investimento
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span>Renda Fixa</span>
-                        <span>40%</span>
-                      </div>
-                      <Progress value={40} />
-                      
-                      <div className="flex justify-between items-center">
-                        <span>Ações</span>
-                        <span>35%</span>
-                      </div>
-                      <Progress value={35} />
-                      
-                      <div className="flex justify-between items-center">
-                        <span>FIIs</span>
-                        <span>25%</span>
-                      </div>
-                      <Progress value={25} />
-                    </div>
-                    
-                    <HeroButton className="w-full">Simular Resultado</HeroButton>
-                    
-                    <div className="mt-4 p-4 bg-success/10 rounded-lg">
-                      <p className="text-sm text-muted-foreground">Rentabilidade estimada:</p>
-                      <p className="text-lg font-bold text-success">+11.5% a.a.</p>
-                      <p className="text-sm">Risco: Moderado</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
 
             {/* Alertas */}
             <TabsContent value="alerts" className="space-y-6">

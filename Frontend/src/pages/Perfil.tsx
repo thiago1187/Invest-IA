@@ -51,6 +51,7 @@ export default function Perfil() {
     setShowAssessment(false)
   }
 
+
   const getProfileDescription = (profile: string) => {
     switch (profile) {
       case "conservador":
@@ -146,7 +147,7 @@ export default function Perfil() {
                           size="sm"
                           onClick={() => setShowAssessment(true)}
                         >
-                          Refazer Teste
+                          Refazer Questionário
                         </Button>
                       </div>
                     </CardContent>
@@ -264,7 +265,7 @@ export default function Perfil() {
                         onClick={() => setShowAssessment(true)}
                       >
                         <Brain className="mr-2 h-4 w-4" />
-                        Refazer Perfil
+                        Refazer Questionário
                       </Button>
                       <HeroButton 
                         className="w-full justify-start"

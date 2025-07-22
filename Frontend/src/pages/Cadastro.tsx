@@ -60,8 +60,9 @@ export default function Cadastro() {
       const success = await register(formData.nome, formData.email, formData.senha, formData.telefone);
       
       if (success) {
-        // Após o cadastro bem-sucedido, redirecionar para login
-        navigate("/login", { replace: true });
+        // Após o cadastro bem-sucedido, redirecionar para dashboard
+        navigate("/dashboard", { replace: true });
+        toast.success("Cadastro realizado! Complete seu perfil na aba Perfil para receber recomendações personalizadas.");
       }
     } catch (error) {
       console.error('Erro no cadastro:', error);
