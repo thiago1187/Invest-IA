@@ -59,6 +59,8 @@ src/
 ### Build and Development
 - **Build project**: `./mvnw clean compile`
 - **Run application**: `./mvnw spring-boot:run`
+- **Run with DeepSeek**: `./start-with-deepseek.sh` (Nina com IA real!)
+- **Alternative**: `source .env && ./mvnw spring-boot:run`
 - **Package application**: `./mvnw clean package`
 - **Clean build artifacts**: `./mvnw clean`
 

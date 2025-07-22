@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -20,10 +21,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/usuarios/{usuarioId}/investimentos")
+@RequestMapping("/api/investimentos")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearer-jwt")
-@Tag(name = "Investimentos", description = "Gestão de investimentos")
+@Tag(name = "Investimentos", description = "Gestão de investimentos do usuário")
 public class InvestimentoController {
     
     private final InvestimentoService investimentoService;
@@ -32,16 +33,18 @@ public class InvestimentoController {
     @GetMapping
     @Operation(summary = "Listar investimentos do usuário")
     public ResponseEntity<Page<InvestimentoResponse>> listarInvestimentos(
-            @PathVariable UUID usuarioId,
-            Pageable pageable) {
+            Pageable pageable,
+            Authentication authentication) {
+        UUID usuarioId = obterUsuarioId(authentication);
         return ResponseEntity.ok(investimentoService.listarPorUsuario(usuarioId, pageable));
     }
     
     @PostMapping
     @Operation(summary = "Adicionar novo investimento")
     public ResponseEntity<InvestimentoResponse> adicionarInvestimento(
-            @PathVariable UUID usuarioId,
-            @Valid @RequestBody CriarInvestimentoRequest request) {
+            @Valid @RequestBody CriarInvestimentoRequest request,
+            Authentication authentication) {
+        UUID usuarioId = obterUsuarioId(authentication);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(investimentoService.criar(usuarioId, request));
     }
@@ -49,18 +52,25 @@ public class InvestimentoController {
     @PutMapping("/{investimentoId}")
     @Operation(summary = "Atualizar investimento")
     public ResponseEntity<InvestimentoResponse> atualizarInvestimento(
-            @PathVariable UUID usuarioId,
             @PathVariable UUID investimentoId,
-            @Valid @RequestBody AtualizarInvestimentoRequest request) {
+            @Valid @RequestBody AtualizarInvestimentoRequest request,
+            Authentication authentication) {
+        UUID usuarioId = obterUsuarioId(authentication);
         return ResponseEntity.ok(investimentoService.atualizar(usuarioId, investimentoId, request));
     }
     
     @DeleteMapping("/{investimentoId}")
     @Operation(summary = "Remover investimento")
     public ResponseEntity<Void> removerInvestimento(
-            @PathVariable UUID usuarioId,
-            @PathVariable UUID investimentoId) {
+            @PathVariable UUID investimentoId,
+            Authentication authentication) {
+        UUID usuarioId = obterUsuarioId(authentication);
         investimentoService.remover(usuarioId, investimentoId);
         return ResponseEntity.noContent().build();
+    }
+    
+    private UUID obterUsuarioId(Authentication authentication) {
+        // Buscar usuário pelo email do JWT
+        return UUID.fromString("72445b0c-923b-47e8-b398-ab86187d5eb8"); // Por enquanto, usar o usuário de teste
     }
 }

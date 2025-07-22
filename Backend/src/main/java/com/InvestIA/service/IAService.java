@@ -25,14 +25,24 @@ import java.util.stream.Collectors;
 @Service
 public class IAService {
 
+    @Value("${claude.api.key}")
+    private String claudeApiKey;
+
+    @Value("${claude.api.url}")
+    private String claudeApiUrl;
+
+    @Value("${claude.api.model}")
+    private String claudeModel;
+
+    @Value("${claude.api.timeout}")
+    private long timeout;
+
+    // DeepSeek backup
     @Value("${deepseek.api.key}")
     private String deepseekApiKey;
 
     @Value("${deepseek.api.url}")
     private String deepseekApiUrl;
-
-    @Value("${deepseek.api.timeout}")
-    private long timeout;
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -45,7 +55,7 @@ public class IAService {
     public String analisarPerfil(TipoPerfil tipoPerfil, NivelExperiencia nivelExp, Map<Integer, String> respostas) {
         try {
             String prompt = buildPerfilAnalysisPrompt(tipoPerfil, nivelExp, respostas);
-            return callDeepSeek(prompt, "Análise de Perfil de Investidor");
+            return callClaude(prompt, "Análise de Perfil de Investidor");
         } catch (Exception e) {
             log.error("Erro ao analisar perfil: {}", e.getMessage());
             return getDefaultPerfilAnalysis(tipoPerfil, nivelExp);
@@ -55,7 +65,7 @@ public class IAService {
     public String gerarRecomendacoes(Usuario usuario, List<Investimento> investimentos, List<Ativo> ativosDisponiveis) {
         try {
             String prompt = buildRecommendationPrompt(usuario, investimentos, ativosDisponiveis);
-            return callDeepSeek(prompt, "Recomendações de Investimento");
+            return callClaude(prompt, "Recomendações de Investimento");
         } catch (Exception e) {
             log.error("Erro ao gerar recomendações: {}", e.getMessage());
             return getDefaultRecommendations(usuario);
@@ -65,7 +75,7 @@ public class IAService {
     public String analisarCarteira(List<Investimento> investimentos, BigDecimal valorTotal) {
         try {
             String prompt = buildPortfolioAnalysisPrompt(investimentos, valorTotal);
-            return callDeepSeek(prompt, "Análise de Carteira");
+            return callClaude(prompt, "Análise de Carteira");
         } catch (Exception e) {
             log.error("Erro ao analisar carteira: {}", e.getMessage());
             return getDefaultPortfolioAnalysis(valorTotal);
@@ -75,10 +85,65 @@ public class IAService {
     public String responderConsulta(String pergunta, Usuario usuario, List<Investimento> investimentos) {
         try {
             String prompt = buildConsultationPrompt(pergunta, usuario, investimentos);
-            return callDeepSeek(prompt, "Consulta sobre Investimentos");
+            return callClaude(prompt, "Consulta sobre Investimentos");
         } catch (Exception e) {
             log.error("Erro ao responder consulta: {}", e.getMessage());
             return "Desculpe, não consegui processar sua pergunta no momento. Tente novamente ou entre em contato com nosso suporte.";
+        }
+    }
+
+    private String callClaude(String prompt, String context) {
+        // Se não tiver chave configurada, tentar DeepSeek ou usar resposta padrão
+        if (claudeApiKey == null || claudeApiKey.equals("sk-placeholder-key")) {
+            log.info("Claude não configurado, tentando DeepSeek para: {}", context);
+            return callDeepSeek(prompt, context);
+        }
+        
+        try {
+            // Criar headers para Claude API
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("x-api-key", claudeApiKey);
+            headers.set("anthropic-version", "2023-06-01");
+
+            // Criar corpo da requisição para Claude
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("model", claudeModel);
+            requestBody.put("max_tokens", 1000);
+            requestBody.put("system", "Você é Nina, uma consultora financeira especializada em investimentos no Brasil. " +
+                "Forneça análises precisas, recomendações personalizadas e conselhos práticos. " +
+                "Use linguagem clara, amigável e profissional. Foque em investimentos brasileiros (B3, Tesouro, etc.).");
+            
+            List<Map<String, String>> messages = new ArrayList<>();
+            Map<String, String> userMessage = new HashMap<>();
+            userMessage.put("role", "user");
+            userMessage.put("content", prompt);
+            messages.add(userMessage);
+            
+            requestBody.put("messages", messages);
+
+            HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
+
+            // Fazer chamada para Claude
+            ResponseEntity<String> response = restTemplate.exchange(
+                claudeApiUrl, 
+                HttpMethod.POST, 
+                entity, 
+                String.class
+            );
+
+            // Parsear resposta do Claude
+            JsonNode responseJson = objectMapper.readTree(response.getBody());
+            String content = responseJson.path("content")
+                                      .get(0)
+                                      .path("text")
+                                      .asText();
+
+            log.info("Resposta do Claude para {}: {}", context, content.substring(0, Math.min(100, content.length())));
+            return content;
+        } catch (Exception e) {
+            log.error("Erro na chamada para Claude: {}, tentando DeepSeek", e.getMessage());
+            return callDeepSeek(prompt, context);
         }
     }
 

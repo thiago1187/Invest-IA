@@ -1,0 +1,326 @@
+🤖 Iniciando InvestIA com Nina DeepSeek...
+✅ Chave DeepSeek configurada: sk-af369ae...
+🚀 Iniciando servidor Spring Boot...
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.InvestIA:InvestIA >------------------------
+[INFO] Building InvestIA 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.3:run (default-cli) > test-compile @ InvestIA >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ InvestIA ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ InvestIA ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ InvestIA ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ InvestIA ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.3:run (default-cli) < test-compile @ InvestIA <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.3:run (default-cli) @ InvestIA ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.3)
+
+2025-07-22T00:20:34.546-03:00  INFO 74859 --- [InvestIA] [           main] com.InvestIA.InvestIaApplication         : Starting InvestIaApplication using Java 21.0.7 with PID 74859 (/Users/thiagoalves/Desktop/Invest-IA/Backend/target/classes started by thiagoalves in /Users/thiagoalves/Desktop/Invest-IA/Backend)
+2025-07-22T00:20:34.548-03:00  INFO 74859 --- [InvestIA] [           main] com.InvestIA.InvestIaApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-07-22T00:20:34.830-03:00  INFO 74859 --- [InvestIA] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-22T00:20:34.888-03:00  INFO 74859 --- [InvestIA] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 54 ms. Found 5 JPA repository interfaces.
+2025-07-22T00:20:35.098-03:00  INFO 74859 --- [InvestIA] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-22T00:20:35.103-03:00  INFO 74859 --- [InvestIA] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-22T00:20:35.103-03:00  INFO 74859 --- [InvestIA] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-22T00:20:35.121-03:00  INFO 74859 --- [InvestIA] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-22T00:20:35.122-03:00  INFO 74859 --- [InvestIA] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 561 ms
+2025-07-22T00:20:35.166-03:00  INFO 74859 --- [InvestIA] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-22T00:20:35.189-03:00  INFO 74859 --- [InvestIA] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-22T00:20:35.201-03:00  INFO 74859 --- [InvestIA] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-22T00:20:35.299-03:00  INFO 74859 --- [InvestIA] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-22T00:20:35.308-03:00  INFO 74859 --- [InvestIA] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-22T00:20:35.391-03:00  INFO 74859 --- [InvestIA] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/investia user=SA
+2025-07-22T00:20:35.392-03:00  INFO 74859 --- [InvestIA] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-22T00:20:35.401-03:00  WARN 74859 --- [InvestIA] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-22T00:20:35.408-03:00  INFO 74859 --- [InvestIA] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-22T00:20:35.780-03:00  INFO 74859 --- [InvestIA] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-22T00:20:35.802-03:00  INFO 74859 --- [InvestIA] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-22T00:20:35.947-03:00  INFO 74859 --- [InvestIA] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-07-22T00:20:35.947-03:00  WARN 74859 --- [InvestIA] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-07-22T00:20:36.042-03:00  WARN 74859 --- [InvestIA] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-22T00:20:36.130-03:00 DEBUG 74859 --- [InvestIA] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-22T00:20:36.277-03:00  INFO 74859 --- [InvestIA] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/investia'
+2025-07-22T00:20:36.314-03:00  INFO 74859 --- [InvestIA] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-07-22T00:20:36.319-03:00  INFO 74859 --- [InvestIA] [           main] com.InvestIA.InvestIaApplication         : Started InvestIaApplication in 1.91 seconds (process running for 2.041)
+2025-07-22T00:20:59.147-03:00  INFO 74859 --- [InvestIA] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-22T00:20:59.148-03:00  INFO 74859 --- [InvestIA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-07-22T00:20:59.148-03:00  INFO 74859 --- [InvestIA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-07-22T00:20:59.154-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/register
+2025-07-22T00:20:59.156-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-22T00:20:59.157-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/register
+Hibernate: 
+    select
+        u1_0.id 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    insert 
+    into
+        usuarios
+        (ativo, atualizado_em, criado_em, email, nome, senha, telefone, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2025-07-22T00:21:10.556-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/chat
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:21:10.600-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/chat
+2025-07-22T00:21:38.462-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing POST /api/chat/pergunta
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:21:38.466-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured POST /api/chat/pergunta
+2025-07-22T00:21:45.169-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/chat/pergunta
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:21:45.172-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/chat/pergunta
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.ativo_id,
+        i1_0.ativo_status,
+        i1_0.atualizado_em,
+        i1_0.criado_em,
+        i1_0.data_compra,
+        i1_0.quantidade,
+        i1_0.usuario_id,
+        i1_0.valor_atual,
+        i1_0.valor_medio_compra,
+        i1_0.valor_total_investido 
+    from
+        investimentos i1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=i1_0.usuario_id 
+    where
+        u1_0.id=? 
+        and i1_0.ativo_status
+2025-07-22T00:21:47.059-03:00 ERROR 74859 --- [InvestIA] [nio-8080-exec-4] com.InvestIA.service.IAService           : Erro na chamada para DeepSeek: 402 Payment Required on POST request for "https://api.deepseek.com/v1/chat/completions": "{"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}", usando fallback
+2025-07-22T00:22:41.721-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/e97cefca-59cb-4ac9-b3cd-0402a6b9da2d
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:22:41.726-03:00 DEBUG 74859 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/e97cefca-59cb-4ac9-b3cd-0402a6b9da2d

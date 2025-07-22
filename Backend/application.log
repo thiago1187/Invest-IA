@@ -1,0 +1,2403 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.InvestIA:InvestIA >------------------------
+[INFO] Building InvestIA 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.3:run (default-cli) > test-compile @ InvestIA >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ InvestIA ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ InvestIA ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ InvestIA ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ InvestIA ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug parameters release 17] to target/test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] <<< spring-boot:3.5.3:run (default-cli) < test-compile @ InvestIA <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.3:run (default-cli) @ InvestIA ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.3)
+
+2025-07-21T20:38:04.062-03:00  INFO 68508 --- [InvestIA] [           main] com.InvestIA.InvestIaApplication         : Starting InvestIaApplication using Java 21.0.7 with PID 68508 (/Users/thiagoalves/Desktop/Invest-IA/Backend/target/classes started by thiagoalves in /Users/thiagoalves/Desktop/Invest-IA/Backend)
+2025-07-21T20:38:04.062-03:00  INFO 68508 --- [InvestIA] [           main] com.InvestIA.InvestIaApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-07-21T20:38:04.339-03:00  INFO 68508 --- [InvestIA] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-21T20:38:04.397-03:00  INFO 68508 --- [InvestIA] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 5 JPA repository interfaces.
+2025-07-21T20:38:04.604-03:00  INFO 68508 --- [InvestIA] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-07-21T20:38:04.609-03:00  INFO 68508 --- [InvestIA] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-07-21T20:38:04.609-03:00  INFO 68508 --- [InvestIA] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-21T20:38:04.627-03:00  INFO 68508 --- [InvestIA] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-07-21T20:38:04.627-03:00  INFO 68508 --- [InvestIA] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 553 ms
+2025-07-21T20:38:04.670-03:00  INFO 68508 --- [InvestIA] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-21T20:38:04.694-03:00  INFO 68508 --- [InvestIA] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-21T20:38:04.705-03:00  INFO 68508 --- [InvestIA] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-07-21T20:38:04.788-03:00  INFO 68508 --- [InvestIA] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-21T20:38:04.798-03:00  INFO 68508 --- [InvestIA] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-07-21T20:38:04.879-03:00  INFO 68508 --- [InvestIA] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./data/investia user=SA
+2025-07-21T20:38:04.880-03:00  INFO 68508 --- [InvestIA] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-07-21T20:38:04.889-03:00  WARN 68508 --- [InvestIA] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-21T20:38:04.896-03:00  INFO 68508 --- [InvestIA] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-21T20:38:05.278-03:00  INFO 68508 --- [InvestIA] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-21T20:38:05.308-03:00  INFO 68508 --- [InvestIA] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-21T20:38:05.454-03:00  INFO 68508 --- [InvestIA] [           main] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-07-21T20:38:05.454-03:00  WARN 68508 --- [InvestIA] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-07-21T20:38:05.550-03:00  WARN 68508 --- [InvestIA] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-21T20:38:05.644-03:00 DEBUG 68508 --- [InvestIA] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-21T20:38:05.795-03:00  INFO 68508 --- [InvestIA] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./data/investia'
+2025-07-21T20:38:05.832-03:00  INFO 68508 --- [InvestIA] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-07-21T20:38:05.837-03:00  INFO 68508 --- [InvestIA] [           main] com.InvestIA.InvestIaApplication         : Started InvestIaApplication in 1.909 seconds (process running for 2.026)
+2025-07-21T20:38:21.833-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-21T20:38:21.833-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-07-21T20:38:21.834-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-07-21T20:38:21.840-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /actuator/health
+2025-07-21T20:38:21.843-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-21T20:38:21.844-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /actuator/health
+2025-07-21T20:40:01.557-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/simulado/perguntas
+2025-07-21T20:40:01.572-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/simulado/perguntas
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T20:40:01.685-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/simulado/perguntas
+2025-07-21T20:40:17.534-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/simulado/responder
+2025-07-21T20:40:17.538-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/simulado/responder
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T20:40:17.549-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/simulado/responder
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T20:40:17.598-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] com.InvestIA.service.IAService           : DeepSeek não configurado, usando resposta padrão para: Análise de Perfil de Investidor
+Hibernate: 
+    update
+        perfis 
+    set
+        atualizado_em=?,
+        criado_em=?,
+        horizonte_investimento=?,
+        nivel_experiencia=?,
+        pontuacao_simulado=?,
+        respostas_simulado=?,
+        tipo_perfil=?,
+        tolerancia_risco=?,
+        usuario_id=? 
+    where
+        id=?
+2025-07-21T20:43:42.430-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2025-07-21T20:43:42.431-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-21T20:43:42.431-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-07-21T20:43:42.595-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2025-07-21T20:43:42.608-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/investimentos
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T20:43:42.612-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/investimentos
+2025-07-21T20:43:42.618-03:00  INFO 68508 --- [InvestIA] [io-8080-exec-10] c.InvestIA.service.InvestimentoService   : Criando investimento para usuário 72445b0c-923b-47e8-b398-ab86187d5eb8: PETR4.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.ticker=?
+2025-07-21T20:43:42.628-03:00  INFO 68508 --- [InvestIA] [io-8080-exec-10] c.InvestIA.service.InvestimentoService   : Criando novo ativo: PETR4.SA
+2025-07-21T20:43:42.631-03:00  INFO 68508 --- [InvestIA] [io-8080-exec-10] c.InvestIA.service.InvestimentoService   : Investimento criado com ID: 8298ae7c-68fe-44e1-a65b-dbd87aa2af3d
+2025-07-21T20:43:42.633-03:00  INFO 68508 --- [InvestIA] [io-8080-exec-10] com.InvestIA.service.FinanceAPIService   : Buscando cotação de PETR4.SA na URL: https://query1.finance.yahoo.com/v8/finance/chart/PETR4.SA
+2025-07-21T20:43:43.064-03:00 ERROR 68508 --- [InvestIA] [io-8080-exec-10] com.InvestIA.service.FinanceAPIService   : Erro ao buscar cotação para PETR4.SA: 429 Too Many Requests on GET request for "https://query1.finance.yahoo.com/v8/finance/chart/PETR4.SA": "Edge: Too Many Requests"
+2025-07-21T20:43:43.064-03:00  INFO 68508 --- [InvestIA] [io-8080-exec-10] com.InvestIA.service.FinanceAPIService   : Usando dados simulados para PETR4.SA devido a rate limiting
+Hibernate: 
+    insert 
+    into
+        ativos
+        (criado_em, descricao, nome, preco_atual, risco, setor, simbolo, status, ticker, tipo_ativo, ultima_atualizacao, variacao_anual, variacao_diaria, variacao_mensal, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        investimentos
+        (ativo_id, ativo_status, atualizado_em, criado_em, data_compra, quantidade, usuario_id, valor_atual, valor_medio_compra, valor_total_investido, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-07-21T20:44:41.740-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2025-07-21T20:44:41.740-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-21T20:44:41.740-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-07-21T20:44:41.816-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2025-07-21T20:44:41.825-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/investimentos
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T20:44:41.827-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/investimentos
+2025-07-21T20:44:41.828-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-4] c.InvestIA.service.InvestimentoService   : Criando investimento para usuário 72445b0c-923b-47e8-b398-ab86187d5eb8: VALE3.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.ticker=?
+2025-07-21T20:44:41.829-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-4] c.InvestIA.service.InvestimentoService   : Criando novo ativo: VALE3.SA
+2025-07-21T20:44:41.829-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-4] c.InvestIA.service.InvestimentoService   : Investimento criado com ID: 4b1268cf-b856-44df-827f-0f6eab810fab
+2025-07-21T20:44:41.829-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-4] com.InvestIA.service.FinanceAPIService   : Buscando cotação de VALE3.SA na URL: https://query1.finance.yahoo.com/v8/finance/chart/VALE3.SA
+2025-07-21T20:44:42.181-03:00 ERROR 68508 --- [InvestIA] [nio-8080-exec-4] com.InvestIA.service.FinanceAPIService   : Erro ao buscar cotação para VALE3.SA: 429 Too Many Requests on GET request for "https://query1.finance.yahoo.com/v8/finance/chart/VALE3.SA": "Edge: Too Many Requests"
+2025-07-21T20:44:42.181-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-4] com.InvestIA.service.FinanceAPIService   : Usando dados simulados para VALE3.SA devido a rate limiting
+Hibernate: 
+    insert 
+    into
+        ativos
+        (criado_em, descricao, nome, preco_atual, risco, setor, simbolo, status, ticker, tipo_ativo, ultima_atualizacao, variacao_anual, variacao_diaria, variacao_mensal, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        investimentos
+        (ativo_id, ativo_status, atualizado_em, criado_em, data_compra, quantidade, usuario_id, valor_atual, valor_medio_compra, valor_total_investido, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-07-21T20:44:42.199-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/investimentos
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T20:44:42.203-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/investimentos
+2025-07-21T20:44:42.204-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] c.InvestIA.service.InvestimentoService   : Criando investimento para usuário 72445b0c-923b-47e8-b398-ab86187d5eb8: AAPL
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.ticker=?
+2025-07-21T20:44:42.205-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] c.InvestIA.service.InvestimentoService   : Criando novo ativo: AAPL
+2025-07-21T20:44:42.205-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] c.InvestIA.service.InvestimentoService   : Investimento criado com ID: 260a7c36-675d-40fb-a3be-bdd81177f4c2
+2025-07-21T20:44:42.205-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] com.InvestIA.service.FinanceAPIService   : Buscando cotação de AAPL na URL: https://query1.finance.yahoo.com/v8/finance/chart/AAPL
+2025-07-21T20:44:42.447-03:00 ERROR 68508 --- [InvestIA] [nio-8080-exec-6] com.InvestIA.service.FinanceAPIService   : Erro ao buscar cotação para AAPL: 429 Too Many Requests on GET request for "https://query1.finance.yahoo.com/v8/finance/chart/AAPL": "Edge: Too Many Requests"
+2025-07-21T20:44:42.447-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] com.InvestIA.service.FinanceAPIService   : Usando dados simulados para AAPL devido a rate limiting
+Hibernate: 
+    insert 
+    into
+        ativos
+        (criado_em, descricao, nome, preco_atual, risco, setor, simbolo, status, ticker, tipo_ativo, ultima_atualizacao, variacao_anual, variacao_diaria, variacao_mensal, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        investimentos
+        (ativo_id, ativo_status, atualizado_em, criado_em, data_compra, quantidade, usuario_id, valor_atual, valor_medio_compra, valor_total_investido, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-07-21T21:10:37.973-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m32s711ms).
+2025-07-21T21:14:15.966-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m37s994ms).
+2025-07-21T21:24:55.874-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m39s908ms).
+2025-07-21T21:30:29.757-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m33s882ms).
+2025-07-21T21:33:16.072-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m46s316ms).
+2025-07-21T21:38:49.372-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m33s300ms).
+2025-07-21T21:49:22.761-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m33s389ms).
+2025-07-21T21:54:54.266-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m31s505ms).
+2025-07-21T22:00:25.779-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m31s513ms).
+2025-07-21T22:05:59.083-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m33s304ms).
+2025-07-21T22:16:38.048-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m38s965ms).
+2025-07-21T22:22:08.686-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m30s638ms).
+2025-07-21T22:27:41.921-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m33s234ms).
+2025-07-21T22:33:12.645-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m30s725ms).
+2025-07-21T22:43:49.947-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m37s302ms).
+2025-07-21T22:49:23.206-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m33s259ms).
+2025-07-21T22:54:53.838-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m30s632ms).
+2025-07-21T23:00:30.060-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m36s222ms).
+2025-07-21T23:11:03.628-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m33s568ms).
+2025-07-21T23:20:25.509-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m21s881ms).
+2025-07-21T23:25:57.840-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m32s331ms).
+2025-07-21T23:31:28.474-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m30s634ms).
+2025-07-21T23:37:00.927-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m32s453ms).
+2025-07-21T23:42:32.450-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m31s523ms).
+2025-07-21T23:48:03.940-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m31s490ms).
+2025-07-21T23:49:46.699-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/auth/login
+2025-07-21T23:49:46.704-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2025-07-21T23:49:46.705-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-21T23:49:46.705-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-07-21T23:49:46.808-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to authenticate since password does not match stored value
+2025-07-21T23:49:46.808-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.s.authentication.ProviderManager     : Authentication failed with provider DaoAuthenticationProvider since Bad credentials
+2025-07-21T23:49:48.878-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2025-07-21T23:49:48.879-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-21T23:49:48.879-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-07-21T23:49:48.982-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2025-07-21T23:49:49.014-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:49:49.018-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:49:49.019-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:49:49.022-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:49:49.024-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:49:49.026-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:50:01.701-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/investimentos?page=0&size=20
+2025-07-21T23:50:01.701-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/investimentos?page=0&size=20
+2025-07-21T23:50:01.704-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/investimentos?page=0&size=20
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:01.712-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/investimentos?page=0&size=20
+2025-07-21T23:50:01.719-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-6] c.InvestIA.service.InvestimentoService   : Listando investimentos para usuário: 72445b0c-923b-47e8-b398-ab86187d5eb8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.ativo_id,
+        i1_0.ativo_status,
+        i1_0.atualizado_em,
+        i1_0.criado_em,
+        i1_0.data_compra,
+        i1_0.quantidade,
+        i1_0.usuario_id,
+        i1_0.valor_atual,
+        i1_0.valor_medio_compra,
+        i1_0.valor_total_investido 
+    from
+        investimentos i1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=i1_0.usuario_id 
+    where
+        u1_0.id=? 
+    order by
+        i1_0.criado_em desc 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+2025-07-21T23:50:01.743-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/investimentos?page=0&size=20
+2025-07-21T23:50:01.744-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/cotacao/PETR4.SA
+2025-07-21T23:50:01.745-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/PETR4.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:01.748-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/investimentos?page=0&size=20
+2025-07-21T23:50:01.748-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/PETR4.SA
+2025-07-21T23:50:01.748-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-7] c.InvestIA.service.InvestimentoService   : Listando investimentos para usuário: 72445b0c-923b-47e8-b398-ab86187d5eb8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.ativo_id,
+        i1_0.ativo_status,
+        i1_0.atualizado_em,
+        i1_0.criado_em,
+        i1_0.data_compra,
+        i1_0.quantidade,
+        i1_0.usuario_id,
+        i1_0.valor_atual,
+        i1_0.valor_medio_compra,
+        i1_0.valor_total_investido 
+    from
+        investimentos i1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=i1_0.usuario_id 
+    where
+        u1_0.id=? 
+    order by
+        i1_0.criado_em desc 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+2025-07-21T23:50:01.753-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-9] com.InvestIA.service.FinanceAPIService   : Buscando informações de PETR4.SA na URL: https://query1.finance.yahoo.com/v8/finance/chart/PETR4.SA?range=1d&interval=1d
+2025-07-21T23:50:02.120-03:00 ERROR 68508 --- [InvestIA] [nio-8080-exec-9] com.InvestIA.service.FinanceAPIService   : Erro ao buscar informações para PETR4.SA: 429 Too Many Requests on GET request for "https://query1.finance.yahoo.com/v8/finance/chart/PETR4.SA": "Edge: Too Many Requests"
+2025-07-21T23:50:02.121-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-9] com.InvestIA.service.FinanceAPIService   : Usando dados simulados para PETR4.SA devido a rate limiting
+2025-07-21T23:50:02.143-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/PETR4.SA
+2025-07-21T23:50:02.146-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/cotacao/VALE3.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:02.147-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:02.148-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/PETR4.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:02.151-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:02.151-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-1] com.InvestIA.service.FinanceAPIService   : Buscando informações de VALE3.SA na URL: https://query1.finance.yahoo.com/v8/finance/chart/VALE3.SA?range=1d&interval=1d
+2025-07-21T23:50:02.402-03:00 ERROR 68508 --- [InvestIA] [nio-8080-exec-1] com.InvestIA.service.FinanceAPIService   : Erro ao buscar informações para VALE3.SA: 429 Too Many Requests on GET request for "https://query1.finance.yahoo.com/v8/finance/chart/VALE3.SA": "Edge: Too Many Requests"
+2025-07-21T23:50:02.403-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-1] com.InvestIA.service.FinanceAPIService   : Usando dados simulados para VALE3.SA devido a rate limiting
+2025-07-21T23:50:02.411-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:02.411-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/cotacao/AAPL
+2025-07-21T23:50:02.414-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/AAPL
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:02.419-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:02.421-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/AAPL
+2025-07-21T23:50:02.422-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-5] com.InvestIA.service.FinanceAPIService   : Buscando informações de AAPL na URL: https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=1d&interval=1d
+2025-07-21T23:50:02.674-03:00 ERROR 68508 --- [InvestIA] [nio-8080-exec-5] com.InvestIA.service.FinanceAPIService   : Erro ao buscar informações para AAPL: 429 Too Many Requests on GET request for "https://query1.finance.yahoo.com/v8/finance/chart/AAPL": "Edge: Too Many Requests"
+2025-07-21T23:50:02.675-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-5] com.InvestIA.service.FinanceAPIService   : Usando dados simulados para AAPL devido a rate limiting
+2025-07-21T23:50:02.679-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/AAPL
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:02.689-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/AAPL
+2025-07-21T23:50:09.279-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/investimentos?page=0&size=20
+2025-07-21T23:50:09.279-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/investimentos?page=0&size=20
+2025-07-21T23:50:09.281-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/investimentos?page=0&size=20
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:09.288-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/investimentos?page=0&size=20
+2025-07-21T23:50:09.290-03:00  INFO 68508 --- [InvestIA] [io-8080-exec-10] c.InvestIA.service.InvestimentoService   : Listando investimentos para usuário: 72445b0c-923b-47e8-b398-ab86187d5eb8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.ativo_id,
+        i1_0.ativo_status,
+        i1_0.atualizado_em,
+        i1_0.criado_em,
+        i1_0.data_compra,
+        i1_0.quantidade,
+        i1_0.usuario_id,
+        i1_0.valor_atual,
+        i1_0.valor_medio_compra,
+        i1_0.valor_total_investido 
+    from
+        investimentos i1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=i1_0.usuario_id 
+    where
+        u1_0.id=? 
+    order by
+        i1_0.criado_em desc 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+2025-07-21T23:50:09.299-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/investimentos?page=0&size=20
+2025-07-21T23:50:09.300-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/cotacao/PETR4.SA
+2025-07-21T23:50:09.301-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/PETR4.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:09.303-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/investimentos?page=0&size=20
+2025-07-21T23:50:09.304-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/PETR4.SA
+2025-07-21T23:50:09.304-03:00  INFO 68508 --- [InvestIA] [nio-8080-exec-1] c.InvestIA.service.InvestimentoService   : Listando investimentos para usuário: 72445b0c-923b-47e8-b398-ab86187d5eb8
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    left join
+        perfis p1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.ativo_id,
+        i1_0.ativo_status,
+        i1_0.atualizado_em,
+        i1_0.criado_em,
+        i1_0.data_compra,
+        i1_0.quantidade,
+        i1_0.usuario_id,
+        i1_0.valor_atual,
+        i1_0.valor_medio_compra,
+        i1_0.valor_total_investido 
+    from
+        investimentos i1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=i1_0.usuario_id 
+    where
+        u1_0.id=? 
+    order by
+        i1_0.criado_em desc 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+2025-07-21T23:50:09.306-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/cotacao/VALE3.SA
+Hibernate: 
+    select
+        a1_0.id,
+        a1_0.criado_em,
+        a1_0.descricao,
+        a1_0.nome,
+        a1_0.preco_atual,
+        a1_0.risco,
+        a1_0.setor,
+        a1_0.simbolo,
+        a1_0.status,
+        a1_0.ticker,
+        a1_0.tipo_ativo,
+        a1_0.ultima_atualizacao,
+        a1_0.variacao_anual,
+        a1_0.variacao_diaria,
+        a1_0.variacao_mensal 
+    from
+        ativos a1_0 
+    where
+        a1_0.id=?
+2025-07-21T23:50:09.307-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/VALE3.SA
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+2025-07-21T23:50:09.309-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/PETR4.SA
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:09.311-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/PETR4.SA
+2025-07-21T23:50:09.311-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:09.313-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/cotacao/AAPL
+2025-07-21T23:50:09.313-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:09.314-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/AAPL
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:09.319-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/AAPL
+2025-07-21T23:50:09.319-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/VALE3.SA
+2025-07-21T23:50:09.322-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/cotacao/AAPL
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:09.325-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/cotacao/AAPL
+2025-07-21T23:50:12.518-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:50:12.518-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:50:12.520-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:12.527-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:50:12.530-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:12.534-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:50:16.625-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:16.632-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:50:16.636-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-21T23:50:16.642-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-21T23:59:56.567-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m22s585ms).
+2025-07-22T00:02:12.709-03:00  WARN 68508 --- [InvestIA] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m16s141ms).
+2025-07-22T00:04:23.156-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:23.156-03:00 DEBUG 68508 --- [InvestIA] [io-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:23.160-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:04:23.170-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:23.176-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:04:23.182-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:38.014-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:38.014-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:38.016-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:04:38.034-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+2025-07-22T00:04:38.037-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        usuarios u1_0 
+    where
+        u1_0.email=?
+Hibernate: 
+    select
+        p1_0.id,
+        p1_0.atualizado_em,
+        p1_0.criado_em,
+        p1_0.horizonte_investimento,
+        p1_0.nivel_experiencia,
+        p1_0.pontuacao_simulado,
+        p1_0.respostas_simulado,
+        p1_0.tipo_perfil,
+        p1_0.tolerancia_risco,
+        u1_0.id,
+        u1_0.ativo,
+        u1_0.atualizado_em,
+        u1_0.criado_em,
+        u1_0.email,
+        u1_0.nome,
+        u1_0.senha,
+        u1_0.telefone 
+    from
+        perfis p1_0 
+    left join
+        usuarios u1_0 
+            on u1_0.id=p1_0.usuario_id 
+    where
+        p1_0.usuario_id=?
+2025-07-22T00:04:38.040-03:00 DEBUG 68508 --- [InvestIA] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/dashboard/f65b08d7-e71b-4da3-baf6-8b88b81a2c24
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:33 h
+[INFO] Finished at: 2025-07-22T00:11:49-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.5.3:run (default-cli) on project InvestIA: Process terminated with exit code: 137 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
