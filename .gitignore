@@ -1,1 +1,12 @@
 .DS_Store
+
+# Environment variables
+.env
+Backend/.env
+
+# Logs
+*.log
+
+# Database files
+*.mv.db
+*.trace.db
