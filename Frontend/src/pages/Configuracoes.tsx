@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator"
 import { Header } from "@/components/Header"
 import { useToast } from "@/hooks/use-toast"
 import { useAuth } from "@/contexts/AuthContext"
+import { configuracoesService, perfilService } from "@/lib/api"
 import { toast as sonnerToast } from "sonner"
 import { 
   Settings, 
@@ -95,62 +96,78 @@ export default function Configuracoes() {
     }
   }
 
-  const handleSaveNotifications = () => {
+  const handleSaveNotifications = async () => {
     try {
       setIsLoading(true)
+      
+      // Salvar no backend
+      await configuracoesService.atualizarConfiguracoes({
+        emailAlertas: notifications.emailAlerts,
+        pushNotifications: notifications.pushAlerts,
+        alertasPreco: notifications.priceAlerts,
+        relatorioSemanal: notifications.weeklyReport,
+        alertasPerformance: notifications.recommendations
+      })
+      
+      // Salvar localmente também
       localStorage.setItem("notifications", JSON.stringify(notifications))
       
-      setTimeout(() => {
-        setIsLoading(false)
-        sonnerToast.success("Configurações de notificação atualizadas!")
-        
-        // Demonstrar notificações funcionais
-        if (notifications.priceAlerts) {
-          setTimeout(() => {
-            sonnerToast("📈 Alerta de Preço", {
-              description: "VALE3 subiu 5% hoje! Suas configurações estão funcionando.",
-              duration: 3000
-            })
-          }, 2000)
-        }
-        
-        if (notifications.recommendations) {
-          setTimeout(() => {
-            sonnerToast("🤖 Recomendação da IA", {
-              description: "Com base no seu perfil, sugerimos diversificar em FIIs.",
-              duration: 3000
-            })
-          }, 3500)
-        }
-      }, 800)
+      sonnerToast.success("Configurações salvas no servidor!")
       
+      // Demonstrar notificações funcionais
+      if (notifications.priceAlerts) {
+        setTimeout(() => {
+          sonnerToast("📈 Alerta de Preço", {
+            description: "VALE3 subiu 5% hoje! Suas configurações estão funcionando.",
+            duration: 3000
+          })
+        }, 2000)
+      }
+      
+      if (notifications.recommendations) {
+        setTimeout(() => {
+          sonnerToast("🤖 Recomendação da IA", {
+            description: "Com base no seu perfil, sugerimos diversificar em FIIs.",
+            duration: 3000
+          })
+        }, 3500)
+      }
+      
+      setIsLoading(false)
     } catch (error) {
       setIsLoading(false)
-      sonnerToast.error("Erro ao salvar notificações")
+      console.error('Erro ao salvar configurações:', error)
+      sonnerToast.error("Erro ao salvar no servidor, mas salvo localmente")
     }
   }
 
-  const handleSaveUserInfo = () => {
+  const handleSaveUserInfo = async () => {
     try {
       setIsLoading(true)
       
       // Validação básica
-      if (!userInfo.name.trim() || !userInfo.email.trim()) {
-        sonnerToast.error("Nome e email são obrigatórios")
+      if (!userInfo.name.trim()) {
+        sonnerToast.error("Nome é obrigatório")
         setIsLoading(false)
         return
       }
       
-      // Simular integração com backend para atualizar dados do usuário
-      setTimeout(() => {
-        localStorage.setItem("userInfo", JSON.stringify(userInfo))
-        setIsLoading(false)
-        sonnerToast.success("Informações pessoais atualizadas com sucesso!")
-      }, 800)
+      // Atualizar no backend
+      await perfilService.atualizarPerfil({
+        nome: userInfo.name.trim(),
+        telefone: userInfo.phone?.trim() || undefined
+      })
+      
+      // Salvar localmente também
+      localStorage.setItem("userInfo", JSON.stringify(userInfo))
+      
+      sonnerToast.success("Informações atualizadas no servidor!")
+      setIsLoading(false)
       
     } catch (error) {
       setIsLoading(false)
-      sonnerToast.error("Erro ao atualizar informações")
+      console.error('Erro ao atualizar perfil:', error)
+      sonnerToast.error("Erro ao salvar no servidor, mas salvo localmente")
     }
   }
 

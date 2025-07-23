@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
 import { ArrowLeft, ArrowRight, User, Shield, Zap, CheckCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { perfilService } from "@/lib/api"
 
 interface Question {
   id: number
@@ -102,6 +103,7 @@ export function ProfileAssessment({ onComplete, onCancel }: ProfileAssessmentPro
   const [answers, setAnswers] = useState<Record<number, string>>({})
   const [isComplete, setIsComplete] = useState(false)
   const [profile, setProfile] = useState<"conservador" | "moderado" | "agressivo" | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast()
 
   const progress = ((currentQuestion + 1) / questions.length) * 100
@@ -197,15 +199,69 @@ export function ProfileAssessment({ onComplete, onCancel }: ProfileAssessmentPro
     }
   }
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     if (profile) {
-      localStorage.setItem("userProfile", profile)
-      onComplete(profile)
-      
-      toast({
-        title: "Perfil atualizado com sucesso!",
-        description: "Seu perfil de investidor foi definido.",
-      })
+      try {
+        setIsLoading(true)
+        
+        // Mapear perfil para formato do backend
+        const perfilMapeado = {
+          conservador: "CONSERVADOR",
+          moderado: "MODERADO", 
+          agressivo: "AGRESSIVO"
+        }[profile] || "MODERADO"
+        
+        // Calcular nível de experiência baseado nas respostas
+        const experienciaResposta = answers[7] // Questão sobre experiência
+        const nivelExperiencia = {
+          "nenhuma": "INICIANTE",
+          "basica": "INICIANTE", 
+          "intermediaria": "INTERMEDIARIO",
+          "avancada": "AVANCADO"
+        }[experienciaResposta] || "INICIANTE"
+        
+        // Calcular tolerância ao risco (0-10)
+        const totalPoints = questions.reduce((sum, question) => {
+          const answer = answers[question.id]
+          const option = question.options.find(opt => opt.value === answer)
+          return sum + (option?.points || 0)
+        }, 0)
+        
+        const toleranciaRisco = Math.round((totalPoints / 21) * 10) // Normalizar para 0-10
+        
+        // Salvar no backend
+        await perfilService.salvarAvaliacao({
+          tipoPerfil: perfilMapeado,
+          nivelExperiencia: nivelExperiencia,
+          toleranciaRisco: toleranciaRisco,
+          respostasCompletas: answers
+        })
+        
+        // Salvar localmente também para compatibilidade
+        localStorage.setItem("userProfile", profile)
+        
+        onComplete(profile)
+        
+        toast({
+          title: "Perfil atualizado com sucesso!",
+          description: "Seu perfil de investidor foi definido no servidor.",
+        })
+        
+      } catch (error) {
+        console.error('Erro ao salvar avaliação no backend:', error)
+        
+        // Fallback: salvar apenas localmente
+        localStorage.setItem("userProfile", profile)
+        onComplete(profile)
+        
+        toast({
+          title: "Perfil salvo localmente",
+          description: "Não foi possível salvar no servidor, mas foi salvo localmente.",
+          variant: "destructive"
+        })
+      } finally {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -238,8 +294,8 @@ export function ProfileAssessment({ onComplete, onCancel }: ProfileAssessmentPro
             <Button variant="outline" onClick={onCancel}>
               Voltar
             </Button>
-            <HeroButton onClick={handleFinish}>
-              Confirmar Perfil
+            <HeroButton onClick={handleFinish} disabled={isLoading}>
+              {isLoading ? "Salvando..." : "Confirmar Perfil"}
             </HeroButton>
           </div>
         </CardContent>

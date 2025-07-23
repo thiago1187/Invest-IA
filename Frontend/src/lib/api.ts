@@ -212,10 +212,10 @@ export const authService = {
 
 export const simuladoService = {
   obterQuestoes: () => 
-    api.get<SimuladoQuestoes>('/simulado/perguntas'),
+    api.get<SimuladoQuestoes>('/descubra-perfil/perguntas'),
   
   processarRespostas: (data: SimuladoRespostas) => 
-    api.post<ResultadoSimulado>('/simulado/responder', data)
+    api.post<ResultadoSimulado>('/descubra-perfil/responder', data)
 };
 
 // Interfaces para performance detalhada
@@ -375,6 +375,34 @@ export interface YahooFinanceResponse {
   };
   status: string;
 }
+
+// Serviços de Perfil e Configurações
+export const perfilService = {
+  obterPerfil: () => 
+    api.get<Usuario>('/perfil'),
+  
+  atualizarPerfil: (data: { nome?: string; telefone?: string }) => 
+    api.put<Usuario>('/perfil', data),
+  
+  salvarAvaliacao: (data: { 
+    tipoPerfil: string; 
+    nivelExperiencia: string; 
+    toleranciaRisco: number;
+    respostasCompletas: Record<string, any>
+  }) => 
+    api.post<{ message: string }>('/perfil/avaliacao', data)
+};
+
+export const configuracoesService = {
+  obterConfiguracoes: () => 
+    api.get<Record<string, boolean>>('/configuracoes/notificacoes'),
+  
+  atualizarConfiguracoes: (data: Record<string, boolean>) => 
+    api.put<{ message: string }>('/configuracoes/notificacoes', data),
+  
+  testarNotificacao: () => 
+    api.post<{ message: string; tipo: string; timestamp: string }>('/configuracoes/testar-notificacao')
+};
 
 export const cotacaoService = {
   // Obter cotação via Yahoo Finance (dados reais)
