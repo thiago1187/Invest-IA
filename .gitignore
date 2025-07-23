@@ -10,3 +10,12 @@ Backend/.env
 # Database files
 *.mv.db
 *.trace.db
+
+# Logs
+*.log
+
+# Database files
+*.mv.db
+*.trace.db
+data/
+
