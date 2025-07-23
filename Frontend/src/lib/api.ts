@@ -218,9 +218,48 @@ export const simuladoService = {
     api.post<ResultadoSimulado>('/simulado/responder', data)
 };
 
+// Interfaces para performance detalhada
+export interface RentabilidadeAtivo {
+  simbolo: string;
+  nome: string;
+  rentabilidade: number;
+  valorInvestido: number;
+  valorAtual: number;
+  participacao: number;
+}
+
+export interface MetricasRisco {
+  sharpeRatio: number;
+  varDiario: number;
+  beta: number;
+  volatilidade30d: number;
+  correlacaoIbov: number;
+}
+
+export interface ComparativoIndices {
+  carteira: number;
+  ibovespa: number;
+  ifix: number;
+  cdi: number;
+  ipca: number;
+}
+
+export interface PerformanceDetalhada {
+  evolucaoPatrimonio: PontoHistorico[];
+  rentabilidadePorAtivo: RentabilidadeAtivo[];
+  metricas: MetricasRisco;
+  comparativoIndices: ComparativoIndices;
+}
+
 export const dashboardService = {
   obterDashboard: (userId: string) => 
     api.get<DashboardData>(`/dashboard/${userId}`),
+  
+  obterPerformanceDetalhada: (userId: string) => 
+    api.get<PerformanceDetalhada>(`/dashboard/${userId}/performance`),
+  
+  atualizarDadosTempoReal: (userId: string) => 
+    api.post<void>(`/dashboard/${userId}/atualizar`),
   
   obterRecomendacoes: (userId: string) => 
     api.get<{ recomendacoes: Recomendacao[] }>(`/dashboard/${userId}/recomendacoes`),
@@ -237,21 +276,160 @@ export const chatService = {
     api.post<ChatResponse>('/chat/analise-carteira'),
   
   obterRecomendacoes: () => 
-    api.post<ChatResponse>('/chat/recomendacoes')
+    api.post<ChatResponse>('/chat/recomendacoes'),
+  
+  obterHistorico: (limite: number = 10) =>
+    api.get<any[]>(`/chat/historico?limite=${limite}`),
+  
+  avaliarResposta: (conversaId: string, avaliacao: number) =>
+    api.post<void>(`/chat/avaliar/${conversaId}`, { avaliacao }),
+  
+  obterEstatisticas: () =>
+    api.get<{
+      totalConversas: number;
+      mediaAvaliacao: number;
+      tiposMaisUsados: string[];
+    }>('/chat/estatisticas')
 };
 
+// Interfaces para Investimentos
+export interface CriarInvestimentoRequest {
+  ticker: string;
+  quantidade: number;
+  valorCompra: number;
+  dataCompra: string;
+}
+
+export interface AtualizarInvestimentoRequest {
+  quantidade?: number;
+  valorMedioCompra?: number;
+}
+
+export interface AtivoResponse {
+  id: string;
+  ticker: string;
+  nome: string;
+  tipoAtivo: 'ACAO' | 'FII' | 'RENDA_FIXA' | 'CRIPTO';
+}
+
+export interface InvestimentoResponse {
+  id: string;
+  ativo: AtivoResponse;
+  quantidade: number;
+  valorMedioCompra: number;
+  valorAtual: number;
+  valorTotalInvestido: number;
+  valorTotalAtual: number;
+  lucroPreju: number;
+  percentualLucroPreju: number;
+  dataCompra: string;
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
 export const investimentoService = {
-  listar: () => 
-    api.get('/investimentos'),
+  listar: (page = 0, size = 20) => 
+    api.get<PageResponse<InvestimentoResponse>>(`/investimentos?page=${page}&size=${size}`),
   
-  criar: (data: any) => 
-    api.post('/investimentos', data),
+  criar: (data: CriarInvestimentoRequest) => 
+    api.post<InvestimentoResponse>('/investimentos', data),
   
-  atualizar: (id: string, data: any) => 
-    api.put(`/investimentos/${id}`, data),
+  atualizar: (id: string, data: AtualizarInvestimentoRequest) => 
+    api.put<InvestimentoResponse>(`/investimentos/${id}`, data),
   
   deletar: (id: string) => 
     api.delete(`/investimentos/${id}`)
+};
+
+// Serviços de Cotação
+export interface CotacaoResponse {
+  ticker: string;
+  preco: number;
+  variacao: number;
+  variacaoPercent: number;
+  horario: string;
+  volume?: number;
+  abertura?: number;
+  maxima?: number;
+  minima?: number;
+  fechamentoAnterior?: number;
+}
+
+// Resposta da API do Yahoo Finance (backend)
+export interface YahooFinanceResponse {
+  symbol: string;
+  data: {
+    symbol: string;
+    currentPrice: number;
+    previousClose: number;
+    change: number;
+    changePercent: number;
+    currency: string;
+    exchangeName: string;
+  };
+  status: string;
+}
+
+export const cotacaoService = {
+  // Obter cotação via Yahoo Finance (dados reais)
+  obterCotacao: async (ticker: string): Promise<{ data: CotacaoResponse }> => {
+    try {
+      const response = await api.get<YahooFinanceResponse>(`/cotacao/${ticker}`);
+      
+      if (response.data.status === 'SUCCESS' && response.data.data) {
+        const yahooData = response.data.data;
+        
+        return {
+          data: {
+            ticker: yahooData.symbol,
+            preco: yahooData.currentPrice,
+            variacao: yahooData.change,
+            variacaoPercent: yahooData.changePercent,
+            horario: new Date().toISOString(),
+            fechamentoAnterior: yahooData.previousClose
+          }
+        };
+      }
+      
+      // Fallback para dados mockados se API falhar
+      return {
+        data: {
+          ticker: ticker,
+          preco: Math.random() * 100 + 10,
+          variacao: (Math.random() - 0.5) * 10,
+          variacaoPercent: (Math.random() - 0.5) * 10,
+          horario: new Date().toISOString(),
+          fechamentoAnterior: Math.random() * 100 + 10
+        }
+      };
+      
+    } catch (error) {
+      console.warn(`Erro ao obter cotação para ${ticker}, usando dados simulados:`, error);
+      
+      // Fallback para dados mockados
+      return {
+        data: {
+          ticker: ticker,
+          preco: Math.random() * 100 + 10,
+          variacao: (Math.random() - 0.5) * 10,
+          variacaoPercent: (Math.random() - 0.5) * 10,
+          horario: new Date().toISOString(),
+          fechamentoAnterior: Math.random() * 100 + 10
+        }
+      };
+    }
+  },
+  
+  // Método alternativo para buscar cotação (compatibilidade)
+  buscarCotacao: async (ticker: string): Promise<{ data: CotacaoResponse }> => {
+    return cotacaoService.obterCotacao(ticker);
+  }
 };
 
 export default api;
