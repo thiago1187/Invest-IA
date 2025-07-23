@@ -636,7 +636,7 @@ export default function Investimentos() {
                       <div className="relative">
                         <Input
                           type="text"
-                          placeholder="Digite o código ou nome da ação..."
+                          placeholder="🔍 Digite o código ou nome da ação..."
                           value={investimentoSearch}
                           onChange={(e) => {
                             setInvestimentoSearch(e.target.value)
@@ -1071,7 +1071,7 @@ export default function Investimentos() {
                       <div className="relative">
                         <Input
                           type="text"
-                          placeholder="Digite o código ou nome da ação..."
+                          placeholder="🔍 Digite o código ou nome da ação..."
                           value={alertaSearch}
                           onChange={(e) => {
                             setAlertaSearch(e.target.value)
