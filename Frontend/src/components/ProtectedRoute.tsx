@@ -8,7 +8,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, needsProfileAssessment } = useAuth();
   const location = useLocation();
 
   // Mostrar loading enquanto verifica autenticação
@@ -36,7 +36,18 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     );
   }
 
-  // Renderizar o componente se autenticado
+  // Redirecionar para teste de perfil se necessário (exceto se já estiver na página do teste)
+  if (needsProfileAssessment && location.pathname !== '/descubra-perfil') {
+    return (
+      <Navigate 
+        to="/descubra-perfil" 
+        state={{ from: location }} 
+        replace 
+      />
+    );
+  }
+
+  // Renderizar o componente se autenticado e perfil ok
   return <>{children}</>;
 };
 

@@ -7,10 +7,12 @@ interface AuthContextType {
   token: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  needsProfileAssessment: boolean;
   login: (email: string, senha: string) => Promise<boolean>;
   register: (nome: string, email: string, senha: string, telefone?: string) => Promise<boolean>;
   logout: () => void;
   updateUser: (user: Usuario) => void;
+  markProfileAssessmentComplete: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,6 +35,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const isAuthenticated = !!user && !!token;
+  
+  // Verificar se usuário precisa fazer teste de perfil
+  const needsProfileAssessment = isAuthenticated && (!user?.perfil || !localStorage.getItem('profileAssessmentCompleted'));
 
   useEffect(() => {
     // Verificar se há token salvo no localStorage
@@ -173,6 +178,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem('userProfile');
     localStorage.removeItem('userInvestments');
     localStorage.removeItem('userNotifications');
+    localStorage.removeItem('profileAssessmentCompleted');
     
     toast.success('Logout realizado com sucesso!');
   };
@@ -182,15 +188,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 
+  const markProfileAssessmentComplete = () => {
+    localStorage.setItem('profileAssessmentCompleted', 'true');
+  };
+
   const value: AuthContextType = {
     user,
     token,
     isLoading,
     isAuthenticated,
+    needsProfileAssessment,
     login,
     register,
     logout,
     updateUser,
+    markProfileAssessmentComplete,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
