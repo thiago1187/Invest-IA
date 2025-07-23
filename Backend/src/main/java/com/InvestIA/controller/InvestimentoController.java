@@ -3,6 +3,7 @@ package com.InvestIA.controller;
 import com.InvestIA.dto.investimento.*;
 import com.InvestIA.service.InvestimentoService;
 import com.InvestIA.service.FinanceAPIService;
+import com.InvestIA.util.AuthenticationUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -70,7 +71,6 @@ public class InvestimentoController {
     }
     
     private UUID obterUsuarioId(Authentication authentication) {
-        // Buscar usuário pelo email do JWT
-        return UUID.fromString("72445b0c-923b-47e8-b398-ab86187d5eb8"); // Por enquanto, usar o usuário de teste
+        return AuthenticationUtils.obterUsuarioIdAutenticado(authentication);
     }
 }
