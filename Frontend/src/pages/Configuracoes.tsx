@@ -9,6 +9,8 @@ import { Switch } from "@/components/ui/switch"
 import { Separator } from "@/components/ui/separator"
 import { Header } from "@/components/Header"
 import { useToast } from "@/hooks/use-toast"
+import { useAuth } from "@/contexts/AuthContext"
+import { toast as sonnerToast } from "sonner"
 import { 
   Settings, 
   User, 
@@ -16,11 +18,16 @@ import {
   Shield, 
   Palette,
   Save,
-  Trash2
+  Trash2,
+  Calendar,
+  Clock
 } from "lucide-react"
 
 export default function Configuracoes() {
   const { toast } = useToast()
+  const { user, logout } = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
+  
   const [userProfile, setUserProfile] = useState<"conservador" | "moderado" | "agressivo">("moderado")
   const [notifications, setNotifications] = useState({
     recommendations: true,
@@ -30,40 +37,133 @@ export default function Configuracoes() {
   })
   
   const [userInfo, setUserInfo] = useState({
-    name: "João Silva",
-    email: "joao.silva@email.com",
-    phone: "(11) 99999-9999"
+    name: user?.nome || "",
+    email: user?.email || "",
+    phone: user?.telefone || ""
   })
 
   useEffect(() => {
+    // Carregar perfil de investidor salvo
     const savedProfile = localStorage.getItem("userProfile") as "conservador" | "moderado" | "agressivo"
     if (savedProfile) {
       setUserProfile(savedProfile)
     }
-  }, [])
+    
+    // Carregar configurações de notificação salvas
+    const savedNotifications = localStorage.getItem("notifications")
+    if (savedNotifications) {
+      setNotifications(JSON.parse(savedNotifications))
+    }
+    
+    // Atualizar informações do usuário se mudaram no contexto
+    if (user) {
+      setUserInfo({
+        name: user.nome || "",
+        email: user.email || "",
+        phone: user.telefone || ""
+      })
+    }
+  }, [user])
 
   const handleSaveProfile = () => {
-    localStorage.setItem("userProfile", userProfile)
-    toast({
-      title: "Perfil atualizado!",
-      description: "Suas configurações foram salvas com sucesso.",
-    })
+    try {
+      setIsLoading(true)
+      localStorage.setItem("userProfile", userProfile)
+      
+      // Simular integração com backend
+      setTimeout(() => {
+        setIsLoading(false)
+        sonnerToast.success("Perfil de investidor atualizado com sucesso!")
+        
+        // Mostrar notificação baseada no perfil escolhido
+        const profileMessages = {
+          conservador: "Suas recomendações agora priorizarão investimentos de baixo risco.",
+          moderado: "Suas recomendações terão um equilíbrio entre risco e rentabilidade.",
+          agressivo: "Suas recomendações focarão em maior rentabilidade com riscos elevados."
+        }
+        
+        setTimeout(() => {
+          sonnerToast.info(profileMessages[userProfile], {
+            duration: 4000
+          })
+        }, 1000)
+      }, 800)
+      
+    } catch (error) {
+      setIsLoading(false)
+      sonnerToast.error("Erro ao salvar perfil")
+    }
   }
 
   const handleSaveNotifications = () => {
-    localStorage.setItem("notifications", JSON.stringify(notifications))
-    toast({
-      title: "Configurações salvas!",
-      description: "Suas preferências de notificação foram atualizadas.",
-    })
+    try {
+      setIsLoading(true)
+      localStorage.setItem("notifications", JSON.stringify(notifications))
+      
+      setTimeout(() => {
+        setIsLoading(false)
+        sonnerToast.success("Configurações de notificação atualizadas!")
+        
+        // Demonstrar notificações funcionais
+        if (notifications.priceAlerts) {
+          setTimeout(() => {
+            sonnerToast("📈 Alerta de Preço", {
+              description: "VALE3 subiu 5% hoje! Suas configurações estão funcionando.",
+              duration: 3000
+            })
+          }, 2000)
+        }
+        
+        if (notifications.recommendations) {
+          setTimeout(() => {
+            sonnerToast("🤖 Recomendação da IA", {
+              description: "Com base no seu perfil, sugerimos diversificar em FIIs.",
+              duration: 3000
+            })
+          }, 3500)
+        }
+      }, 800)
+      
+    } catch (error) {
+      setIsLoading(false)
+      sonnerToast.error("Erro ao salvar notificações")
+    }
   }
 
   const handleSaveUserInfo = () => {
-    localStorage.setItem("userInfo", JSON.stringify(userInfo))
-    toast({
-      title: "Informações atualizadas!",
-      description: "Seus dados pessoais foram salvos.",
-    })
+    try {
+      setIsLoading(true)
+      
+      // Validação básica
+      if (!userInfo.name.trim() || !userInfo.email.trim()) {
+        sonnerToast.error("Nome e email são obrigatórios")
+        setIsLoading(false)
+        return
+      }
+      
+      // Simular integração com backend para atualizar dados do usuário
+      setTimeout(() => {
+        localStorage.setItem("userInfo", JSON.stringify(userInfo))
+        setIsLoading(false)
+        sonnerToast.success("Informações pessoais atualizadas com sucesso!")
+      }, 800)
+      
+    } catch (error) {
+      setIsLoading(false)
+      sonnerToast.error("Erro ao atualizar informações")
+    }
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <User className="h-16 w-16 text-muted-foreground mx-auto" />
+          <h2 className="text-xl font-semibold">Acesso Restrito</h2>
+          <p className="text-muted-foreground">Faça login para acessar as configurações</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -126,9 +226,9 @@ export default function Configuracoes() {
                     />
                   </div>
                   <div className="flex justify-end">
-                    <Button onClick={handleSaveUserInfo}>
+                    <Button onClick={handleSaveUserInfo} disabled={isLoading}>
                       <Save className="mr-2 h-4 w-4" />
-                      Salvar Informações
+                      {isLoading ? "Salvando..." : "Salvar Informações"}
                     </Button>
                   </div>
                 </CardContent>
@@ -176,9 +276,9 @@ export default function Configuracoes() {
                     ))}
                   </div>
                   <div className="flex justify-end">
-                    <HeroButton onClick={handleSaveProfile}>
+                    <HeroButton onClick={handleSaveProfile} disabled={isLoading}>
                       <Save className="mr-2 h-4 w-4" />
-                      Salvar Perfil
+                      {isLoading ? "Salvando..." : "Salvar Perfil"}
                     </HeroButton>
                   </div>
                 </CardContent>
@@ -218,9 +318,9 @@ export default function Configuracoes() {
                     ))}
                   </div>
                   <div className="flex justify-end">
-                    <Button onClick={handleSaveNotifications}>
+                    <Button onClick={handleSaveNotifications} disabled={isLoading}>
                       <Save className="mr-2 h-4 w-4" />
-                      Salvar Notificações
+                      {isLoading ? "Salvando..." : "Salvar Notificações"}
                     </Button>
                   </div>
                 </CardContent>
@@ -254,20 +354,40 @@ export default function Configuracoes() {
               {/* Informações da Conta */}
               <Card className="bg-gradient-surface border-border/50">
                 <CardHeader>
-                  <CardTitle>Informações da Conta</CardTitle>
+                  <CardTitle className="flex items-center space-x-2">
+                    <User className="h-4 w-4" />
+                    <span>Informações da Conta</span>
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Membro desde:</span>
-                    <span>Janeiro 2024</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground flex items-center">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      Membro desde:
+                    </span>
+                    <span>{user?.dataCriacao ? new Date(user.dataCriacao).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : 'Janeiro 2024'}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Último acesso:</span>
-                    <span>Hoje</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground flex items-center">
+                      <Clock className="h-3 w-3 mr-1" />
+                      Último acesso:
+                    </span>
+                    <span>{user?.ultimoAcesso ? new Date(user.ultimoAcesso).toLocaleDateString('pt-BR') : 'Hoje'}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Plano:</span>
-                    <span className="font-medium text-primary">Premium</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Status:</span>
+                    <span className="font-medium text-success">✓ Ativo</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Perfil atual:</span>
+                    <span className="font-medium text-primary capitalize">
+                      {userProfile}
+                    </span>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">ID do usuário:</span>
+                    <span className="text-xs font-mono">{user?.id?.slice(-8) || '••••••••'}</span>
                   </div>
                 </CardContent>
               </Card>
