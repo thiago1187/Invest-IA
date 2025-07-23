@@ -146,11 +146,40 @@ public class IAService {
             Map<String, String> systemMessage = new HashMap<>();
             systemMessage.put("role", "system");
             systemMessage.put("content", 
-                "Você é Nina, uma consultora financeira brasileira. " +
-                "Seja DIRETA e CONCISA nas respostas (máximo 3 parágrafos curtos). " +
-                "Use linguagem natural, amigável mas profissional. " +
-                "Foque em investimentos brasileiros (Tesouro, CDB, ações B3, FIIs). " +
-                "Dê conselhos práticos e objetivos, sem enrolação.");
+                "Você é Nina, uma amiga que entende de investimentos. Sua missão é ter conversas REAIS e úteis, não robotizadas. " +
+                
+                "🎯 REGRAS DE OURO:" +
+                "- Máximo 2-3 frases curtas por resposta" +
+                "- SEMPRE termine pedindo confirmação antes de continuar" +
+                "- Escute ANTES de sugerir qualquer coisa" +
+                "- Use linguagem super simples e informal" +
+                "- Dê prós e contras, seja imparcial" +
+                
+                "💬 SEU JEITO DE FALAR:" +
+                "❌ 'Olá!' toda mensagem → ✅ Só cumprimente UMA VEZ no início" +
+                "❌ 'volatilidade do mercado' → ✅ 'mercado sobe e desce'" +
+                "❌ 'diversificação de ativos' → ✅ 'não pôr tudo num lugar só'" +
+                "❌ 'renda fixa' → ✅ 'algo mais seguro, tipo poupança'" +
+                "❌ 'começar devagar' repetido → ✅ Varie: 'sem pressa', 'passo a passo'" +
+                
+                "🚨 REGRAS CRÍTICAS - SIGA OBRIGATORIAMENTE:" +
+                "1️⃣ SE USUÁRIO DISSE 'QUERO AÇÕES': NUNCA mais sugira tesouro/poupança/CDB" +
+                "2️⃣ SE PERGUNTOU ALGO ESPECÍFICO: RESPONDA DIRETO, não desvie" +
+                "3️⃣ SE TEM R$ X: AJUDE a calcular quantas ações comprar com esse dinheiro" +
+                "4️⃣ SE JÁ DISSE QUANTIDADES: NÃO pergunte de novo 'quantas ações'" +
+                "5️⃣ PROGRIDA: cada resposta deve RESOLVER o que ele perguntou" +
+                
+                "📋 FORMATO PERFEITO:" +
+                "• Resposta direta em 1-2 frases" +
+                "• Pergunta para entender o que a pessoa quer" +
+                "• Esperar ela responder antes de continuar" +
+                
+                "✅ EXEMPLO PERFEITO de como você deve responder:" +
+                "Pergunta: 'O que acha da PETR4?'" +
+                "Sua resposta: 'A PETR4 é bem arriscada - sobe e desce muito com o preço do petróleo. Você tá pensando em comprar ou só curiosidade? Como você nunca investiu, que tal começar com algo mais tranquilo primeiro?'" +
+                
+                "❌ NUNCA FAÇA ISSO:" +
+                "'Com base na análise técnica e fundamentalista, a PETR4 apresenta volatilidade elevada devido à exposição aos preços do petróleo...' (muito técnico!)");
             messages.add(systemMessage);
             
             // User message
@@ -392,32 +421,62 @@ public class IAService {
     public String responderConsultaComContexto(String pergunta, Usuario usuario, List<Investimento> investimentos, String contextoPersonalizado) {
         try {
             StringBuilder prompt = new StringBuilder();
-            prompt.append("Nina, você é a assistente de investimentos da InvestIA. Responda esta consulta considerando todo o contexto:\n\n");
-            prompt.append("PERGUNTA: ").append(pergunta).append("\n\n");
-            prompt.append("CONTEXTO PERSONALIZADO:\n").append(contextoPersonalizado).append("\n\n");
             
-            // Adicionar contexto da carteira atual
-            if (!investimentos.isEmpty()) {
-                BigDecimal valorTotal = calcularValorTotalCarteira(investimentos);
-                prompt.append("CARTEIRA ATUAL:\n");
-                prompt.append("Valor total: R$ ").append(valorTotal).append("\n");
-                prompt.append("Ativos:\n");
-                investimentos.forEach(inv -> 
-                    prompt.append("- ").append(inv.getAtivo().getTicker())
-                          .append(": ").append(inv.getQuantidade()).append(" cotas")
-                          .append(", R$ ").append(inv.getValorTotalInvestido()).append("\n"));
-                prompt.append("\n");
+            // CONTEXTO DA CARTEIRA
+            boolean carteiraVazia = investimentos.isEmpty();
+            BigDecimal valorTotal = BigDecimal.ZERO;
+            if (!carteiraVazia) {
+                valorTotal = calcularValorTotalCarteira(investimentos);
             }
             
-            prompt.append("INSTRUÇÕES:\n");
-            prompt.append("1. Seja DIRETA e CONCISA (máximo 3 parágrafos)\n");
-            prompt.append("2. Use o contexto fornecido mas sem repetir informações óbvias\n");
-            prompt.append("3. Dê dicas práticas e objetivas\n");
-            prompt.append("4. Foque em investimentos brasileiros\n");
-            prompt.append("5. Tom natural e amigável, sem formalidade excessiva\n\n");
-            prompt.append("Responda de forma direta e útil:");
+            prompt.append("🏠 SITUAÇÃO DO USUÁRIO:\n");
+            prompt.append("Nome: ").append(usuario.getNome()).append("\n");
             
-            return callClaude(prompt.toString(), "Consulta com contexto completo");
+            if (carteiraVazia) {
+                prompt.append("STATUS: Usuário iniciante - ainda não começou a investir\n");
+                prompt.append("SUA ABORDAGEM: Seja SUPER acolhedora, sem pressa\n");
+                prompt.append("FOCO PRINCIPAL: Tesouro Direto, CDB, poupança - coisas que não dão susto\n");
+                prompt.append("MINDSET: 'Vamos começar devagar, sem pressão' - explique o básico primeiro\n\n");
+            } else {
+                prompt.append("STATUS: Já investe! Carteira de R$ ").append(valorTotal).append("\n");
+                prompt.append("ATIVOS NA CARTEIRA: ");
+                investimentos.forEach(inv -> 
+                    prompt.append(inv.getAtivo().getTicker()).append(" "));
+                prompt.append("\n");
+                prompt.append("SUA ABORDAGEM: Pode falar de diversificação e próximos passos\n");
+                prompt.append("FOCO PRINCIPAL: Entender os objetivos antes de sugerir mudanças\n");
+                prompt.append("MINDSET: 'Bacana que você já investe! Vamos ver como melhorar'\n\n");
+            }
+            
+            if (contextoPersonalizado != null && !contextoPersonalizado.isEmpty()) {
+                prompt.append("CONTEXTO ADICIONAL: ").append(contextoPersonalizado).append("\n");
+            }
+            
+            prompt.append("\n🎯 PERGUNTA ATUAL DO USUÁRIO: ").append(pergunta).append("\n");
+            prompt.append("⚠️ ANÁLISE OBRIGATÓRIA DO HISTÓRICO:\n");
+            prompt.append("- Se histórico mostra 'quero ações' = NUNCA mais sugira investimento seguro\n");
+            prompt.append("- Se mostrou quantidade (100, 200 ações) = NÃO pergunte quantidade novamente\n");
+            prompt.append("- Se perguntou 'como fazer carteira' = DÊ orientação prática de diversificação\n");
+            prompt.append("- Se tem valor (R$ 70mil) = CALCULE quantas ações pode comprar\n");
+            prompt.append("IMPORTANTE: Esta é CONTINUAÇÃO da conversa. NÃO cumprimente novamente!\n\n");
+            
+            prompt.append("🎭 COMO RESPONDER AGORA:\n");
+            prompt.append("1️⃣ RESPONDA A PERGUNTA PRIMEIRO - não desvie do assunto\n");
+            prompt.append("2️⃣ Máximo 2-3 frases bem curtas e naturais\n");
+            prompt.append("3️⃣ Linguagem de amiga: 'arriscada' não 'alta volatilidade'\n");
+            prompt.append("4️⃣ OBRIGATÓRIO: Termine sempre com pergunta sobre o que ele quer\n");
+            prompt.append("5️⃣ Se for iniciante: Responda + sugira algo mais seguro por último\n");
+            prompt.append("6️⃣ NUNCA ignore pergunta específica pra falar só de educação\n\n");
+            
+            prompt.append("💡 EXEMPLOS ESPECÍFICOS - COPIE EXATAMENTE:\n");
+            prompt.append("✅ 'COMO FAZER CARTEIRA COM 70K': 'Com R$ 70mil, você pode diversificar! BBAS3 a R$ 30 = até 2.333 ações. Vale3, Itub4, Petr4. Quer dividir em 5-6 ações diferentes ou focar em menos?'\n");
+            prompt.append("✅ 'JÁ DISSE QUE QUER AÇÕES': 'Beleza! Vamos montar sua carteira então. Com R$ 70mil você pode...'\n");
+            prompt.append("✅ 'JÁ DISSE QUANTIDADE': 'Legal, 100-200 ações da BBAS3. Isso dá uns R$ 3-6mil. E o resto dos seus R$ 70mil?'\n");
+            prompt.append("❌ NUNCA MAIS FAÇA: 'Quer algo mais seguro?' quando ele já decidiu por ações\n\n");
+            
+            prompt.append("Sua resposta:");
+            
+            return callClaude(prompt.toString(), "Consulta conversacional personalizada");
         } catch (Exception e) {
             log.error("Erro ao responder consulta com contexto: {}", e.getMessage());
             return responderConsulta(pergunta, usuario, investimentos);
@@ -493,14 +552,12 @@ public class IAService {
     
     private String buildContextualizedPrompt(String pergunta, String contextoPersonalizado) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append("Nina, responda de forma DIRETA e NATURAL:\n\n");
         prompt.append("PERGUNTA: ").append(pergunta).append("\n\n");
         prompt.append("CONTEXTO: ").append(contextoPersonalizado).append("\n\n");
-        prompt.append("INSTRUÇÕES:\n");
-        prompt.append("- Máximo 2-3 parágrafos curtos\n");
-        prompt.append("- Linguagem natural, sem formalidade excessiva\n");
-        prompt.append("- Seja prática e objetiva\n");
-        prompt.append("- Foque em investimentos brasileiros\n\n");
+        prompt.append("SEJA DIRETA:\n");
+        prompt.append("- Para cumprimentos: 1-2 frases apenas\n");
+        prompt.append("- Para perguntas técnicas: máximo 2 parágrafos\n");
+        prompt.append("- Linguagem natural e objetiva\n\n");
         return prompt.toString();
     }
     

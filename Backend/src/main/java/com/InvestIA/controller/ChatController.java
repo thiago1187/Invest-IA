@@ -29,6 +29,39 @@ public class ChatController {
     private final UsuarioRepository usuarioRepository;
     private final InvestimentoRepository investimentoRepository;
 
+    // Endpoint de teste público para verificar se a Nina está funcionando
+    @PostMapping("/teste")
+    public ResponseEntity<ChatResponse> testarNina(@RequestBody ChatRequest request) {
+        try {
+            // Criar usuário fake para teste
+            Usuario usuarioTeste = Usuario.builder()
+                    .nome("Thiago")
+                    .email("teste@teste.com")
+                    .build();
+            
+            // Lista vazia de investimentos (usuário iniciante)
+            List<Investimento> investimentosVazios = List.of();
+            
+            String resposta = chatBotService.responderComContexto(
+                    request.getPergunta(), 
+                    usuarioTeste, 
+                    investimentosVazios
+            );
+            
+            return ResponseEntity.ok(ChatResponse.builder()
+                    .resposta(resposta)
+                    .sucesso(true)
+                    .build());
+                    
+        } catch (Exception e) {
+            return ResponseEntity.ok(ChatResponse.builder()
+                    .resposta("Erro no teste: " + e.getMessage())
+                    .sucesso(false)
+                    .erro(e.getMessage())
+                    .build());
+        }
+    }
+
     @PostMapping("/pergunta")
     public ResponseEntity<ChatResponse> fazerPergunta(
             @RequestBody ChatRequest request,

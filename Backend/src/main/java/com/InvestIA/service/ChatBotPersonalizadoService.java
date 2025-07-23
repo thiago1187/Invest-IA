@@ -37,8 +37,8 @@ public class ChatBotPersonalizadoService {
             // 2. Construir contexto personalizado
             String contextoPersonalizado = construirContextoPersonalizado(usuario, investimentos, historicoRecente);
             
-            // 3. Gerar resposta com IA considerando o contexto
-            String resposta = iaService.responderComContextoPersonalizado(pergunta, contextoPersonalizado);
+            // 3. Gerar resposta com IA considerando o contexto (usando o método correto com novo prompt)
+            String resposta = iaService.responderConsultaComContexto(pergunta, usuario, investimentos, contextoPersonalizado);
             
             // 4. Salvar conversa no histórico
             salvarConversaHistorico(pergunta, resposta, usuario, investimentos, 
@@ -166,12 +166,17 @@ public class ChatBotPersonalizadoService {
                             .append("\n"));
         }
         
-        // Histórico recente de perguntas
+        // Histórico recente para continuidade
         if (!historicoRecente.isEmpty()) {
-            contexto.append("\nTÓPICOS RECENTES DE INTERESSE:\n");
+            contexto.append("\nÚLTIMAS MENSAGENS DA CONVERSA:\n");
             historicoRecente.stream()
-                    .limit(5)
-                    .forEach(h -> contexto.append("- ").append(h.getPergunta()).append("\n"));
+                    .limit(3)
+                    .forEach(h -> {
+                        contexto.append("Usuário: ").append(h.getPergunta()).append("\n");
+                        contexto.append("Nina: ").append(h.getResposta().substring(0, Math.min(100, h.getResposta().length()))).append("...\n");
+                        contexto.append("---\n");
+                    });
+            contexto.append("LEMBRE-SE: Continue naturalmente a partir daí!\n");
         }
         
         return contexto.toString();

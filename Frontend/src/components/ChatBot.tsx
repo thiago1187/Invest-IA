@@ -47,15 +47,15 @@ interface ChatBotProps {
 
 const ninaPersonality = {
   conservador: {
-    greeting: "Olá! Sou a Nina, sua assistente de investimentos. Vou te ajudar com estratégias seguras e estáveis. Como posso te ajudar hoje?",
+    greeting: "Oi! Sou a Nina, sua assistente de investimentos. 😊\n\nVocê já investe alguma coisa ou está começando do zero? Quer que eu te mostre algumas opções seguras pra começar?",
     tone: "calma e reasseguradora"
   },
   moderado: {
-    greeting: "Oi! Nina aqui! 😊 Estou aqui para te ajudar a equilibrar seus investimentos. Que tal explorarmos algumas oportunidades?",
+    greeting: "Oi! Nina aqui! 😊\n\nConta pra mim: você já tem alguns investimentos ou está começando agora? Te interessa saber sobre opções que equilibram segurança e crescimento?",
     tone: "equilibrada e amigável"
   },
   agressivo: {
-    greeting: "E aí! Nina na área! 🚀 Pronto para domar o mercado? Vamos conversar sobre oportunidades ousadas!",
+    greeting: "E aí! Nina na área! 🚀\n\nVocê já investe ou quer começar com tudo? Topa conhecer algumas oportunidades que podem render mais (mas com mais riscos também)?",
     tone: "ousada e energética"
   }
 }
