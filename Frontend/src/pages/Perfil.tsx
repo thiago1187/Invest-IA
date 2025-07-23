@@ -8,6 +8,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Header } from "@/components/Header"
 import { ProfileAssessment } from "@/components/ProfileAssessment"
+import { useAuth } from "@/contexts/AuthContext"
+import { investimentoService, InvestimentoResponse } from "@/lib/api"
 import { 
   User, 
   Calendar, 
@@ -16,27 +18,35 @@ import {
   Brain, 
   Edit,
   CheckCircle,
-  FileText
+  FileText,
+  DollarSign,
+  PieChart,
+  Activity
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
 export default function Perfil() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [userProfile, setUserProfile] = useState<"conservador" | "moderado" | "agressivo">("moderado")
   const [showAssessment, setShowAssessment] = useState(false)
+  const [investimentos, setInvestimentos] = useState<InvestimentoResponse[]>([])
+  const [isLoading, setIsLoading] = useState(true)
   
-  // Dados simulados do perfil
+  // Dados reais do usuário
   const userData = {
-    name: "João Silva",
-    email: "joao.silva@email.com",
-    joinDate: "Janeiro 2024",
-    totalInvestments: "R$ 62.450",
-    monthlyGoal: "R$ 2.000",
-    currentProgress: 75,
+    name: user?.nome || "Usuário",
+    email: user?.email || "usuario@investia.com",
+    joinDate: user?.dataCriacao ? new Date(user.dataCriacao).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }) : "Janeiro 2024",
+    totalInvestments: investimentos.reduce((sum, inv) => sum + inv.valorTotalAtual, 0),
+    totalInvested: investimentos.reduce((sum, inv) => sum + inv.valorTotalInvestido, 0),
+    totalProfit: investimentos.reduce((sum, inv) => sum + inv.lucroPreju, 0),
+    monthlyGoal: parseFloat(localStorage.getItem("monthlyInvestmentGoal") || "2000"),
+    currentProgress: 0, // Will be calculated
     riskTolerance: userProfile,
-    completedAssessments: 1,
-    totalRecommendations: 12,
-    followedRecommendations: 8
+    totalAssets: investimentos.length,
+    totalRecommendations: parseInt(localStorage.getItem("totalRecommendations") || "12"),
+    followedRecommendations: parseInt(localStorage.getItem("followedRecommendations") || "8")
   }
 
   useEffect(() => {
@@ -44,11 +54,55 @@ export default function Perfil() {
     if (savedProfile) {
       setUserProfile(savedProfile)
     }
+    
+    carregarInvestimentos()
   }, [])
+
+  const carregarInvestimentos = async () => {
+    try {
+      setIsLoading(true)
+      const response = await investimentoService.listar()
+      setInvestimentos(response.data.content)
+    } catch (error) {
+      console.error('Erro ao carregar investimentos:', error)
+      setInvestimentos([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleAssessmentComplete = (newProfile: "conservador" | "moderado" | "agressivo") => {
     setUserProfile(newProfile)
     setShowAssessment(false)
+  }
+
+  // Calcular progresso mensal baseado em investimentos do mês atual
+  const calculateMonthlyProgress = () => {
+    const currentMonth = new Date().getMonth()
+    const currentYear = new Date().getFullYear()
+    
+    const monthlyInvestments = investimentos.filter(inv => {
+      const investDate = new Date(inv.dataUltimaAtualizacao || inv.dataCompra || Date.now())
+      return investDate.getMonth() === currentMonth && investDate.getFullYear() === currentYear
+    })
+    
+    const monthlyTotal = monthlyInvestments.reduce((sum, inv) => sum + inv.valorTotalInvestido, 0)
+    return userData.monthlyGoal > 0 ? Math.min((monthlyTotal / userData.monthlyGoal) * 100, 100) : 0
+  }
+
+  // Atualizar progresso mensal
+  userData.currentProgress = calculateMonthlyProgress()
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <User className="h-16 w-16 text-muted-foreground mx-auto" />
+          <h2 className="text-xl font-semibold">Acesso Restrito</h2>
+          <p className="text-muted-foreground">Faça login para acessar seu perfil</p>
+        </div>
+      </div>
+    )
   }
 
 
@@ -165,52 +219,66 @@ export default function Perfil() {
                       <div className="space-y-2">
                         <div className="flex justify-between text-sm">
                           <span>Meta Mensal de Investimento</span>
-                          <span className="font-semibold">{userData.monthlyGoal}</span>
+                          <span className="font-semibold">
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(userData.monthlyGoal)}
+                          </span>
                         </div>
                         <Progress value={userData.currentProgress} className="h-2" />
                         <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>{userData.currentProgress}% atingido este mês</span>
-                          <span>R$ {(parseFloat(userData.monthlyGoal.replace("R$ ", "").replace(".", "")) * userData.currentProgress / 100).toLocaleString('pt-BR')} investidos</span>
+                          <span>{userData.currentProgress.toFixed(1)}% atingido este mês</span>
+                          <span>
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format((userData.monthlyGoal * userData.currentProgress / 100))} investidos
+                          </span>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  {/* Histórico de Recomendações */}
+                  {/* Estatísticas da Carteira */}
                   <Card className="bg-gradient-surface border-border/50">
                     <CardHeader>
                       <CardTitle className="flex items-center space-x-2">
-                        <CheckCircle className="h-5 w-5" />
-                        <span>Histórico de Recomendações</span>
+                        <Activity className="h-5 w-5" />
+                        <span>Estatísticas da Carteira</span>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-primary">
-                            {userData.totalRecommendations}
+                      {isLoading ? (
+                        <div className="space-y-3">
+                          <div className="h-8 bg-muted/50 rounded animate-pulse" />
+                          <div className="h-8 bg-muted/50 rounded animate-pulse" />
+                          <div className="h-4 bg-muted/50 rounded animate-pulse" />
+                        </div>
+                      ) : (
+                        <>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="text-center">
+                              <div className="text-2xl font-bold text-primary">
+                                {userData.totalAssets}
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                Ativos em Carteira
+                              </p>
+                            </div>
+                            <div className="text-center">
+                              <div className={`text-2xl font-bold ${userData.totalProfit >= 0 ? 'text-success' : 'text-destructive'}`}>
+                                {userData.totalInvested > 0 ? ((userData.totalProfit / userData.totalInvested) * 100).toFixed(1) : '0.0'}%
+                              </div>
+                              <p className="text-sm text-muted-foreground">
+                                Rentabilidade Total
+                              </p>
+                            </div>
                           </div>
-                          <p className="text-sm text-muted-foreground">
-                            Recomendações Recebidas
-                          </p>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-success">
-                            {userData.followedRecommendations}
+                          <div className="mt-4 pt-4 border-t">
+                            <div className="flex justify-between text-sm">
+                              <span>Diversificação</span>
+                              <span className="font-semibold text-primary">
+                                {userData.totalAssets > 5 ? 'Boa' : userData.totalAssets > 2 ? 'Moderada' : 'Baixa'}
+                              </span>
+                            </div>
                           </div>
-                          <p className="text-sm text-muted-foreground">
-                            Recomendações Seguidas
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mt-4 pt-4 border-t">
-                        <div className="flex justify-between text-sm">
-                          <span>Taxa de Adesão</span>
-                          <span className="font-semibold text-success">
-                            {Math.round((userData.followedRecommendations / userData.totalRecommendations) * 100)}%
-                          </span>
-                        </div>
-                      </div>
+                        </>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -228,12 +296,26 @@ export default function Perfil() {
                     <CardContent className="space-y-4">
                       <div className="space-y-3">
                         <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Patrimônio Total</span>
-                          <span className="font-semibold">{userData.totalInvestments}</span>
+                          <span className="text-sm text-muted-foreground">Patrimônio Atual</span>
+                          <span className="font-semibold">
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(userData.totalInvestments)}
+                          </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Meta Mensal</span>
-                          <span className="font-semibold">{userData.monthlyGoal}</span>
+                          <span className="text-sm text-muted-foreground">Total Investido</span>
+                          <span className="font-semibold">
+                            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(userData.totalInvested)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Lucro/Prejuízo</span>
+                          <span className={`font-semibold ${userData.totalProfit >= 0 ? 'text-success' : 'text-destructive'}`}>
+                            {userData.totalProfit >= 0 ? '+' : ''}{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(userData.totalProfit)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Ativos na Carteira</span>
+                          <span className="font-semibold">{userData.totalAssets}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Perfil</span>
