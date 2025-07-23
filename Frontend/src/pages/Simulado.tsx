@@ -16,6 +16,7 @@ import {
   BarChart3,
   Coins
 } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 
 interface ResultadoSimulacao {
@@ -37,12 +38,16 @@ export default function Simulado() {
   const [valorMeta, setValorMeta] = useState("")
   const [valorMensal1, setValorMensal1] = useState("")
   const [taxaJuros1, setTaxaJuros1] = useState("12")
+  const [comAporteInicial1, setComAporteInicial1] = useState(false)
+  const [aporteInicial1, setAporteInicial1] = useState("")
   const [resultado1, setResultado1] = useState<ResultadoSimulacao | null>(null)
   
   // Estados para Simulador 2: Quanto investir mensalmente
   const [valorMeta2, setValorMeta2] = useState("")
   const [tempoMeta, setTempoMeta] = useState("")
   const [taxaJuros2, setTaxaJuros2] = useState("12")
+  const [comAporteInicial2, setComAporteInicial2] = useState(false)
+  const [aporteInicial2, setAporteInicial2] = useState("")
   const [resultado2, setResultado2] = useState<ResultadoSimulacao | null>(null)
   
   // Estados para Simulador 3: Aporte inicial + mensal
@@ -73,34 +78,87 @@ export default function Simulado() {
       return
     }
     
+    if (comAporteInicial1 && !aporteInicial1) {
+      toast.error("Preencha o valor do aporte inicial")
+      return
+    }
+    
     const meta = parseFloat(valorMeta.replace(/[^\d]/g, ''))
     const mensal = parseFloat(valorMensal1.replace(/[^\d]/g, ''))
+    const inicial = comAporteInicial1 ? parseFloat(aporteInicial1.replace(/[^\d]/g, '')) : 0
     const taxa = parseFloat(taxaJuros1) / 100 / 12 // Taxa mensal
     
-    if (meta <= 0 || mensal <= 0 || taxa <= 0) {
+    if (meta <= 0 || mensal <= 0 || taxa <= 0 || (comAporteInicial1 && inicial < 0)) {
       toast.error("Valores devem ser positivos")
       return
     }
     
-    // Fórmula de juros compostos para anuidades
-    // FV = PMT * (((1 + r)^n - 1) / r)
-    // Resolvendo para n: n = ln(1 + (FV * r) / PMT) / ln(1 + r)
+    // Ajustar meta considerando aporte inicial
+    const metaAjustada = meta - inicial
     
-    const meses = Math.log(1 + (meta * taxa) / mensal) / Math.log(1 + taxa)
+    if (metaAjustada <= 0) {
+      // Se aporte inicial já cobre a meta
+      setResultado1({
+        tempoParaMeta: 0,
+        valorFinal: inicial,
+        totalInvestido: inicial,
+        rendimentoTotal: 0,
+        valorMensal: mensal,
+        detalhamento: [{
+          ano: 1,
+          valorInvestido: inicial,
+          rendimento: 0,
+          saldoTotal: inicial
+        }]
+      })
+      return
+    }
+    
+    // Fórmula com aporte inicial: FV = PV*(1+r)^n + PMT*(((1+r)^n - 1)/r)
+    // Resolvendo para n quando temos PV (aporte inicial)
+    let meses = 0
+    if (inicial > 0) {
+      // Método iterativo para encontrar n quando há aporte inicial
+      for (let n = 1; n <= 1200; n++) { // máximo 100 anos
+        const valorFuturoInicial = inicial * Math.pow(1 + taxa, n)
+        const valorFuturoMensal = mensal * (Math.pow(1 + taxa, n) - 1) / taxa
+        const valorTotal = valorFuturoInicial + valorFuturoMensal
+        
+        if (valorTotal >= meta) {
+          meses = n
+          break
+        }
+      }
+    } else {
+      // Sem aporte inicial, usar fórmula tradicional
+      meses = Math.log(1 + (meta * taxa) / mensal) / Math.log(1 + taxa)
+    }
+    
+    if (meses === 0) {
+      toast.error("Não foi possível calcular - verifique os valores inseridos")
+      return
+    }
+    
     const anos = Math.ceil(meses / 12)
     
-    // Calcular detalhamento ano a ano
+    // Calcular detalhamento ano a ano usando simulação mês a mês precisa
     const detalhamento = []
-    let saldoAcumulado = 0
-    let totalInvestidoAcumulado = 0
+    let saldoAcumulado = inicial
+    let totalInvestidoAcumulado = inicial
+    let mesAtual = 0
     
     for (let ano = 1; ano <= anos; ano++) {
-      const mesesNoAno = Math.min(12, meses - ((ano - 1) * 12))
-      let saldoInicialAno = saldoAcumulado
+      const mesesNoAno = Math.min(12, meses - mesAtual)
       
       for (let mes = 1; mes <= mesesNoAno; mes++) {
-        saldoAcumulado = (saldoAcumulado + mensal) * (1 + taxa)
+        // Aplicar juros no saldo atual
+        saldoAcumulado = saldoAcumulado * (1 + taxa)
+        // Adicionar aporte mensal
+        saldoAcumulado += mensal
         totalInvestidoAcumulado += mensal
+        mesAtual++
+        
+        if (mesAtual >= meses) break
       }
       
       detalhamento.push({
@@ -109,6 +167,8 @@ export default function Simulado() {
         rendimento: saldoAcumulado - totalInvestidoAcumulado,
         saldoTotal: saldoAcumulado
       })
+      
+      if (mesAtual >= meses) break
     }
     
     setResultado1({
@@ -128,28 +188,53 @@ export default function Simulado() {
       return
     }
     
+    if (comAporteInicial2 && !aporteInicial2) {
+      toast.error("Preencha o valor do aporte inicial")
+      return
+    }
+    
     const meta = parseFloat(valorMeta2.replace(/[^\d]/g, ''))
     const meses = parseInt(tempoMeta) * 12
+    const inicial = comAporteInicial2 ? parseFloat(aporteInicial2.replace(/[^\d]/g, '')) : 0
     const taxa = parseFloat(taxaJuros2) / 100 / 12 // Taxa mensal
     
-    if (meta <= 0 || meses <= 0 || taxa <= 0) {
+    if (meta <= 0 || meses <= 0 || taxa <= 0 || (comAporteInicial2 && inicial < 0)) {
       toast.error("Valores devem ser positivos")
       return
     }
     
-    // PMT = FV / (((1 + r)^n - 1) / r)
-    const valorMensalNecessario = meta / (((1 + taxa) ** meses - 1) / taxa)
+    let valorMensalNecessario = 0
     
-    // Calcular detalhamento
+    if (inicial > 0) {
+      // Com aporte inicial: FV = PV*(1+r)^n + PMT*(((1+r)^n - 1)/r)
+      // Resolvendo para PMT: PMT = (FV - PV*(1+r)^n) / (((1+r)^n - 1)/r)
+      const valorFuturoInicial = inicial * Math.pow(1 + taxa, meses)
+      const metaRestante = meta - valorFuturoInicial
+      
+      if (metaRestante <= 0) {
+        // Aporte inicial já cobre a meta
+        valorMensalNecessario = 0
+      } else {
+        valorMensalNecessario = metaRestante / (((1 + taxa) ** meses - 1) / taxa)
+      }
+    } else {
+      // Sem aporte inicial: PMT = FV / (((1 + r)^n - 1) / r)
+      valorMensalNecessario = meta / (((1 + taxa) ** meses - 1) / taxa)
+    }
+    
+    // Calcular detalhamento usando simulação mês a mês precisa
     const detalhamento = []
-    let saldoAcumulado = 0
-    let totalInvestidoAcumulado = 0
+    let saldoAcumulado = inicial
+    let totalInvestidoAcumulado = inicial
     
     const anosTotal = parseInt(tempoMeta)
     
     for (let ano = 1; ano <= anosTotal; ano++) {
       for (let mes = 1; mes <= 12; mes++) {
-        saldoAcumulado = (saldoAcumulado + valorMensalNecessario) * (1 + taxa)
+        // Aplicar juros no saldo atual
+        saldoAcumulado = saldoAcumulado * (1 + taxa)
+        // Adicionar aporte mensal
+        saldoAcumulado += valorMensalNecessario
         totalInvestidoAcumulado += valorMensalNecessario
       }
       
@@ -193,7 +278,7 @@ export default function Simulado() {
     const valorFinalMensal = mensal * (((1 + taxa) ** meses - 1) / taxa)
     const valorFinalTotal = valorFinalInicial + valorFinalMensal
     
-    // Calcular detalhamento
+    // Calcular detalhamento usando simulação mês a mês precisa
     const detalhamento = []
     let saldoAcumulado = inicial
     let totalInvestidoAcumulado = inicial
@@ -202,7 +287,10 @@ export default function Simulado() {
     
     for (let ano = 1; ano <= anosTotal; ano++) {
       for (let mes = 1; mes <= 12; mes++) {
-        saldoAcumulado = (saldoAcumulado + mensal) * (1 + taxa)
+        // Aplicar juros no saldo atual
+        saldoAcumulado = saldoAcumulado * (1 + taxa)
+        // Adicionar aporte mensal
+        saldoAcumulado += mensal
         totalInvestidoAcumulado += mensal
       }
       
@@ -293,6 +381,31 @@ export default function Simulado() {
                     placeholder="R$ 1.000"
                   />
                 </div>
+                
+                {/* Checkbox e campo de aporte inicial */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="aporte-inicial-1"
+                      checked={comAporteInicial1}
+                      onCheckedChange={setComAporteInicial1}
+                    />
+                    <Label htmlFor="aporte-inicial-1" className="text-sm font-medium">
+                      Incluir aporte inicial
+                    </Label>
+                  </div>
+                  {comAporteInicial1 && (
+                    <div className="space-y-2">
+                      <Label>Valor Inicial</Label>
+                      <Input 
+                        value={aporteInicial1}
+                        onChange={(e) => setAporteInicial1(formatCurrency(e.target.value))}
+                        placeholder="R$ 10.000"
+                      />
+                    </div>
+                  )}
+                </div>
+                
                 <div className="space-y-2">
                   <Label>Taxa de Juros (% ao ano)</Label>
                   <Input 
@@ -314,7 +427,8 @@ export default function Simulado() {
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-muted-foreground">Tempo necessário:</span>
                       <Badge variant="secondary">
-                        {Math.ceil(resultado1.tempoParaMeta / 12)} anos e {Math.ceil(resultado1.tempoParaMeta % 12)} meses
+                        {resultado1.tempoParaMeta === 0 ? 'Meta já atingida!' : 
+                         `${Math.ceil(resultado1.tempoParaMeta / 12)} anos e ${Math.ceil(resultado1.tempoParaMeta % 12)} meses`}
                       </Badge>
                     </div>
                     
@@ -324,6 +438,12 @@ export default function Simulado() {
                         <p className="font-bold">
                           {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(resultado1.totalInvestido)}
                         </p>
+                        {comAporteInicial1 && parseFloat(aporteInicial1.replace(/[^\d]/g, '')) > 0 && (
+                          <p className="text-xs text-muted-foreground">
+                            (Inicial: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(parseFloat(aporteInicial1.replace(/[^\d]/g, '')))} + 
+                            Aportes: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(resultado1.totalInvestido - parseFloat(aporteInicial1.replace(/[^\d]/g, '')))})
+                          </p>
+                        )}
                       </div>
                       <div>
                         <p className="text-muted-foreground">Rendimento</p>
@@ -376,6 +496,31 @@ export default function Simulado() {
                     placeholder="10"
                   />
                 </div>
+                
+                {/* Checkbox e campo de aporte inicial */}
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="aporte-inicial-2"
+                      checked={comAporteInicial2}
+                      onCheckedChange={setComAporteInicial2}
+                    />
+                    <Label htmlFor="aporte-inicial-2" className="text-sm font-medium">
+                      Incluir aporte inicial
+                    </Label>
+                  </div>
+                  {comAporteInicial2 && (
+                    <div className="space-y-2">
+                      <Label>Valor Inicial</Label>
+                      <Input 
+                        value={aporteInicial2}
+                        onChange={(e) => setAporteInicial2(formatCurrency(e.target.value))}
+                        placeholder="R$ 50.000"
+                      />
+                    </div>
+                  )}
+                </div>
+                
                 <div className="space-y-2">
                   <Label>Taxa de Juros (% ao ano)</Label>
                   <Input 
@@ -397,8 +542,14 @@ export default function Simulado() {
                     <div className="text-center">
                       <p className="text-sm text-muted-foreground">Valor mensal necessário:</p>
                       <p className="text-xl font-bold text-success">
-                        {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(resultado2.valorMensal)}
+                        {resultado2.valorMensal === 0 ? 'R$ 0,00' : 
+                         new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(resultado2.valorMensal)}
                       </p>
+                      {resultado2.valorMensal === 0 && (
+                        <p className="text-sm text-primary font-medium">
+                          O aporte inicial já cobre sua meta!
+                        </p>
+                      )}
                     </div>
                     
                     <div className="grid grid-cols-2 gap-2 text-xs">
@@ -407,6 +558,12 @@ export default function Simulado() {
                         <p className="font-bold">
                           {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(resultado2.totalInvestido)}
                         </p>
+                        {comAporteInicial2 && parseFloat(aporteInicial2.replace(/[^\d]/g, '')) > 0 && (
+                          <p className="text-xs text-muted-foreground">
+                            (Inicial: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(parseFloat(aporteInicial2.replace(/[^\d]/g, '')))} + 
+                            Aportes: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(resultado2.totalInvestido - parseFloat(aporteInicial2.replace(/[^\d]/g, '')))})
+                          </p>
+                        )}
                       </div>
                       <div>
                         <p className="text-muted-foreground">Rendimento</p>
@@ -419,9 +576,9 @@ export default function Simulado() {
                     <div className="mt-2">
                       <div className="flex justify-between text-xs mb-1">
                         <span>Eficiência</span>
-                        <span>{((resultado2.rendimentoTotal / resultado2.totalInvestido) * 100).toFixed(1)}% de retorno</span>
+                        <span>{resultado2.totalInvestido > 0 ? ((resultado2.rendimentoTotal / resultado2.totalInvestido) * 100).toFixed(1) : '0.0'}% de retorno</span>
                       </div>
-                      <Progress value={Math.min(((resultado2.rendimentoTotal / resultado2.totalInvestido) * 100), 100)} />
+                      <Progress value={Math.min(resultado2.totalInvestido > 0 ? ((resultado2.rendimentoTotal / resultado2.totalInvestido) * 100) : 0, 100)} />
                     </div>
                     
                     {renderDetalhamento(resultado2)}
