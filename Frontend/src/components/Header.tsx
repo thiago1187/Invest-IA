@@ -62,10 +62,16 @@ export function Header() {
       description: "Gerencie sua carteira"
     },
     {
-      title: "Simulador",
-      href: "/simulado",
+      title: "Simuladores",
+      href: "/simuladores", 
       icon: Target,
-      description: "Simule cenários e metas"
+      description: "Calculadoras financeiras"
+    },
+    {
+      title: "Descubra seu Perfil",
+      href: "/descubra-perfil",
+      icon: User,
+      description: "Teste de perfil de investidor"
     }
   ]
 

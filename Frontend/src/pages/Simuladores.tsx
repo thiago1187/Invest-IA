@@ -33,7 +33,7 @@ interface ResultadoSimulacao {
   }[]
 }
 
-export default function Simulado() {
+export default function Simuladores() {
   // Estados para Simulador 1: Tempo para atingir meta
   const [valorMeta, setValorMeta] = useState("")
   const [valorMensal1, setValorMensal1] = useState("")
@@ -345,9 +345,9 @@ export default function Simulado() {
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-3xl font-bold">Simuladores de Investimento</h1>
+            <h1 className="text-3xl font-bold">Simuladores Financeiros</h1>
             <p className="text-muted-foreground text-lg">
-              Calcule metas, prazos e valores com juros compostos reais
+              Calculadoras avançadas para planejamento de investimentos com juros compostos
             </p>
           </div>
 

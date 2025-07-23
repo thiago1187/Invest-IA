@@ -13,12 +13,13 @@ import Investimentos from "./pages/Investimentos";
 import Dashboard from "./pages/Dashboard";
 import Perfil from "./pages/Perfil";
 import Configuracoes from "./pages/Configuracoes";
-import Simulado from "./pages/Simulado";
+import Simuladores from "./pages/Simuladores";
+import DescubraPerfil from "./pages/DescubraPerfil";
 import NotFound from "./pages/NotFound";
 
-// Componente para redirecionar baseado na autenticação
+// Componente para redirecionar baseado na autenticação e perfil
 const HomeRedirect = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, needsProfileAssessment } = useAuth();
   
   if (isLoading) {
     return (
@@ -31,7 +32,18 @@ const HomeRedirect = () => {
     );
   }
   
-  return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
+  // Se não está autenticado, vai para login
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  
+  // Se está autenticado mas precisa fazer teste de perfil, vai para descubra perfil
+  if (needsProfileAssessment) {
+    return <Navigate to="/descubra-perfil" replace />;
+  }
+  
+  // Se está tudo ok, vai para dashboard
+  return <Navigate to="/dashboard" replace />;
 };
 
 const queryClient = new QueryClient({
@@ -83,13 +95,23 @@ const AppRoutes = () => (
         } 
       />
       <Route 
-        path="/simulado" 
+        path="/simuladores" 
         element={
           <ProtectedRoute>
-            <Simulado />
+            <Simuladores />
           </ProtectedRoute>
         } 
       />
+      <Route 
+        path="/descubra-perfil" 
+        element={
+          <ProtectedRoute>
+            <DescubraPerfil />
+          </ProtectedRoute>
+        } 
+      />
+      {/* Redirect antigo para compatibilidade */}
+      <Route path="/simulado" element={<Navigate to="/simuladores" replace />} />
       <Route 
         path="/configuracoes" 
         element={
