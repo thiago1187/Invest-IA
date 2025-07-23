@@ -361,15 +361,7 @@ export default function DescubraPerfil() {
                 <div className="text-center space-y-4">
                   <div className="flex justify-center gap-4 text-sm">
                     <div className="text-center">
-                      <p className="text-muted-foreground">Pontuação</p>
-                      <p className="font-bold">{resultado.pontuacaoTotal}</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-muted-foreground">Tolerância ao Risco</p>
-                      <p className="font-bold">{resultado.toleranciaRisco}/10</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-muted-foreground">Nível</p>
+                      <p className="text-muted-foreground">Nível de Experiência</p>
                       <p className="font-bold">{resultado.nivelExperiencia}</p>
                     </div>
                   </div>

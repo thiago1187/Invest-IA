@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const isAuthenticated = !!user && !!token;
   
   // Verificar se usuário precisa fazer teste de perfil
-  const needsProfileAssessment = isAuthenticated && (!user?.perfil || !localStorage.getItem('profileAssessmentCompleted'));
+  const needsProfileAssessment = isAuthenticated && !localStorage.getItem('profileAssessmentCompleted');
 
   useEffect(() => {
     // Verificar se há token salvo no localStorage
