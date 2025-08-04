@@ -220,10 +220,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 👨‍💻 **Desenvolvedor**
 
-**Thiago Alves**
-- Desenvolvedor Full Stack especializado em Spring Boot e React
-- Focado em soluções fintech e aplicações financeiras
-- GitHub: [@thiago-alves](https://github.com/thiago-alves)
+**Thiago Alves Macena**
+- Desenvolvedor Full Stack 
+- GitHub: [@thiago1187](https://github.com/thiago1187)
 
 ## 🌟 **Demonstração**
 
