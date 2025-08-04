@@ -16,7 +16,6 @@ InvestIA é uma plataforma completa de investimentos que combina análise de por
 
 - 📊 **Dashboard Interativo**: Visualização completa do portfólio com gráficos avançados
 - 🤖 **ChatBot Nina**: IA conversacional para consultas sobre investimentos
-- 💹 **Cotações Reais**: Integração com Yahoo Finance para preços atualizados
 - 🧮 **Simuladores Financeiros**: Calculadoras para planejamento de metas
 - 📈 **Análise de Perfil**: Avaliação de tolerância ao risco e objetivos
 - 🔔 **Alertas de Preços**: Notificações personalizadas para ativos
@@ -42,7 +41,6 @@ InvestIA é uma plataforma completa de investimentos que combina análise de por
 
 ### **Integrações**
 - 🤖 **Groq API** - IA para chatbot Nina (gratuita)
-- 📈 **Yahoo Finance** - Cotações de mercado (tier gratuito)
 - 🔄 **Axios** - Cliente HTTP para comunicação
 
 ## 🚀 **Como Executar o Projeto**
@@ -137,7 +135,7 @@ H2_CONSOLE_ENABLED=true
 
 ## 📈 **Dados de Mercado**
 
-O projeto combina **dados reais com simulações** para demonstração:
+O projeto combina **dados "reais" com simulações** para demonstração:
 - **Taxa SELIC**: 14,25% a.a. (real)
 - **CDI**: 12,14% a.a. (real)  
 - **Ações**: Alguns dados mockados para demonstração
