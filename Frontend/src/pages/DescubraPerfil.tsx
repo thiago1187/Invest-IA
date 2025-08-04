@@ -47,7 +47,7 @@ export default function DescubraPerfil() {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(true)
   const { toast } = useToast()
-  const { markProfileAssessmentComplete } = useAuth()
+  const { user, markProfileAssessmentComplete, updateUser } = useAuth()
   const navigate = useNavigate()
 
   // Carregar perguntas do backend
@@ -169,6 +169,12 @@ export default function DescubraPerfil() {
       // Enviar para backend
       const response = await simuladoService.processarRespostas(respostasData)
       setResultado(response.data)
+      
+      // ✅ SALVAR PERFIL NO LOCALSTORAGE (quando backend funciona)
+      localStorage.setItem("userProfile", response.data.perfil.toLowerCase())
+      localStorage.setItem("profileAssessmentResult", JSON.stringify(response.data))
+      console.log("✅ Perfil salvo do backend:", response.data.perfil.toLowerCase())
+      
       setIsComplete(true)
       
       sonnerToast.success("Perfil analisado com sucesso!", {
@@ -218,7 +224,7 @@ export default function DescubraPerfil() {
         ]
       }
       
-      setResultado({
+      const resultadoFinal = {
         perfil,
         nivelExperiencia: 'INTERMEDIARIO',
         pontuacaoTotal: totalPoints,
@@ -230,7 +236,17 @@ export default function DescubraPerfil() {
           "Revise periodicamente sua carteira"
         ],
         toleranciaRisco: Math.round((totalPoints / 15) * 10)
-      })
+      }
+      
+      setResultado(resultadoFinal)
+      
+      // ✅ SALVAR PERFIL NO LOCALSTORAGE
+      localStorage.setItem("userProfile", perfil.toLowerCase())
+      localStorage.setItem("profileAssessmentResult", JSON.stringify(resultadoFinal))
+      
+      // 🔧 DEBUG: Verificar se foi salvo corretamente
+      console.log("✅ Perfil salvo:", perfil.toLowerCase())
+      console.log("✅ Verificação localStorage:", localStorage.getItem("userProfile"))
       
       setIsComplete(true)
       
@@ -282,12 +298,34 @@ export default function DescubraPerfil() {
     // Marcar como completado no localStorage
     markProfileAssessmentComplete()
     
+    // ✅ GARANTIR QUE O PERFIL SEJA SALVO NO LOCALSTORAGE
+    if (resultado) {
+      localStorage.setItem("userProfile", resultado.perfil.toLowerCase())
+      localStorage.setItem("profileAssessmentResult", JSON.stringify(resultado))
+      console.log("🎯 COMPLETAR TESTE - Perfil garantido:", resultado.perfil.toLowerCase())
+    }
+    
+    // Atualizar o usuário no contexto com o perfil criado
+    if (user && resultado) {
+      const updatedUser = {
+        ...user,
+        perfil: {
+          tipoPerfil: resultado.perfil,
+          nivelExperiencia: resultado.nivelExperiencia,
+          toleranciaRisco: resultado.toleranciaRisco
+        }
+      }
+      updateUser(updatedUser)
+    }
+    
     sonnerToast.success("Perfil configurado!", {
       description: "Agora você pode acessar todas as funcionalidades do InvestIA."
     })
     
-    // Redirecionar para dashboard
-    navigate('/dashboard')
+    // Redirecionar para dashboard após pequeno delay para garantir que o contexto atualize
+    setTimeout(() => {
+      navigate('/dashboard')
+    }, 100)
   }
 
   if (isLoadingQuestions) {

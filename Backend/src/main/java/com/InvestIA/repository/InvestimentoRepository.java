@@ -4,6 +4,7 @@ import com.InvestIA.entity.Investimento;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,11 @@ public interface InvestimentoRepository extends JpaRepository<Investimento, UUID
     List<Investimento> findByUsuarioId(UUID usuarioId);
     Page<Investimento> findByUsuarioIdOrderByCriadoEmDesc(UUID usuarioId, Pageable pageable);
     Optional<Investimento> findByIdAndUsuarioId(UUID id, UUID usuarioId);
+    
+    // Métodos para validação de integridade
+    @Query("SELECT COUNT(i) FROM Investimento i WHERE i.usuario IS NULL")
+    long countByUsuarioIsNull();
+    
+    @Query("SELECT COUNT(i) FROM Investimento i WHERE i.ativo IS NULL") 
+    long countByAtivoIsNull();
 }

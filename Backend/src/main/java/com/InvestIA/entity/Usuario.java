@@ -35,17 +35,22 @@ public class Usuario implements UserDetails {
     private Perfil perfil;
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Investimento> investimentos = new ArrayList<>();
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Meta> metas = new ArrayList<>();
     
     @Column(name = "criado_em")
+    @Builder.Default
     private LocalDateTime criadoEm = LocalDateTime.now();
     
     @Column(name = "atualizado_em")
+    @Builder.Default
     private LocalDateTime atualizadoEm = LocalDateTime.now();
     
+    @Builder.Default
     private boolean ativo = true;
     
     // UserDetails methods

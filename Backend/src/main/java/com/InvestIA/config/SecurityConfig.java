@@ -34,10 +34,24 @@ public class SecurityConfig {
                     "/api/auth/**",
                     "/auth/**",
                     "/api/chat/teste",
+                    "/api/dashboard/public-health",
+                    "/api/dashboard/teste",
+                    "/api/dashboard-simple",
+                    "/api/test/**",
+                    "/api/test-data/**",
+                    "/api/simple-test/**",
+                    "/api/real-data/**",
+                    "/api/investimentos/teste/**",
+                    "/api/investimentos/teste-auth/**",
+                    "/test/**",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
                     "/actuator/**",
-                    "/h2-console/**"
+                    "/h2-console/**",
+                    "/api/chat/teste",
+                    "/api/chat/teste-perfil/**",
+                    "/api/user-update/**",
+                    "/api/setup/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
@@ -53,7 +67,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3001", "http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003", "http://localhost:3004", "http://localhost:5173"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

@@ -21,26 +21,26 @@
     --popover: 240 10% 6%;
     --popover-foreground: 0 0% 98%;
 
-    /* Primary Brand - Deep Purple */
-    --primary: 267 77% 45%;
+    /* Primary Brand - Purple-600 (Elegant) */
+    --primary: 267 84% 50%;
     --primary-foreground: 0 0% 98%;
-    --primary-glow: 267 77% 65%;
+    --primary-glow: 267 84% 70%;
 
-    /* Secondary - Blue Accent */
-    --secondary: 217 91% 60%;
-    --secondary-foreground: 240 10% 3.9%;
-    --secondary-glow: 217 91% 80%;
+    /* Secondary - Emerald-500 (Success/Gains) */
+    --secondary: 160 84% 39%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-glow: 160 84% 59%;
 
-    /* Muted & Neutral */
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 65%;
+    /* Muted & Neutral - Slate-500 (Information) */
+    --muted: 215 16% 47%;
+    --muted-foreground: 215 13% 65%;
 
-    /* Accent - Bright Blue */
-    --accent: 217 91% 60%;
-    --accent-foreground: 240 10% 3.9%;
+    /* Accent - Indigo-500 (Special Highlights) */
+    --accent: 239 84% 67%;
+    --accent-foreground: 0 0% 98%;
 
-    /* Success - Green */
-    --success: 142 76% 36%;
+    /* Success - Emerald-500 (Consistent with secondary) */
+    --success: 160 84% 39%;
     --success-foreground: 0 0% 98%;
 
     /* Warning - Yellow */
@@ -52,20 +52,20 @@
     --destructive-foreground: 0 0% 98%;
 
     /* Borders & Inputs */
-    --border: 240 5% 15%;
-    --input: 240 5% 15%;
-    --ring: 267 77% 45%;
+    --border: 215 16% 20%;
+    --input: 215 16% 20%;
+    --ring: 267 84% 50%;
 
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(267 77% 45%), hsl(217 91% 60%));
+    /* Gradients - Updated with new palette */
+    --gradient-primary: linear-gradient(135deg, hsl(267 84% 50%), hsl(239 84% 67%));
     --gradient-surface: linear-gradient(180deg, hsl(240 10% 6%), hsl(240 8% 8%));
-    --gradient-glow: linear-gradient(135deg, hsl(267 77% 65% / 0.1), hsl(217 91% 80% / 0.1));
+    --gradient-glow: linear-gradient(135deg, hsl(267 84% 70% / 0.1), hsl(160 84% 59% / 0.1));
 
     /* Shadows */
     --shadow-soft: 0 4px 6px -1px hsl(240 10% 3.9% / 0.1), 0 2px 4px -1px hsl(240 10% 3.9% / 0.06);
     --shadow-medium: 0 10px 15px -3px hsl(240 10% 3.9% / 0.1), 0 4px 6px -2px hsl(240 10% 3.9% / 0.05);
     --shadow-large: 0 25px 50px -12px hsl(240 10% 3.9% / 0.25);
-    --shadow-glow: 0 0 40px hsl(267 77% 65% / 0.15);
+    --shadow-glow: 0 0 40px hsl(267 84% 70% / 0.15);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

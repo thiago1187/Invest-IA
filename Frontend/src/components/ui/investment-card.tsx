@@ -5,10 +5,11 @@ import { TrendingUp, TrendingDown, DollarSign } from "lucide-react"
 interface InvestmentCardProps {
   title: string
   value: string
-  change: string
-  changeType: "positive" | "negative" | "neutral"
+  change?: string
+  changeType?: "positive" | "negative" | "neutral"
   icon?: React.ReactNode
   className?: string
+  hideArrows?: boolean // Nova prop para ocultar setas
 }
 
 export function InvestmentCard({ 
@@ -17,9 +18,11 @@ export function InvestmentCard({
   change, 
   changeType,
   icon = <DollarSign className="h-5 w-5" />,
-  className 
+  className,
+  hideArrows = false
 }: InvestmentCardProps) {
   const getTrendIcon = () => {
+    if (hideArrows || !changeType) return null
     if (changeType === "positive") return <TrendingUp className="h-4 w-4 text-success" />
     if (changeType === "negative") return <TrendingDown className="h-4 w-4 text-destructive" />
     return null
@@ -45,12 +48,6 @@ export function InvestmentCard({
             <p className="text-sm font-medium text-muted-foreground">{title}</p>
             <p className="text-2xl font-bold text-foreground">{value}</p>
           </div>
-        </div>
-        <div className="flex items-center space-x-1">
-          {getTrendIcon()}
-          <span className={cn("text-sm font-medium", getChangeColor())}>
-            {change}
-          </span>
         </div>
       </div>
     </Card>

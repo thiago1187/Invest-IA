@@ -37,7 +37,7 @@ export default function Simuladores() {
   // Estados para Simulador 1: Tempo para atingir meta
   const [valorMeta, setValorMeta] = useState("")
   const [valorMensal1, setValorMensal1] = useState("")
-  const [taxaJuros1, setTaxaJuros1] = useState("12")
+  const [taxaJuros1, setTaxaJuros1] = useState("14.25") // Taxa Selic atual (Julho 2025)
   const [comAporteInicial1, setComAporteInicial1] = useState(false)
   const [aporteInicial1, setAporteInicial1] = useState("")
   const [resultado1, setResultado1] = useState<ResultadoSimulacao | null>(null)
@@ -45,7 +45,7 @@ export default function Simuladores() {
   // Estados para Simulador 2: Quanto investir mensalmente
   const [valorMeta2, setValorMeta2] = useState("")
   const [tempoMeta, setTempoMeta] = useState("")
-  const [taxaJuros2, setTaxaJuros2] = useState("12")
+  const [taxaJuros2, setTaxaJuros2] = useState("14.25") // Taxa Selic atual (Julho 2025)
   const [comAporteInicial2, setComAporteInicial2] = useState(false)
   const [aporteInicial2, setAporteInicial2] = useState("")
   const [resultado2, setResultado2] = useState<ResultadoSimulacao | null>(null)
@@ -54,7 +54,7 @@ export default function Simuladores() {
   const [aporteInicial, setAporteInicial] = useState("")
   const [aportesMensais, setAportesMensais] = useState("")
   const [periodo, setPeriodo] = useState("")
-  const [taxaJuros3, setTaxaJuros3] = useState("12")
+  const [taxaJuros3, setTaxaJuros3] = useState("14.25") // Taxa Selic atual (Julho 2025)
   const [resultado3, setResultado3] = useState<ResultadoSimulacao | null>(null)
 
   const formatCurrency = (value: string) => {
@@ -706,7 +706,7 @@ export default function Simuladores() {
                 <div>
                   <h4 className="font-semibold text-warning mb-2">Taxa Realista</h4>
                   <p className="text-muted-foreground">
-                    Considere taxas conservadoras: Poupança ~6%, CDI ~12%, Ações ~15% 
+                    Considere taxas atuais: Poupança ~6.17%, CDI ~12.14%, SELIC ~14.25% 
                     (médias históricas, não garantias).
                   </p>
                 </div>

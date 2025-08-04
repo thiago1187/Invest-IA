@@ -34,11 +34,13 @@ public class Meta {
     private BigDecimal valorObjetivo;
     
     @Column(precision = 15, scale = 2)
+    @Builder.Default
     private BigDecimal valorAtual = BigDecimal.ZERO;
     
     private LocalDate prazo;
     
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private StatusMeta status = StatusMeta.EM_ANDAMENTO;
     
     @Column(precision = 15, scale = 2)
@@ -48,8 +50,10 @@ public class Meta {
     private String estrategiaSugerida; // JSON com sugestões da IA
     
     @Column(name = "criado_em")
+    @Builder.Default
     private LocalDateTime criadoEm = LocalDateTime.now();
     
     @Column(name = "atualizado_em")
+    @Builder.Default
     private LocalDateTime atualizadoEm = LocalDateTime.now();
 }

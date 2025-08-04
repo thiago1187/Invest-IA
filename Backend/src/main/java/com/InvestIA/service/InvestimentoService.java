@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -50,27 +51,52 @@ public class InvestimentoService {
     public InvestimentoResponse criar(UUID usuarioId, CriarInvestimentoRequest request) {
         log.info("Criando investimento para usuário {}: {}", usuarioId, request.getTicker());
         
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        
-        // Buscar ou criar o ativo
-        Ativo ativo = buscarOuCriarAtivo(request.getTicker());
-        
-        // Criar o investimento
-        Investimento investimento = Investimento.builder()
-                .usuario(usuario)
-                .ativo(ativo)
-                .quantidade(request.getQuantidade())
-                .valorTotalInvestido(request.getValorCompra().multiply(BigDecimal.valueOf(request.getQuantidade())))
-                .valorMedioCompra(request.getValorCompra())
-                .dataCompra(request.getDataCompra())
-                .ativoStatus(true)
-                .build();
-        
-        investimento = investimentoRepository.save(investimento);
-        log.info("Investimento criado com ID: {}", investimento.getId());
-        
-        return toInvestimentoResponse(investimento);
+        try {
+            // Validações adicionais
+            if (request.getTicker() == null || request.getTicker().trim().isEmpty()) {
+                throw new RuntimeException("Ticker não pode ser vazio");
+            }
+            
+            if (request.getQuantidade() == null || request.getQuantidade() <= 0) {
+                throw new RuntimeException("Quantidade deve ser maior que zero");
+            }
+            
+            if (request.getValorCompra() == null || request.getValorCompra().compareTo(BigDecimal.ZERO) <= 0) {
+                throw new RuntimeException("Valor de compra deve ser maior que zero");
+            }
+            
+            if (request.getDataCompra() == null) {
+                throw new RuntimeException("Data de compra é obrigatória");
+            }
+            
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + usuarioId));
+            
+            // Buscar ou criar o ativo
+            Ativo ativo = buscarOuCriarAtivo(request.getTicker().trim().toUpperCase());
+            
+            // Criar o investimento
+            Investimento investimento = Investimento.builder()
+                    .usuario(usuario)
+                    .ativo(ativo)
+                    .quantidade(request.getQuantidade())
+                    .valorTotalInvestido(request.getValorCompra().multiply(BigDecimal.valueOf(request.getQuantidade())))
+                    .valorMedioCompra(request.getValorCompra())
+                    .dataCompra(request.getDataCompra())
+                    .ativoStatus(true)
+                    .criadoEm(LocalDateTime.now())
+                    .atualizadoEm(LocalDateTime.now())
+                    .build();
+            
+            investimento = investimentoRepository.save(investimento);
+            log.info("Investimento criado com sucesso. ID: {}", investimento.getId());
+            
+            return toInvestimentoResponse(investimento);
+            
+        } catch (Exception e) {
+            log.error("Erro ao criar investimento para usuário {}: {}", usuarioId, e.getMessage(), e);
+            throw new RuntimeException("Erro ao criar investimento: " + e.getMessage());
+        }
     }
     
     @Transactional
@@ -108,27 +134,46 @@ public class InvestimentoService {
     }
     
     private Ativo buscarOuCriarAtivo(String ticker) {
-        Optional<Ativo> ativoExistente = ativoRepository.findByTicker(ticker);
-        
-        if (ativoExistente.isPresent()) {
-            return ativoExistente.get();
+        try {
+            // Primeiro tenta buscar pelo ticker exato
+            Optional<Ativo> ativoExistente = ativoRepository.findByTicker(ticker);
+            
+            if (ativoExistente.isPresent()) {
+                log.info("Ativo encontrado: {}", ticker);
+                return ativoExistente.get();
+            }
+            
+            // Se não encontrar, tenta buscar pelo símbolo
+            ativoExistente = ativoRepository.findBySimbolo(ticker);
+            if (ativoExistente.isPresent()) {
+                log.info("Ativo encontrado por símbolo: {}", ticker);
+                return ativoExistente.get();
+            }
+            
+            // Criar novo ativo
+            log.info("Criando novo ativo: {}", ticker);
+            
+            String simboloCompleto = ticker.contains(".SA") ? ticker : ticker;
+            
+            Ativo novoAtivo = Ativo.builder()
+                    .ticker(ticker)
+                    .simbolo(simboloCompleto)
+                    .nome(obterNomeAtivo(ticker))
+                    .tipoAtivo(determinarTipoAtivo(ticker))
+                    .setor(null)
+                    .status(true)
+                    .criadoEm(LocalDateTime.now())
+                    .ultimaAtualizacao(LocalDateTime.now())
+                    .build();
+            
+            Ativo ativoSalvo = ativoRepository.save(novoAtivo);
+            log.info("Novo ativo criado com ID: {}", ativoSalvo.getId());
+            return ativoSalvo;
+            
+        } catch (Exception e) {
+            log.error("Erro ao buscar ou criar ativo {}: {}", ticker, e.getMessage(), e);
+            throw new RuntimeException("Erro ao processar ativo: " + e.getMessage());
         }
-        
-        // Criar novo ativo
-        log.info("Criando novo ativo: {}", ticker);
-        
-        Ativo novoAtivo = Ativo.builder()
-                .ticker(ticker)
-                .simbolo(ticker) // Usar o mesmo valor do ticker
-                .nome(obterNomeAtivo(ticker))
-                .tipoAtivo(determinarTipoAtivo(ticker))
-                .setor(null) // Pode ser definido manualmente depois
-                .status(true)
-                .criadoEm(LocalDateTime.now())
-                .ultimaAtualizacao(LocalDateTime.now())
-                .build();
-        
-        return ativoRepository.save(novoAtivo);
     }
     
     private String obterNomeAtivo(String ticker) {
@@ -160,11 +205,18 @@ public class InvestimentoService {
         BigDecimal cotacaoAtual = financeAPIService.getCurrentPrice(investimento.getAtivo().getTicker())
                 .orElse(investimento.getValorMedioCompra());
         
+        // Atualizar valor atual na entidade (preço por ação)
+        investimento.setValorAtual(cotacaoAtual);
+        investimento.setAtualizadoEm(LocalDateTime.now());
+        investimentoRepository.save(investimento);
+        
         // Calcular valores
-        BigDecimal valorAtual = cotacaoAtual.multiply(BigDecimal.valueOf(investimento.getQuantidade()));
-        BigDecimal ganhoPerda = valorAtual.subtract(investimento.getValorTotalInvestido());
-        BigDecimal percentualGanhoPerda = ganhoPerda.divide(investimento.getValorTotalInvestido(), 4, BigDecimal.ROUND_HALF_UP)
-                                                     .multiply(BigDecimal.valueOf(100));
+        BigDecimal valorTotalAtual = cotacaoAtual.multiply(BigDecimal.valueOf(investimento.getQuantidade()));
+        BigDecimal lucroPreju = valorTotalAtual.subtract(investimento.getValorTotalInvestido());
+        BigDecimal percentualLucroPreju = investimento.getValorTotalInvestido().compareTo(BigDecimal.ZERO) > 0 ?
+                lucroPreju.divide(investimento.getValorTotalInvestido(), 4, RoundingMode.HALF_UP)
+                         .multiply(BigDecimal.valueOf(100)) :
+                BigDecimal.ZERO;
         
         return InvestimentoResponse.builder()
                 .id(investimento.getId())
@@ -178,9 +230,9 @@ public class InvestimentoService {
                 .valorMedioCompra(investimento.getValorMedioCompra())
                 .valorAtual(cotacaoAtual)
                 .valorTotalInvestido(investimento.getValorTotalInvestido())
-                .valorTotalAtual(valorAtual)
-                .lucroPreju(ganhoPerda)
-                .percentualLucroPreju(percentualGanhoPerda)
+                .valorTotalAtual(valorTotalAtual)
+                .lucroPreju(lucroPreju)
+                .percentualLucroPreju(percentualLucroPreju)
                 .dataCompra(investimento.getDataCompra())
                 .build();
     }

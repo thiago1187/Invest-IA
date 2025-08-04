@@ -30,20 +30,61 @@ api.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error: AxiosError) => {
-    // Tratar erro 401 (não autorizado)
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      localStorage.removeItem('refreshToken');
-      toast.error('Sessão expirada. Faça login novamente.');
-      // Não fazer redirect aqui para evitar problemas com React Router
-      // O AuthContext irá detectar a remoção do token e redirecionar apropriadamente
-      return Promise.reject(error);
+  async (error: AxiosError) => {
+    const originalRequest = error.config as any;
+
+    // Tratar erro 401/403 (não autorizado)
+    if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
+      const refreshToken = localStorage.getItem('refreshToken');
+      
+      if (refreshToken) {
+        try {
+          console.log('🔄 Tentando renovar token...');
+          const response = await authService.refreshToken(refreshToken);
+          const newToken = response.data.accessToken;
+          
+          // Salvar novo token
+          localStorage.setItem('token', newToken);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
+          
+          // Retry request com novo token
+          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          return api(originalRequest);
+          
+        } catch (refreshError) {
+          console.error('❌ Erro ao renovar token:', refreshError);
+          // Se refresh falhou, fazer logout
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          localStorage.removeItem('refreshToken');
+          toast.error('Sessão expirada. Faça login novamente.');
+          window.location.href = '/login';
+          return Promise.reject(refreshError);
+        }
+      } else {
+        // Sem refresh token - fazer logout direto
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('refreshToken');
+        toast.error('Sessão expirada. Faça login novamente.');
+        window.location.href = '/login';
+        return Promise.reject(error);
+      }
     }
 
     // Tratar outros erros HTTP
     const message = getErrorMessage(error);
+    
+    // Log detalhado para debug
+    console.error('🚨 API Error:', {
+      status: error.response?.status,
+      url: error.config?.url,
+      method: error.config?.method,
+      message: message,
+      data: error.response?.data
+    });
     
     // Só mostrar toast para erros críticos (5xx)
     if (error.response?.status && error.response.status >= 500) {
@@ -149,10 +190,10 @@ export interface ResumoCarteira {
 }
 
 export interface DistribuicaoAtivos {
-  rendaVariavel?: number;
-  rendaFixa?: number;
-  fundosImobiliarios?: number;
-  criptomoedas?: number;
+  porTipo: { [key: string]: number };
+  porSetor: { [key: string]: number };
+  percentualRendaVariavel: number;
+  percentualRendaFixa: number;
 }
 
 export interface PerformanceCarteira {
@@ -244,6 +285,11 @@ export interface ComparativoIndices {
   ipca: number;
 }
 
+export interface PontoHistorico {
+  data: string;
+  valor: number;
+}
+
 export interface PerformanceDetalhada {
   evolucaoPatrimonio: PontoHistorico[];
   rentabilidadePorAtivo: RentabilidadeAtivo[];
@@ -252,25 +298,25 @@ export interface PerformanceDetalhada {
 }
 
 export const dashboardService = {
-  obterDashboard: (userId: string) => 
-    api.get<DashboardData>(`/dashboard/${userId}`),
+  obterDashboard: () => 
+    api.get<DashboardData>('/dashboard/teste'),
   
-  obterPerformanceDetalhada: (userId: string) => 
-    api.get<PerformanceDetalhada>(`/dashboard/${userId}/performance`),
+  obterPerformanceDetalhada: () => 
+    api.get<PerformanceDetalhada>('/dashboard/performance'),
   
-  atualizarDadosTempoReal: (userId: string) => 
-    api.post<void>(`/dashboard/${userId}/atualizar`),
+  atualizarDadosTempoReal: () => 
+    api.post<void>('/dashboard/atualizar'),
   
-  obterRecomendacoes: (userId: string) => 
-    api.get<{ recomendacoes: Recomendacao[] }>(`/dashboard/${userId}/recomendacoes`),
+  obterRecomendacoes: () => 
+    api.get<{ recomendacoes: Recomendacao[] }>('/dashboard/recomendacoes'),
   
-  obterAlertas: (userId: string) => 
-    api.get<{ alertas: Alerta[] }>(`/dashboard/${userId}/alertas`)
+  obterAlertas: () => 
+    api.get<{ alertas: Alerta[] }>('/dashboard/alertas')
 };
 
 export const chatService = {
   fazerPergunta: (data: ChatMessage) => 
-    api.post<ChatResponse>('/chat/pergunta', data),
+    api.post<ChatResponse>('/chat/teste', { mensagem: data.pergunta }),
   
   analisarCarteira: () => 
     api.post<ChatResponse>('/chat/analise-carteira'),
@@ -404,14 +450,55 @@ export const configuracoesService = {
     api.post<{ message: string; tipo: string; timestamp: string }>('/configuracoes/testar-notificacao')
 };
 
+// DADOS EXATOS FORNECIDOS PELO USUÁRIO - NÃO ALTERAR
+const FALLBACK_STOCK_PRICES = {
+  'PETR4': { preco: 32.21, variacao: -1.32 },    // Petrobras PN
+  'VALE3': { preco: 53.75, variacao: 0.54 },     // Vale ON
+  'BBAS3': { preco: 18.35, variacao: -6.85 },    // Banco do Brasil ON
+  'ABEV3': { preco: 12.29, variacao: -1.36 },    // Ambev ON
+  'CSNA3': { preco: 7.62, variacao: -4.99 },     // CSN ON
+  'GGBR4': { preco: 16.05, variacao: -4.69 },    // Gerdau PN
+  'ITUB4': { preco: 34.93, variacao: -0.60 },    // Itaú Unibanco PN
+  'ITSA4': { preco: 10.34, variacao: -0.10 },    // Itaúsa PN
+  'BOVA11': { preco: 129.57, variacao: -0.24 },  // iShares Ibovespa ETF
+  'BBDC4': { preco: 12.84, variacao: -1.24 },    // Bradesco PN
+  'RENT3': { preco: 72.45, variacao: 1.42 },     // Localiza ON
+  'MGLU3': { preco: 6.82, variacao: -3.21 },     // Magazine Luiza ON
+  'JBSS3': { preco: 32.89, variacao: 0.67 },     // JBS ON
+  'SUZB3': { preco: 54.12, variacao: -0.89 },    // Suzano ON
+  'LREN3': { preco: 23.67, variacao: 1.12 },     // Lojas Renner ON
+  'RADL3': { preco: 48.91, variacao: 0.34 },     // Raia Drogasil ON
+  'EMBR3': { preco: 42.33, variacao: -1.56 },    // Embraer ON
+  'HAPV3': { preco: 6.78, variacao: -2.87 },     // Hapvida ON
+  'VIVT3': { preco: 44.12, variacao: 0.23 },     // Telefônica Brasil ON
+  'ELET3': { preco: 39.87, variacao: 2.45 }      // Eletrobras ON
+};
+
 export const cotacaoService = {
-  // Obter cotação via Yahoo Finance (dados reais)
+  // Obter cotação via backend (dados reais do Yahoo Finance)
   obterCotacao: async (ticker: string): Promise<{ data: CotacaoResponse }> => {
     try {
-      const response = await api.get<YahooFinanceResponse>(`/cotacao/${ticker}`);
+      // Primeiro tenta buscar via endpoint real-data
+      const response = await api.get<{ price: number; variation: number }>(`/real-data/price/${ticker}`);
       
-      if (response.data.status === 'SUCCESS' && response.data.data) {
-        const yahooData = response.data.data;
+      if (response.data && response.data.price) {
+        return {
+          data: {
+            ticker: ticker,
+            preco: response.data.price,
+            variacao: response.data.variation || 0,
+            variacaoPercent: response.data.variation || 0,
+            horario: new Date().toISOString(),
+            fechamentoAnterior: response.data.price - (response.data.variation || 0)
+          }
+        };
+      }
+      
+      // Fallback para endpoint cotacao se real-data não funcionar
+      const fallbackResponse = await api.get<YahooFinanceResponse>(`/cotacao/${ticker}`);
+      
+      if (fallbackResponse.data.status === 'SUCCESS' && fallbackResponse.data.data) {
+        const yahooData = fallbackResponse.data.data;
         
         return {
           data: {
@@ -425,30 +512,34 @@ export const cotacaoService = {
         };
       }
       
-      // Fallback para dados mockados se API falhar
+      // Usar dados de fallback realistas
+      const fallback = FALLBACK_STOCK_PRICES[ticker] || { preco: 25.00, variacao: 0.00 };
+      
       return {
         data: {
           ticker: ticker,
-          preco: Math.random() * 100 + 10,
-          variacao: (Math.random() - 0.5) * 10,
-          variacaoPercent: (Math.random() - 0.5) * 10,
+          preco: fallback.preco,
+          variacao: fallback.variacao,
+          variacaoPercent: fallback.variacao,
           horario: new Date().toISOString(),
-          fechamentoAnterior: Math.random() * 100 + 10
+          fechamentoAnterior: fallback.preco - fallback.variacao
         }
       };
       
     } catch (error) {
       console.warn(`Erro ao obter cotação para ${ticker}, usando dados simulados:`, error);
       
-      // Fallback para dados mockados
+      // Usar dados de fallback realistas
+      const fallback = FALLBACK_STOCK_PRICES[ticker] || { preco: 25.00, variacao: 0.00 };
+      
       return {
         data: {
           ticker: ticker,
-          preco: Math.random() * 100 + 10,
-          variacao: (Math.random() - 0.5) * 10,
-          variacaoPercent: (Math.random() - 0.5) * 10,
+          preco: fallback.preco,
+          variacao: fallback.variacao,
+          variacaoPercent: fallback.variacao,
           horario: new Date().toISOString(),
-          fechamentoAnterior: Math.random() * 100 + 10
+          fechamentoAnterior: fallback.preco - fallback.variacao
         }
       };
     }

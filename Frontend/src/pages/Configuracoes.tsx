@@ -29,7 +29,6 @@ export default function Configuracoes() {
   const { user, logout } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
   
-  const [userProfile, setUserProfile] = useState<"conservador" | "moderado" | "agressivo">("moderado")
   const [notifications, setNotifications] = useState({
     recommendations: true,
     priceAlerts: true,
@@ -42,14 +41,41 @@ export default function Configuracoes() {
     email: user?.email || "",
     phone: user?.telefone || ""
   })
+  
+  const [userProfile, setUserProfile] = useState<{
+    tipoPerfil?: string
+    nivelExperiencia?: string
+    pontuacaoSimulado?: number
+  } | null>(null)
+
+  const loadUserProfile = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+      
+      const response = await fetch('http://localhost:8080/api/perfil', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (response.ok) {
+        const userData = await response.json()
+        if (userData.perfil) {
+          setUserProfile({
+            tipoPerfil: userData.perfil.tipoPerfil,
+            nivelExperiencia: userData.perfil.nivelExperiencia,
+            pontuacaoSimulado: userData.perfil.pontuacaoSimulado
+          })
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao carregar perfil do usuário:', error)
+    }
+  }
 
   useEffect(() => {
-    // Carregar perfil de investidor salvo
-    const savedProfile = localStorage.getItem("userProfile") as "conservador" | "moderado" | "agressivo"
-    if (savedProfile) {
-      setUserProfile(savedProfile)
-    }
-    
     // Carregar configurações de notificação salvas
     const savedNotifications = localStorage.getItem("notifications")
     if (savedNotifications) {
@@ -63,38 +89,12 @@ export default function Configuracoes() {
         email: user.email || "",
         phone: user.telefone || ""
       })
+      
+      // Carregar perfil do backend
+      loadUserProfile()
     }
   }, [user])
 
-  const handleSaveProfile = () => {
-    try {
-      setIsLoading(true)
-      localStorage.setItem("userProfile", userProfile)
-      
-      // Simular integração com backend
-      setTimeout(() => {
-        setIsLoading(false)
-        sonnerToast.success("Perfil de investidor atualizado com sucesso!")
-        
-        // Mostrar notificação baseada no perfil escolhido
-        const profileMessages = {
-          conservador: "Suas recomendações agora priorizarão investimentos de baixo risco.",
-          moderado: "Suas recomendações terão um equilíbrio entre risco e rentabilidade.",
-          agressivo: "Suas recomendações focarão em maior rentabilidade com riscos elevados."
-        }
-        
-        setTimeout(() => {
-          sonnerToast.info(profileMessages[userProfile], {
-            duration: 4000
-          })
-        }, 1000)
-      }, 800)
-      
-    } catch (error) {
-      setIsLoading(false)
-      sonnerToast.error("Erro ao salvar perfil")
-    }
-  }
 
   const handleSaveNotifications = async () => {
     try {
@@ -251,55 +251,6 @@ export default function Configuracoes() {
                 </CardContent>
               </Card>
 
-              {/* Perfil de Investidor */}
-              <Card className="bg-gradient-surface border-border/50">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <Shield className="h-5 w-5" />
-                    <span>Perfil de Investidor</span>
-                  </CardTitle>
-                  <CardDescription>
-                    Configure seu perfil de risco
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    {[
-                      { value: "conservador", label: "Conservador", desc: "Prioriza segurança e baixo risco" },
-                      { value: "moderado", label: "Moderado", desc: "Equilibra risco e rentabilidade" },
-                      { value: "agressivo", label: "Agressivo", desc: "Busca alta rentabilidade com maior risco" }
-                    ].map((option) => (
-                      <div
-                        key={option.value}
-                        className={`p-4 rounded-lg border cursor-pointer transition-colors ${
-                          userProfile === option.value
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/50"
-                        }`}
-                        onClick={() => setUserProfile(option.value as any)}
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div className={`w-4 h-4 rounded-full border-2 ${
-                            userProfile === option.value
-                              ? "border-primary bg-primary"
-                              : "border-muted-foreground"
-                          }`} />
-                          <div>
-                            <p className="font-medium">{option.label}</p>
-                            <p className="text-sm text-muted-foreground">{option.desc}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex justify-end">
-                    <HeroButton onClick={handleSaveProfile} disabled={isLoading}>
-                      <Save className="mr-2 h-4 w-4" />
-                      {isLoading ? "Salvando..." : "Salvar Perfil"}
-                    </HeroButton>
-                  </div>
-                </CardContent>
-              </Card>
 
               {/* Notificações */}
               <Card className="bg-gradient-surface border-border/50">
@@ -398,8 +349,33 @@ export default function Configuracoes() {
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">Perfil atual:</span>
                     <span className="font-medium text-primary capitalize">
-                      {userProfile}
+                      {userProfile?.tipoPerfil?.toLowerCase() || "Não definido"}
                     </span>
+                  </div>
+                  {userProfile?.nivelExperiencia && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Nível de experiência:</span>
+                      <span className="font-medium text-secondary capitalize">
+                        {userProfile.nivelExperiencia.toLowerCase()}
+                      </span>
+                    </div>
+                  )}
+                  {userProfile?.pontuacaoSimulado && (
+                    <div className="flex justify-between items-center">
+                      <span className="text-muted-foreground">Pontuação do teste:</span>
+                      <span className="font-medium">
+                        {userProfile.pontuacaoSimulado}/15 pontos
+                      </span>
+                    </div>
+                  )}
+                  <div className="flex justify-end">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={loadUserProfile}
+                    >
+                      Atualizar Perfil
+                    </Button>
                   </div>
                   <Separator />
                   <div className="flex justify-between items-center">

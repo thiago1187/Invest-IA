@@ -165,11 +165,13 @@ public class SimuladoService {
     }
     
     private TipoPerfil determinarPerfil(int pontuacao) {
-        if (pontuacao <= 5) {
+        // Pontuação máxima: 15 pontos (5 perguntas × 3 pontos)
+        // Ajustando para distribuição mais equilibrada
+        if (pontuacao <= 6) {           // 0-6 pontos: 40% inferior = CONSERVADOR
             return TipoPerfil.CONSERVADOR;
-        } else if (pontuacao <= 10) {
+        } else if (pontuacao <= 11) {   // 7-11 pontos: 40% médio = MODERADO  
             return TipoPerfil.MODERADO;
-        } else {
+        } else {                        // 12-15 pontos: 20% superior = AGRESSIVO
             return TipoPerfil.AGRESSIVO;
         }
     }

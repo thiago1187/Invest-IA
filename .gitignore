@@ -3,19 +3,29 @@
 # Environment variables
 .env
 Backend/.env
+*/.env
 
 # Logs
 *.log
+**/*.log
 
 # Database files
-*.mv.db
-*.trace.db
-
-# Logs
-*.log
-
-# Database files
+*.db
 *.mv.db
 *.trace.db
 data/
+**/data/
+
+# Build artifacts
+target/
+**/target/
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
 

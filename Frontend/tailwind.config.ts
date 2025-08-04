@@ -75,6 +75,19 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Elegant color palette additions
+				purple: {
+					600: 'hsl(267 84% 50%)'
+				},
+				emerald: {
+					500: 'hsl(160 84% 39%)'
+				},
+				slate: {
+					500: 'hsl(215 16% 47%)'
+				},
+				indigo: {
+					500: 'hsl(239 84% 67%)'
 				}
 			},
 			borderRadius: {

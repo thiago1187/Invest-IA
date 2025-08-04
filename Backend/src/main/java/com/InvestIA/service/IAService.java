@@ -108,7 +108,7 @@ public class IAService {
         log.info("Processando solicitação: {}", context);
         
         // 1. Tentar Groq primeiro (grátis e rápida)
-        if (groqApiKey != null && !groqApiKey.equals("sk-placeholder-key") && !groqApiKey.startsWith("gsk_placeholder")) {
+        if (groqApiKey != null && !groqApiKey.equals("your_groq_api_key_here") && !groqApiKey.startsWith("gsk_placeholder") && groqApiKey.startsWith("gsk_")) {
             log.info("Tentando Groq API para: {}", context);
             String groqResponse = callGroq(prompt, context);
             if (groqResponse != null && !groqResponse.startsWith("Desculpe")) {
@@ -212,7 +212,12 @@ public class IAService {
             return content;
             
         } catch (Exception e) {
-            log.error("❌ Erro na chamada para Groq: {}", e.getMessage());
+            log.error("❌ Erro na chamada para Groq: {} - Detalhes: {}", e.getMessage(), e.getClass().getSimpleName());
+            if (e.getMessage() != null && e.getMessage().contains("401")) {
+                log.error("🔑 Problema de autenticação - Verifique GROQ_API_KEY");
+            } else if (e.getMessage() != null && e.getMessage().contains("429")) {
+                log.error("⏳ Rate limit atingido - Aguarde antes de tentar novamente");
+            }
             return null; // Retorna null para tentar próximo fallback
         }
     }
@@ -349,9 +354,11 @@ public class IAService {
                    "Para otimizar, considere rebalancear periodicamente mantendo sua estratégia de longo prazo. " +
                    "Continue acompanhando os resultados e ajuste conforme necessário.";
         } else {
-            return "Nossa análise indica que você está no caminho certo. Continue diversificando seus investimentos " +
-                   "e mantenha o foco em seus objetivos de longo prazo. Se precisar de mais orientações, " +
-                   "consulte um profissional especializado.";
+            // Fallback mais personalizado e útil
+            return "Oi! Tô vendo aqui seus investimentos... 📊 " +
+                   "Que tal me falar o que você quer saber específico? " +
+                   "Posso te ajudar com análise dos seus ativos, sugestões de diversificação, " +
+                   "ou tirar qualquer dúvida sobre investimentos. O que tá na sua cabeça?";
         }
     }
 

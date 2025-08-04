@@ -47,8 +47,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception e) {
         Map<String, Object> response = new HashMap<>();
         response.put("success", false);
-        response.put("message", "Erro interno do servidor");
+        response.put("message", "Erro ao criar investimento: " + e.getMessage());
+        response.put("detalhes", e.getClass().getSimpleName());
         response.put("timestamp", System.currentTimeMillis());
+        
+        // Log the actual error for debugging
+        System.err.println("ERRO CAPTURADO: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+        e.printStackTrace();
         
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }

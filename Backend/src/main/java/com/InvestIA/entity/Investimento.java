@@ -41,11 +41,14 @@ public class Investimento {
     
     private LocalDate dataCompra;
     
+    @Builder.Default
     private boolean ativoStatus = true;
     
     @Column(name = "criado_em")
+    @Builder.Default
     private LocalDateTime criadoEm = LocalDateTime.now();
     
     @Column(name = "atualizado_em")
+    @Builder.Default
     private LocalDateTime atualizadoEm = LocalDateTime.now();
 }

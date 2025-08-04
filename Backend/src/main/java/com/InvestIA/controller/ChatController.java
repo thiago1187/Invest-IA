@@ -1,5 +1,7 @@
 package com.InvestIA.controller;
 
+import com.InvestIA.dto.chat.ChatRequest;
+import com.InvestIA.dto.chat.ChatResponse;
 import com.InvestIA.entity.HistoricoConversa;
 import com.InvestIA.entity.Investimento;
 import com.InvestIA.entity.Usuario;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -29,35 +32,161 @@ public class ChatController {
     private final UsuarioRepository usuarioRepository;
     private final InvestimentoRepository investimentoRepository;
 
-    // Endpoint de teste público para verificar se a Nina está funcionando
+    // Endpoint público com contexto realista (dados do usuário padrão) - COM HISTÓRICO
     @PostMapping("/teste")
-    public ResponseEntity<ChatResponse> testarNina(@RequestBody ChatRequest request) {
+    public ResponseEntity<ChatResponse> testarNina(@RequestBody ChatRequest request, Authentication authentication) {
         try {
-            // Criar usuário fake para teste
-            Usuario usuarioTeste = Usuario.builder()
-                    .nome("Thiago")
-                    .email("teste@teste.com")
-                    .build();
+            Usuario usuario;
             
-            // Lista vazia de investimentos (usuário iniciante)
-            List<Investimento> investimentosVazios = List.of();
+            // Se há autenticação, usar o usuário autenticado
+            if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
+                usuario = usuarioRepository.findByEmail(authentication.getName())
+                        .orElse(null);
+                
+                if (usuario == null) {
+                    return ResponseEntity.ok(ChatResponse.builder()
+                            .resposta("Usuário autenticado não encontrado. Faça login novamente.")
+                            .success(false)
+                            .timestamp(LocalDateTime.now())
+                            .build());
+                }
+            } else {
+                // Fallback para usuário de teste se não autenticado
+                usuario = usuarioRepository.findByEmail("teste@investia.com")
+                        .orElse(null);
+                
+                if (usuario == null) {
+                    return ResponseEntity.ok(ChatResponse.builder()
+                            .resposta("Usuário de teste não encontrado. Configure primeiro os dados de teste.")
+                            .success(false)
+                            .timestamp(LocalDateTime.now())
+                            .build());
+                }
+            }
             
+            // Buscar investimentos reais do usuário
+            List<Investimento> investimentos = investimentoRepository
+                    .findByUsuarioIdAndAtivoStatusTrue(usuario.getId());
+            
+            // USAR O SERVIÇO QUE TEM CONTEXTO CONVERSACIONAL!
             String resposta = chatBotService.responderComContexto(
-                    request.getPergunta(), 
-                    usuarioTeste, 
-                    investimentosVazios
+                    request.getMensagem(),
+                    usuario,
+                    investimentos
             );
             
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta(resposta)
-                    .sucesso(true)
+                    .success(true)
+                    .timestamp(LocalDateTime.now())
                     .build());
                     
         } catch (Exception e) {
             return ResponseEntity.ok(ChatResponse.builder()
-                    .resposta("Erro no teste: " + e.getMessage())
-                    .sucesso(false)
+                    .resposta("Desculpe, estou com problemas técnicos no momento. Tente novamente em alguns instantes.")
+                    .success(false)
+                    .timestamp(LocalDateTime.now())
                     .erro(e.getMessage())
+                    .build());
+        }
+    }
+    
+    // Endpoint para testar com perfil específico
+    @PostMapping("/teste-perfil/{tipoPerfil}")
+    public ResponseEntity<ChatResponse> testarNinaPerfil(
+            @PathVariable String tipoPerfil,
+            @RequestBody ChatRequest request) {
+        try {
+            // Criar usuário fictício com perfil específico para teste
+            Usuario usuarioTeste = new Usuario();
+            usuarioTeste.setNome("Usuário Teste");
+            usuarioTeste.setEmail("teste-perfil@investia.com");
+            
+            // Criar perfil baseado no parâmetro
+            com.InvestIA.entity.Perfil perfil = new com.InvestIA.entity.Perfil();
+            
+            switch (tipoPerfil.toLowerCase()) {
+                case "iniciante":
+                    perfil.setTipoPerfil(com.InvestIA.enums.TipoPerfil.CONSERVADOR);
+                    perfil.setNivelExperiencia(com.InvestIA.enums.NivelExperiencia.INICIANTE);
+                    perfil.setToleranciaRisco(0.2); // 20% tolerância ao risco
+                    break;
+                case "moderado":
+                    perfil.setTipoPerfil(com.InvestIA.enums.TipoPerfil.MODERADO);
+                    perfil.setNivelExperiencia(com.InvestIA.enums.NivelExperiencia.INTERMEDIARIO);
+                    perfil.setToleranciaRisco(0.5); // 50% tolerância ao risco
+                    break;
+                case "agressivo":
+                    perfil.setTipoPerfil(com.InvestIA.enums.TipoPerfil.AGRESSIVO);
+                    perfil.setNivelExperiencia(com.InvestIA.enums.NivelExperiencia.AVANCADO);
+                    perfil.setToleranciaRisco(0.8); // 80% tolerância ao risco
+                    break;
+                default:
+                    perfil.setTipoPerfil(com.InvestIA.enums.TipoPerfil.CONSERVADOR);
+                    perfil.setNivelExperiencia(com.InvestIA.enums.NivelExperiencia.INICIANTE);
+                    perfil.setToleranciaRisco(0.3); // 30% tolerância ao risco
+            }
+            
+            usuarioTeste.setPerfil(perfil);
+            
+            // Lista vazia de investimentos para teste
+            List<Investimento> investimentos = List.of();
+            
+            // USAR O SERVIÇO QUE TEM CONTEXTO CONVERSACIONAL!
+            String resposta = chatBotService.responderComContexto(
+                    request.getMensagem() + " (PERFIL TESTE: " + tipoPerfil.toUpperCase() + ")",
+                    usuarioTeste,
+                    investimentos
+            );
+            
+            return ResponseEntity.ok(ChatResponse.builder()
+                    .resposta(resposta)
+                    .success(true)
+                    .timestamp(LocalDateTime.now())
+                    .build());
+                    
+        } catch (Exception e) {
+            return ResponseEntity.ok(ChatResponse.builder()
+                    .resposta("Erro no teste de perfil: " + e.getMessage())
+                    .success(false)
+                    .timestamp(LocalDateTime.now())
+                    .erro(e.getMessage())
+                    .build());
+        }
+    }
+
+    // Endpoint principal do chat
+    @PostMapping
+    public ResponseEntity<ChatResponse> chat(
+            @RequestBody ChatRequest request,
+            Authentication authentication) {
+        
+        try {
+            Usuario usuario = usuarioRepository.findByEmail(authentication.getName())
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+            
+            List<Investimento> investimentos = investimentoRepository
+                    .findByUsuarioIdAndAtivoStatusTrue(usuario.getId());
+            
+            String resposta = chatBotService.responderComContexto(
+                    request.getMensagem(), 
+                    usuario, 
+                    investimentos
+            );
+            
+            return ResponseEntity.ok(ChatResponse.builder()
+                    .resposta(resposta)
+                    .success(true)
+                    .timestamp(LocalDateTime.now())
+                    .build());
+                    
+        } catch (Exception e) {
+            return ResponseEntity.ok(ChatResponse.builder()
+                    .resposta("Desculpe, não consegui processar sua mensagem no momento. " +
+                             "Tente reformular ou entre em contato com nosso suporte.")
+                    .success(false)
+                    .erro(e.getMessage())
+                    .timestamp(LocalDateTime.now())
                     .build());
         }
     }
@@ -75,21 +204,23 @@ public class ChatController {
                     .findByUsuarioIdAndAtivoStatusTrue(usuario.getId());
             
             String resposta = chatBotService.responderComContexto(
-                    request.getPergunta(), 
+                    request.getMensagem(), 
                     usuario, 
                     investimentos
             );
             
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta(resposta)
-                    .sucesso(true)
+                    .success(true)
+                    .timestamp(LocalDateTime.now())
                     .build());
                     
         } catch (Exception e) {
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta("Desculpe, não consegui processar sua pergunta no momento. " +
                              "Tente reformular ou entre em contato com nosso suporte.")
-                    .sucesso(false)
+                    .success(false)
+                    .timestamp(LocalDateTime.now())
                     .erro(e.getMessage())
                     .build());
         }
@@ -108,14 +239,16 @@ public class ChatController {
             
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta(analise)
-                    .sucesso(true)
+                    .success(true)
+                    .timestamp(LocalDateTime.now())
                     .build());
                     
         } catch (Exception e) {
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta("Não foi possível analisar sua carteira no momento. Tente novamente.")
-                    .sucesso(false)
+                    .success(false)
                     .erro(e.getMessage())
+                    .timestamp(LocalDateTime.now())
                     .build());
         }
     }
@@ -133,14 +266,16 @@ public class ChatController {
             
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta(recomendacoes)
-                    .sucesso(true)
+                    .success(true)
+                    .timestamp(LocalDateTime.now())
                     .build());
                     
         } catch (Exception e) {
             return ResponseEntity.ok(ChatResponse.builder()
                     .resposta("Não foi possível gerar recomendações no momento. Tente novamente.")
-                    .sucesso(false)
+                    .success(false)
                     .erro(e.getMessage())
+                    .timestamp(LocalDateTime.now())
                     .build());
         }
     }
@@ -194,55 +329,6 @@ public class ChatController {
         }
     }
 
-    public static class ChatRequest {
-        private String pergunta;
-        
-        public String getPergunta() { return pergunta; }
-        public void setPergunta(String pergunta) { this.pergunta = pergunta; }
-    }
-
-    public static class ChatResponse {
-        private String resposta;
-        private boolean sucesso;
-        private String erro;
-        
-        public static ChatResponseBuilder builder() {
-            return new ChatResponseBuilder();
-        }
-        
-        public static class ChatResponseBuilder {
-            private String resposta;
-            private boolean sucesso;
-            private String erro;
-            
-            public ChatResponseBuilder resposta(String resposta) {
-                this.resposta = resposta;
-                return this;
-            }
-            
-            public ChatResponseBuilder sucesso(boolean sucesso) {
-                this.sucesso = sucesso;
-                return this;
-            }
-            
-            public ChatResponseBuilder erro(String erro) {
-                this.erro = erro;
-                return this;
-            }
-            
-            public ChatResponse build() {
-                ChatResponse response = new ChatResponse();
-                response.resposta = this.resposta;
-                response.sucesso = this.sucesso;
-                response.erro = this.erro;
-                return response;
-            }
-        }
-        
-        public String getResposta() { return resposta; }
-        public boolean isSucesso() { return sucesso; }
-        public String getErro() { return erro; }
-    }
     
     public static class AvaliacaoRequest {
         private Integer avaliacao;

@@ -137,20 +137,47 @@ public class ChatBotPersonalizadoService {
         
         StringBuilder contexto = new StringBuilder();
         
-        // Perfil do usuário
+        // Perfil do usuário com análise inteligente
         contexto.append("PERFIL DO USUÁRIO:\n");
         contexto.append("Nome: ").append(usuario.getNome()).append("\n");
+        
+        String recomendacaoTipoInvestimento = "ações (perfil não definido)";
+        String orientacaoRisco = "Seja cautelosa até entender melhor o perfil.";
         
         if (usuario.getPerfil() != null) {
             contexto.append("Perfil de Risco: ").append(usuario.getPerfil().getTipoPerfil()).append("\n");
             contexto.append("Experiência: ").append(usuario.getPerfil().getNivelExperiencia()).append("\n");
-            contexto.append("Tolerância ao Risco: ").append(usuario.getPerfil().getToleranciaRisco()).append("/10\n");
+            contexto.append("Tolerância ao Risco: ").append(String.format("%.0f%%", usuario.getPerfil().getToleranciaRisco() * 100)).append("\n");
+            
+            // ANÁLISE INTELIGENTE DO PERFIL PARA RECOMENDAÇÕES
+            boolean isIniciante = usuario.getPerfil().getNivelExperiencia().name().equals("INICIANTE") ||
+                                 usuario.getPerfil().getTipoPerfil().name().equals("CONSERVADOR") ||
+                                 (usuario.getPerfil().getToleranciaRisco() != null && usuario.getPerfil().getToleranciaRisco() <= 0.3);
+            
+            boolean isExperiente = usuario.getPerfil().getNivelExperiencia().name().equals("AVANCADO") ||
+                                  usuario.getPerfil().getTipoPerfil().name().equals("AGRESSIVO") ||
+                                  (usuario.getPerfil().getToleranciaRisco() != null && usuario.getPerfil().getToleranciaRisco() >= 0.7);
+            
+            if (isIniciante) {
+                recomendacaoTipoInvestimento = "CDB, Tesouro Direto e Fundos DI";
+                orientacaoRisco = "FOQUE EM RENDA FIXA! Usuário iniciante - evite ações por enquanto. Sugira CDB, Tesouro Direto, LCI/LCA.";
+            } else if (isExperiente) {
+                recomendacaoTipoInvestimento = "ações, FIIs e renda variável";
+                orientacaoRisco = "Pode sugerir ações e investimentos mais arriscados. Usuário experiente com tolerância ao risco.";
+            } else {
+                recomendacaoTipoInvestimento = "mix de renda fixa (60%) e ações (40%)";
+                orientacaoRisco = "Perfil moderado - sugira diversificação entre renda fixa e algumas ações de empresas sólidas.";
+            }
         }
+        
+        contexto.append("\nESTRATÉGIA DE RECOMENDAÇÃO:\n");
+        contexto.append("Tipo ideal: ").append(recomendacaoTipoInvestimento).append("\n");
+        contexto.append("Orientação: ").append(orientacaoRisco).append("\n");
         
         // Resumo da carteira
         contexto.append("\nCARTEIRA ATUAL:\n");
         if (investimentos.isEmpty()) {
-            contexto.append("Carteira vazia - usuário iniciante\n");
+            contexto.append("Carteira vazia - oportunidade para começar com investimentos adequados ao perfil\n");
         } else {
             java.math.BigDecimal valorTotal = calcularValorTotalCarteira(investimentos);
             contexto.append("Valor total: R$ ").append(valorTotal).append("\n");

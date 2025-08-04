@@ -26,6 +26,5 @@ public class CriarInvestimentoRequest {
     private BigDecimal valorCompra;
     
     @NotNull(message = "Data de compra é obrigatória")
-    @PastOrPresent(message = "Data de compra não pode ser futura")
     private LocalDate dataCompra;
 }

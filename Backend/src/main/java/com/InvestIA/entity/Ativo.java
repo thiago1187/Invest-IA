@@ -54,11 +54,13 @@ public class Ativo {
     
     private Double risco; // 0.0 a 1.0
     
+    @Builder.Default
     private boolean status = true;
     
     @Column(name = "ultima_atualizacao")
     private LocalDateTime ultimaAtualizacao;
     
     @Column(name = "criado_em")
+    @Builder.Default
     private LocalDateTime criadoEm = LocalDateTime.now();
 }

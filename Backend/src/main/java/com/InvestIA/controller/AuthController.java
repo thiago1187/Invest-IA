@@ -19,14 +19,44 @@ public class AuthController {
     
     @PostMapping("/register")
     @Operation(summary = "Registrar novo usuário")
-    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
+        try {
+            return ResponseEntity.ok(authService.register(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(java.util.Map.of(
+                    "success", false,
+                    "message", "Erro no cadastro: " + e.getMessage(),
+                    "timestamp", System.currentTimeMillis()
+            ));
+        }
+    }
+    
+    @PostMapping("/cadastro")
+    @Operation(summary = "Cadastrar novo usuário (endpoint brasileiro)")
+    public ResponseEntity<?> cadastro(@Valid @RequestBody RegisterRequest request) {
+        try {
+            return ResponseEntity.ok(authService.register(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(java.util.Map.of(
+                    "success", false,
+                    "message", "Erro no cadastro: " + e.getMessage(),
+                    "timestamp", System.currentTimeMillis()
+            ));
+        }
     }
     
     @PostMapping("/login")
     @Operation(summary = "Login de usuário")
-    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
-        return ResponseEntity.ok(authService.authenticate(request));
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+        try {
+            return ResponseEntity.ok(authService.authenticate(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(java.util.Map.of(
+                    "success", false,
+                    "message", "Erro no login: " + e.getMessage(),
+                    "timestamp", System.currentTimeMillis()
+            ));
+        }
     }
     
     @PostMapping("/refresh-token")
