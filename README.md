@@ -41,9 +41,9 @@ InvestIA é uma plataforma completa de investimentos que combina análise de por
 - 📊 **Recharts** - Gráficos e visualizações
 
 ### **Integrações**
-- 🤖 **Groq API** - IA para chatbot (gratuita)
-- 📈 **Yahoo Finance** - Cotações reais (gratuita)
-- 🔄 **Axios** - Cliente HTTP
+- 🤖 **Groq API** - IA para chatbot Nina (gratuita)
+- 📈 **Yahoo Finance** - Cotações de mercado (tier gratuito)
+- 🔄 **Axios** - Cliente HTTP para comunicação
 
 ## 🚀 **Como Executar o Projeto**
 
@@ -137,13 +137,15 @@ H2_CONSOLE_ENABLED=true
 
 ## 📈 **Dados de Mercado**
 
-O projeto utiliza **dados reais e atualizados** (Julho 2025):
-- **Taxa SELIC**: 14,25% a.a.
-- **CDI**: 12,14% a.a.
-- **Ações**: Preços atuais via Yahoo Finance
+O projeto combina **dados reais com simulações** para demonstração:
+- **Taxa SELIC**: 14,25% a.a. (real)
+- **CDI**: 12,14% a.a. (real)  
+- **Ações**: Alguns dados mockados para demonstração
   - ITUB4: R$ 35,31 (+35% no ano)
   - PETR4: R$ 31,95 (-1,33% no ano)
   - VALE3: R$ 53,00 (estável)
+
+> **Nota**: Alguns dados de mercado são simulados pois o projeto utiliza apenas APIs gratuitas (Yahoo Finance basic tier) para manter o custo zero.
 
 ## 🔒 **Segurança**
 
@@ -221,9 +223,9 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 👨‍💻 **Desenvolvedor**
 
 **Thiago Alves**
-- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/seu-perfil)
-- Email: seu.email@exemplo.com
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
+- Desenvolvedor Full Stack especializado em Spring Boot e React
+- Focado em soluções fintech e aplicações financeiras
+- GitHub: [@thiago-alves](https://github.com/thiago-alves)
 
 ## 🌟 **Demonstração**
 
